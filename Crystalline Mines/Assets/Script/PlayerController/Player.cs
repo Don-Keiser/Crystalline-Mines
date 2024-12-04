@@ -46,16 +46,31 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _coyotteJump;
     [SerializeField] private bool _doubleJump;
 
+    [Header("TEST")]
+    [SerializeField] private LayerMask _interactibleMask;
+    [SerializeField] private SimonGame _simon;
+
+
     private void Start()
     {
         _velocity = Vector2.zero;
         InitializeData();
+    }
+    public void DetectCristal()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.5f, Vector2.right, 0, _interactibleMask);
+        if (hit && Input.GetMouseButtonDown(0))
+        {
+            _simon.PlayerInteractCristal(hit.collider.gameObject);
+        }
     }
 
     private void Update()
     {
         UpdateColliderInfos();
         ApplyGravity();
+
+        DetectCristal();
 
         Vector2 deltaMovement = _velocity * Time.deltaTime;
         //print($" Y velocity {deltaMovement.y}");
@@ -271,7 +286,7 @@ public class Player : MonoBehaviour
             //}
 
 
-            Debug.Log("Jump executed");
+            //Debug.Log("Jump executed");
             _velocity.y = _jumpForce;
             _hasFloor = false; // Définir à false immédiatement après le saut
             _coyoteTimeCounter = 0; // Réinitialiser le coyote time dès le saut
@@ -290,6 +305,9 @@ public class Player : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(_bounds.center, _bounds.size);
+
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, 1.5f);
     }
     private void DownSlope() //permet de descendre une rampe 
     {
@@ -304,7 +322,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        Debug.Log("down slope");
+       //Debug.Log("down slope");
 
         float angle = Vector2.Angle(hitInfo.normal, Vector2.up);
         if (angle > _maxSlopeAngle)
