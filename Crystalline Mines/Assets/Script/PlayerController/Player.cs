@@ -46,30 +46,30 @@ public class Player : MonoBehaviour
     private float _currentSlopeAngle;
     private float _oldSlopeAngle;
 
-    [Header("TEST")]
-    [SerializeField] private LayerMask _interactibleMask;
-    [SerializeField] private SimonGame _simon;
+    //[Header("TEST")]
+    //[SerializeField] private LayerMask _interactibleMask;
+    //[SerializeField] private SimonGame _simon;
     
     private void Start()
     {
         _velocity = Vector2.zero;
         InitializeData();
     }
-    public void DetectCristal()
-    {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.5f, Vector2.right, 0, _interactibleMask);
-        if (hit && Input.GetMouseButtonDown(0))
-        {
-            _simon.PlayerInteractCristal(hit.collider.gameObject);
-        }
-    }
+    //public void DetectCristal()
+    //{
+    //    RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.5f, Vector2.right, 0, _interactibleMask);
+    //    if (hit && Input.GetMouseButtonDown(0))
+    //    {
+    //        _simon.PlayerInteractCristal(hit.collider.gameObject);
+    //    }
+    //}
 
     private void Update()
     {
         UpdateColliderInfos();
         ApplyGravity();
 
-        DetectCristal();
+        //DetectCristal();
 
         Vector2 deltaMovement = _velocity * Time.deltaTime;
 
