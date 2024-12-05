@@ -199,7 +199,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ClimbSlope(ref Vector2 deltaMovement, float slopeAngle) //permet de se ddplacer sur les surfaces diagonale praticables
+    private void ClimbSlope(ref Vector2 deltaMovement, float slopeAngle) //permet de se deplacer sur les surfaces diagonale praticables
     {
         float magnitude = Mathf.Abs(deltaMovement.x);
         float slopeMouvementY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * magnitude;
