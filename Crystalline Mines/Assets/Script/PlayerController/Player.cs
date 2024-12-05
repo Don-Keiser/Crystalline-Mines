@@ -46,16 +46,30 @@ public class Player : MonoBehaviour
     private float _currentSlopeAngle;
     private float _oldSlopeAngle;
 
+    [Header("TEST")]
+    [SerializeField] private LayerMask _interactibleMask;
+    [SerializeField] private SimonGame _simon;
+    
     private void Start()
     {
         _velocity = Vector2.zero;
         InitializeData();
+    }
+    public void DetectCristal()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.5f, Vector2.right, 0, _interactibleMask);
+        if (hit && Input.GetMouseButtonDown(0))
+        {
+            _simon.PlayerInteractCristal(hit.collider.gameObject);
+        }
     }
 
     private void Update()
     {
         UpdateColliderInfos();
         ApplyGravity();
+
+        DetectCristal();
 
         Vector2 deltaMovement = _velocity * Time.deltaTime;
 
@@ -275,7 +289,6 @@ public class Player : MonoBehaviour
     {
         if (_hasFloor || _coyotteJump)
         {
-            Debug.Log("Jump executed");
             _velocity.y = _jumpForce;
             _hasFloor = false;
             _coyoteTimeCounter = 0;
@@ -295,6 +308,9 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(_bounds.center, _bounds.size);
 
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, 1.5f);
+
     }
 
 
@@ -311,7 +327,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        Debug.Log("down slope");
+       //Debug.Log("down slope");
 
         float angle = Vector2.Angle(hitInfo.normal, Vector2.up);
         if (angle > _maxSlopeAngle)
