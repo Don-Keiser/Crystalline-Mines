@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class SimonGame : MonoBehaviour
 {
-    [Header("Cristal ref")]
+    [Header("Cristal refs")]
     [SerializeField] private List<GameObject> _allCristals = new();
     [SerializeField] private GameObject _startingCristal;
-
 
     [Header("Cristal Sequence")]
     [SerializeField] private int _maxSequencelength;
     private List<GameObject> _cristalSequence = new();
-    private bool _enigmaIsLunched = false;
+    public bool _enigmaIsLaunched {get; private set;}
+
     private bool _animationTime = false;
     private int _cristalIndex = 1;
-
-
 
     private List<GameObject> _cristalPlayerChoose = new();
 
     private void Start()
     {
+        _enigmaIsLaunched = false;
         InitializeRandomSequence();
         FirstAnim();
     }
+
     #region Initialize sequence
     private int PickRandomCristal()
     {
         return Random.Range(0, _allCristals.Count);
     }
-    private void InitializeRandomSequence() //appel pour choisir une sequence aléatoire
+    private void InitializeRandomSequence()
     {
         if (_cristalSequence.Count > 0) { _cristalSequence.Clear(); }
 
@@ -52,7 +52,7 @@ public class SimonGame : MonoBehaviour
     }
     private IEnumerator FirstCristalAnim()
     {
-        while (!_enigmaIsLunched)
+        while (!_enigmaIsLaunched)
         {
             yield return new WaitForSeconds(0.25f);
             _startingCristal.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
@@ -82,12 +82,12 @@ public class SimonGame : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         cristal.transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
     }
+
     private IEnumerator ResetAnim()
     {
         for (int i = 0; i < 3; i++)
         {
             yield return new WaitForSeconds(0.15f);
-
             foreach (var cristal in _allCristals)
             {
                 cristal.transform.localScale += Vector3.one;
@@ -107,23 +107,20 @@ public class SimonGame : MonoBehaviour
     {
         bool reset = false;
 
-
-        if (choosedCristal == _startingCristal && !_enigmaIsLunched) //lance l enigme
+        if (choosedCristal == _startingCristal && !_enigmaIsLaunched)
         {
-            _enigmaIsLunched = true;
+            _enigmaIsLaunched = true;
             StopCoroutine(FirstCristalAnim());
             SimonIteration();
             return;
         }
 
-
-        if (choosedCristal != _startingCristal && _enigmaIsLunched)
+        if (choosedCristal != _startingCristal && _enigmaIsLaunched)
         {
             if (_animationTime) { return; }
 
             StartCoroutine(ClickedAnim(choosedCristal));
             _cristalPlayerChoose.Add(choosedCristal);
-
 
             for (int i = 0; i < _cristalPlayerChoose.Count; i++)
             {
@@ -135,7 +132,11 @@ public class SimonGame : MonoBehaviour
 
             if (_cristalPlayerChoose.Count == _cristalIndex)
             {
-                if (_cristalPlayerChoose.Count >= _maxSequencelength) { print("you win!"); return; } //mettre fin enigme 
+                if (_cristalPlayerChoose.Count >= _maxSequencelength)
+                {
+                    print("you win!");
+                    return;
+                }
 
                 if (!reset)
                 {
@@ -143,10 +144,10 @@ public class SimonGame : MonoBehaviour
                     SimonIteration();
                     _cristalPlayerChoose.Clear();
                 }
-
             }
         }
     }
+
     private bool ResetEnigma()
     {
         print("wrong cristal");
@@ -154,7 +155,7 @@ public class SimonGame : MonoBehaviour
 
         _cristalPlayerChoose.Clear();
         _cristalIndex = 1;
-        _enigmaIsLunched = false;
+        _enigmaIsLaunched = false;
 
         InitializeRandomSequence();
         FirstAnim();

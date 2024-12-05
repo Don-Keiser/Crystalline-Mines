@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 51403027}
   - component: {fileID: 51403026}
   - component: {fileID: 51403028}
+  - component: {fileID: 51403029}
   m_Layer: 9
   m_Name: GreenCristal
   m_TagString: Cristal
@@ -252,6 +253,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &51403029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51403025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550147d27a40d2245804909e6b9d4fef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &141755245
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +276,7 @@ GameObject:
   - component: {fileID: 141755247}
   - component: {fileID: 141755246}
   - component: {fileID: 141755248}
+  - component: {fileID: 141755249}
   m_Layer: 9
   m_Name: BlueCristal
   m_TagString: Cristal
@@ -382,6 +396,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &141755249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141755245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550147d27a40d2245804909e6b9d4fef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &170494847
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +419,7 @@ GameObject:
   - component: {fileID: 170494849}
   - component: {fileID: 170494848}
   - component: {fileID: 170494850}
+  - component: {fileID: 170494851}
   m_Layer: 9
   m_Name: YellowCristal
   m_TagString: Cristal
@@ -512,6 +539,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &170494851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170494847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550147d27a40d2245804909e6b9d4fef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &310006486
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +562,7 @@ GameObject:
   - component: {fileID: 310006488}
   - component: {fileID: 310006487}
   - component: {fileID: 310006489}
+  - component: {fileID: 310006490}
   m_Layer: 9
   m_Name: RedCristal
   m_TagString: Cristal
@@ -642,6 +682,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &310006490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310006486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550147d27a40d2245804909e6b9d4fef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &422339105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,8 +1061,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coyoteTimeDuration: 0.2
   _size: {x: 1, y: 2}
+  _playerFeet: {fileID: 0}
   _skinWidth: 0.01
   _gravity: 10
+  _hasFloor: 0
+  _coyotteJump: 0
   _verticalRaySpacing: 0.1
   _horizontalRaySpacing: 0.1
   _moveSpeed: 8
@@ -1022,9 +1077,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _maxSlopeAngle: 45
-  _hasFloor: 0
-  _coyotteJump: 0
-  _doubleJump: 0
+  _platformHeight: 0
   _interactibleMask:
     serializedVersion: 2
     m_Bits: 512
@@ -1223,6 +1276,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1278265921}
+  _rangeRadius: 5
+  _interactibleMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!4 &1417773932
 Transform:
   m_ObjectHideFlags: 0
@@ -1268,6 +1325,7 @@ GameObject:
   - component: {fileID: 1767590857}
   - component: {fileID: 1767590856}
   - component: {fileID: 1767590855}
+  - component: {fileID: 1767590858}
   m_Layer: 9
   m_Name: WhiteCristal
   m_TagString: Cristal
@@ -1387,6 +1445,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1767590858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767590854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550147d27a40d2245804909e6b9d4fef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
