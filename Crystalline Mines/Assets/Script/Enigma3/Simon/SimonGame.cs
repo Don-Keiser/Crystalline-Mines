@@ -11,7 +11,7 @@ public class SimonGame : MonoBehaviour
     [Header("Cristal Sequence")]
     [SerializeField] private int _maxSequencelength;
     private List<GameObject> _cristalSequence = new();
-    public bool _enigmaIsLaunched {get; private set;}
+    public bool EnigmaIsLaunched {get; private set;}
 
     private bool _animationTime = false;
     private int _cristalIndex = 1;
@@ -20,7 +20,7 @@ public class SimonGame : MonoBehaviour
 
     private void Start()
     {
-        _enigmaIsLaunched = false;
+        EnigmaIsLaunched = false;
         InitializeRandomSequence();
         FirstAnim();
     }
@@ -52,7 +52,7 @@ public class SimonGame : MonoBehaviour
     }
     private IEnumerator FirstCristalAnim()
     {
-        while (!_enigmaIsLaunched)
+        while (!EnigmaIsLaunched)
         {
             yield return new WaitForSeconds(0.25f);
             _startingCristal.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
@@ -107,15 +107,15 @@ public class SimonGame : MonoBehaviour
     {
         bool reset = false;
 
-        if (choosedCristal == _startingCristal && !_enigmaIsLaunched)
+        if (choosedCristal == _startingCristal && !EnigmaIsLaunched)
         {
-            _enigmaIsLaunched = true;
+            EnigmaIsLaunched = true;
             StopCoroutine(FirstCristalAnim());
             SimonIteration();
             return;
         }
 
-        if (choosedCristal != _startingCristal && _enigmaIsLaunched)
+        if (choosedCristal != _startingCristal && EnigmaIsLaunched)
         {
             if (_animationTime) { return; }
 
@@ -155,7 +155,7 @@ public class SimonGame : MonoBehaviour
 
         _cristalPlayerChoose.Clear();
         _cristalIndex = 1;
-        _enigmaIsLaunched = false;
+        EnigmaIsLaunched = false;
 
         InitializeRandomSequence();
         FirstAnim();
