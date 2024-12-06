@@ -4,6 +4,7 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private CameraController _camera;
 
     [Header("Player Interaction Range")]
     [SerializeField] private float _rangeRadius;
@@ -11,6 +12,8 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
+        if (_camera.AnimTIme) { return; }
+
         Vector2 _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         _player.SetMoveInput(_moveInput);
 
@@ -35,6 +38,12 @@ public class Controller : MonoBehaviour
                 }
             }
         }
+    }
+    private void LateUpdate()
+    {
+        _camera.SmoothFollowWithBounds();
+
+        if(_camera.AnimTIme) { _camera.AnimateCamera(); }
     }
 
     private GameObject GetNearestInteractableObject()
