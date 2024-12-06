@@ -18,19 +18,19 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _coyotteJump;
 
     [Header("Raycast Settings")]
-    [SerializeField] private float _verticalRaySpacing; //distance entre les raycasts vertical
-    [SerializeField] private float _horizontalRaySpacing; // distance horizontal
+    [SerializeField] private float _verticalRaySpacing; //distance between vertical beams
+    [SerializeField] private float _horizontalRaySpacing; // horizontal distance
 
     [Header("Movement Settings")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
 
     [Header("Collision and Slope Settings")]
-    [SerializeField] private LayerMask _solidMask;  // layers detecter pour les collisions
-    [SerializeField] private LayerMask _passThroughMask; //layer pour les platformes que le joueur peut traverser
+    [SerializeField] private LayerMask _solidMask;  //layers detect for collisions
+    [SerializeField] private LayerMask _passThroughMask; //layer for the platforms that the player can cross
     private int _platformLayerIndex;
     private GameObject _passThroughPlatform;
-    [SerializeField] private float _maxSlopeAngle; // Angle maximal que le joueur peut monter ou descendre
+    [SerializeField] private float _maxSlopeAngle; //Maximum angle the player can go up or down
 
     [Header("Environnement")]
     [SerializeField] private float _platformHeight;
@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
     {
         float rayDirection = Mathf.Sign(raySign);
 
-        //parametre de la box
+        //box settings
         Vector2 boxDirection = (rayDirection > 0) ? Vector2.up : Vector2.down;
         Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + ((Vector2.right * _size.x) / 2) : (_bottomLeft + _bottomRight) / 2;
         Vector2 boxSize = Vector2.one;
@@ -111,12 +111,12 @@ public class Player : MonoBehaviour
         if (hitInfo.collider != null)
         {
 
-            _coyoteTimeCounter = 0; //desactive le jump et coyotte time
+            _coyoteTimeCounter = 0; //disable jump and coyotte time
             _coyotteJump = false;
 
             _passThroughPlatform = hitInfo.collider.gameObject;
 
-            _platformLayerIndex = _passThroughPlatform.layer; //prend le layer d origine de la platform
+            _platformLayerIndex = _passThroughPlatform.layer; //takes the original layer of the platform
             _passThroughPlatform.layer = 0;
         }
     }
@@ -128,8 +128,6 @@ public class Player : MonoBehaviour
 
         float playerFeetHeight = _playerFeet.position.y + _skinWidth * 2;
         float platformTopHeight = _passThroughPlatform.transform.position.y + _platformHeight / 2;
-
-        print($"Player Feet Height: {playerFeetHeight}, Platform Top Height: {platformTopHeight}");
 
         if (playerFeetHeight > platformTopHeight)
         {
@@ -158,7 +156,7 @@ public class Player : MonoBehaviour
         _velocity.y -= _gravity * Time.deltaTime;
     }
 
-    private void DetectWallAndSlopes(ref Vector2 deltaMovement) //detection des obstacles 
+    private void DetectWallAndSlopes(ref Vector2 deltaMovement) //obstacle detection 
     {
         float horizontalDirection = Mathf.Sign(deltaMovement.x);
         float rayDistance = Mathf.Abs(deltaMovement.x) + _skinWidth;
@@ -202,7 +200,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ClimbSlope(ref Vector2 deltaMovement, float slopeAngle) //permet de se ddplacer sur les surfaces diagonale praticables
+    private void ClimbSlope(ref Vector2 deltaMovement, float slopeAngle) //allows you to move on diagonal surfaces that can be walked on
     {
         float magnitude = Mathf.Abs(deltaMovement.x);
         float slopeMouvementY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * magnitude;
@@ -245,9 +243,9 @@ public class Player : MonoBehaviour
                 if (verticalDirection < 0)
                 {
                     _hasFloor = true;
-                    _coyoteTimeCounter = _coyoteTimeDuration; // Reinitialiser le coyote time des qu on touche le sol
+                    _coyoteTimeCounter = _coyoteTimeDuration; // Reset coyote time as soon as you touch the ground
 
-                    if (_passThroughPlatform != null) // si le joueur a traverser un platform remettre le layer a l'etat d'origine
+                    if (_passThroughPlatform != null) // if the player has crossed a platform, return the layer to its original state
                     {
                         _passThroughPlatform.layer = _platformLayerIndex;
                         _passThroughPlatform = null;
@@ -284,26 +282,7 @@ public class Player : MonoBehaviour
 
         }
     }
-
-    private void OnDrawGizmosSelected() // debug raycast
-    {
-        _bounds = new Bounds(transform.position, _size);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_bounds.center, _bounds.size);
-
-        _bounds.Expand(-2 * _skinWidth);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(_bounds.center, _bounds.size);
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, 1.5f);
-
-    }
-
-
-    private void DownSlope() //permet de descendre une rampe 
+    private void DownSlope() //allows you to go down a ramp 
     {
         if (!_hasFloor && !_coyotteJump) return;
 
@@ -316,20 +295,18 @@ public class Player : MonoBehaviour
         {
             return;
         }
-       //Debug.Log("down slope");
-
         float angle = Vector2.Angle(hitInfo.normal, Vector2.up);
         if (angle > _maxSlopeAngle)
         {
             return;
         }
 
-        _velocity = ProjectOnLine(_velocity, hitInfo.normal);  //adapte la velocity en fonction de l inclinaison de la rampe 
+        _velocity = ProjectOnLine(_velocity, hitInfo.normal);  //adapts velocity according to ramp inclination 
         _hasFloor = true;
         Debug.DrawRay(transform.position, _velocity * 50, Color.green);
     }
 
-    public static Vector2 ProjectOnLine(Vector2 vector, Vector2 normal) //retourne un vecteur qui varies en fonction de la rampe
+    public static Vector2 ProjectOnLine(Vector2 vector, Vector2 normal) //returns a vector which varies according to the ramp
     {
         Vector2 direction = new(-normal.y, normal.x);
 
