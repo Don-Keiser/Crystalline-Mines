@@ -17,26 +17,29 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _smoothSpeed;
 
     [Header("Camera Animation Settings")]
-    [HideInInspector] public bool AnimTIme = false;
     [SerializeField] private float _animDuration = 3f;
     private Vector3 _startPos;
     private float _startFOV;
     private float _initialFOV;
     private float _elapsedTime = 0f;
-    private bool _backToPlayer = true;
-
-    [Header("DEBUG")]
-    [SerializeField] private Transform _levelCenter;
-    [SerializeField] private float _maxDezoom;
+    private Vector3 _targetPosition;
+    private Vector3 _levelCenter;
+    private float _targetZoom;
 
     private Camera _cam;
     private Vector3 _velocity = Vector3.zero;
 
+    public bool IsAnimating { get; private set; }
+    public bool FinishAnim { get; private set; }
+
     private void Awake()
     {
+        EventManager.CameraCinematic += GoToMapCenter; // Subscribe event
+
         _cam = GetComponent<Camera>();
         _startFOV = _cam.orthographicSize;
         _initialFOV = _startFOV;
+        FinishAnim = true;
     }
 
     public void InitializeCameraBoundary(float maxX, float minX, float maxY, float minY)
@@ -49,7 +52,7 @@ public class CameraController : MonoBehaviour
 
     public void SmoothFollowWithBounds()
     {
-        if (_player == null || AnimTIme) return;
+        if (_player == null || !FinishAnim) return;
 
         Vector3 targetPosition = new Vector3(_player.position.x + _offset.x, _player.position.y + _offset.y, transform.position.z);
 
@@ -61,43 +64,54 @@ public class CameraController : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, clampedTarget, ref _velocity, _smoothSpeed);
     }
 
-    [ContextMenu("StartCentering")] //debug
-    public void StartCenteringAnimation()
+    private void StartAnimation(Vector3 targetPos, float targetZoom)
     {
-        _backToPlayer = false;
-        StartCameraAnimation(_levelCenter.position, _maxDezoom);
-    }
+        IsAnimating = true;
+        _elapsedTime = 0f;
 
-    private void StartCameraAnimation(Vector3 targetPos, float targetZoom)
-    {
         _startPos = _cam.transform.position;
         _startFOV = _cam.orthographicSize;
-        _elapsedTime = 0f;
-        AnimTIme = true;
+
+        _targetPosition = targetPos;
+        _targetZoom = targetZoom;
+    }
+
+    public void GoToMapCenter(Vector3 mapCenter, float zoomOutLevel)
+    {
+        FinishAnim = false;
+        _levelCenter = mapCenter;
+        StartAnimation(mapCenter, zoomOutLevel);
+    }
+
+    public void ReturnToPlayer()
+    {
+        StartAnimation(_player.position, _initialFOV);
     }
 
     public void AnimateCamera()
     {
+        if (!IsAnimating) return;
+
         _elapsedTime += Time.deltaTime;
 
-        float t = _elapsedTime / _animDuration;
-        t = Mathf.Clamp01(t);
+        float t = Mathf.Clamp01(_elapsedTime / _animDuration);
 
-        Vector3 camPos = Vector3.Lerp(_startPos, (_backToPlayer ? _player.position : _levelCenter.position), t);
+        Vector3 camPos = Vector3.Lerp(_startPos, _targetPosition, t);
         _cam.transform.position = camPos;
 
-        _cam.orthographicSize = Mathf.Lerp(_startFOV, _backToPlayer ? _initialFOV : _maxDezoom, t);
+        _cam.orthographicSize = Mathf.Lerp(_startFOV, _targetZoom, t);
 
         if (t >= 1f)
         {
-            if (!_backToPlayer)
+            IsAnimating = false;
+
+            if (_targetPosition == _levelCenter)
             {
-                _backToPlayer = true;
-                StartCameraAnimation(_player.position, _initialFOV); //set a timer before restarting the animation
+                TimerManager.StartTimer(2.0f, ReturnToPlayer);
             }
-            else
+            else if (_targetPosition == _player.position)
             {
-                AnimTIme = false;
+                FinishAnim = true;
             }
         }
     }

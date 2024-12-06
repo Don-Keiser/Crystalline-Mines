@@ -10,9 +10,18 @@ public class Controller : MonoBehaviour
     [SerializeField] private float _rangeRadius;
     [SerializeField] private LayerMask _interactibleMask;
 
+    [Header("TEST")]
+    [SerializeField] private float _maxDezoom;
+    [SerializeField] private Vector3 _levelCenter;
+
+    [ContextMenu("StartCamAnim")]
+    public void StartCamAnim()
+    {
+        EventManager.StartCameraAnimation(_levelCenter, _maxDezoom);
+    }
     private void Update()
     {
-        if (_camera.AnimTIme) { return; }
+        if (!_camera.FinishAnim) { return; }
 
         Vector2 _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         _player.SetMoveInput(_moveInput);
@@ -43,7 +52,7 @@ public class Controller : MonoBehaviour
     {
         _camera.SmoothFollowWithBounds();
 
-        if(_camera.AnimTIme) { _camera.AnimateCamera(); }
+        if(_camera.IsAnimating) { _camera.AnimateCamera(); }
     }
 
     private GameObject GetNearestInteractableObject()
