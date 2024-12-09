@@ -22,9 +22,17 @@ public class RailPiecesFormHandler : MonoBehaviour
         public Sprite spriteWhenCarried;
     }
 
+    #region Variables
+
     public static RailPiecesFormHandler Instance;
 
+    [Header("External references :")]
+    public Transform railPiecesParent;
+
+    [Header("Statistics :")]
+    [Space]
     public List<RailPiecesForm> railPiecesForms = new();
+    #endregion
 
     #region Methods
 
@@ -43,19 +51,26 @@ public class RailPiecesFormHandler : MonoBehaviour
 
     void IsHandlerDefinedProperly()
     {
+        if (railPiecesParent == null)
+        {
+            Debug.LogError(
+                "ERROR ! The railParent Transform variable is not defined."
+            );
+        }
+
         int atStartRailPiecesFormsLenght = railPiecesForms.Count;
         int enumLenght = Enum.GetValues(typeof(RailPiecesFormTypes)).Length;
 
         if (atStartRailPiecesFormsLenght != enumLenght)
         {
             Debug.LogError(
-                "ERROR ! The lenght of the List 'railPiecesForms' is not equal to the size of the 'RailPiecesFormTypes' Enum lenght " +
-                $": {atStartRailPiecesFormsLenght} is not equal to {enumLenght}"
+                "ERROR ! The lenght of the List 'railForms' is not equal to the size of the 'RailPiecesFormTypes' Enum lenght " +
+                $": {atStartRailPiecesFormsLenght} is not equal to {enumLenght}."
             );
         }
     }
 
-    public RailPiecesForm GetRailFormSprites(RailPiecesFormTypes p_railPiecesFormType)
+    public RailPiecesForm GetRailFormValues(RailPiecesFormTypes p_railPiecesFormType)
     {
         foreach (RailPiecesForm railPiecesForm in railPiecesForms)
         {
@@ -63,8 +78,8 @@ public class RailPiecesFormHandler : MonoBehaviour
                 return railPiecesForm;
         }
 
-        // If we do not find the given p_railPiecesFormType in railPiecesForms then we print out an error, and return an empty RailPiecesForm
-        Debug.LogError($"ERROR ! The given railPiecesFormType '{p_railPiecesFormType}' has not been founded insind railPiecesForms");
+        // If we do not find the given p_railPiecesFormType in railForms then we print out an error, and return an empty RailPiecesForm
+        Debug.LogError($"ERROR ! The given railPiecesFormType '{p_railPiecesFormType}' has not been founded insind railForms.");
         
         return new RailPiecesForm();
     }

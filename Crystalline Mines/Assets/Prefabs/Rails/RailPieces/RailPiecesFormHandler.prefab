@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8215e68f1f9cf5e4ab388e6aaf7a6426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  railPiecesParent: {fileID: 0}
   railPiecesForms:
   - railPiecesFormTypes: 0
     spriteOnGround: {fileID: 0}
@@ -55,7 +56,7 @@ MonoBehaviour:
     spriteOnGround: {fileID: 0}
     spriteWhenCarried: {fileID: 21300000, guid: aeb007e1699be9a47a4de7ac4e911909, type: 3}
   - railPiecesFormTypes: 3
-    spriteOnGround: {fileID: 0}
+    spriteOnGround: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     spriteWhenCarried: {fileID: 21300000, guid: 413aeea0e38a59c49b9d0130fd6782af, type: 3}
   - railPiecesFormTypes: 4
     spriteOnGround: {fileID: 0}

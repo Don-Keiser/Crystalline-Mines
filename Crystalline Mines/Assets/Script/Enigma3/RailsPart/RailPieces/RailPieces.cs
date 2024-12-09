@@ -7,18 +7,24 @@ public class RailPieces : Interactible
 {
     #region Variables
 
-    // Public variables
+    // - Public variables - //
 
     [Header("Statistics :")]
     public RailPiecesFormHandler.RailPiecesFormTypes railPiecesFormType;
 
-    // Private variables
+    // - Private variables - //
 
+    // Form Player
+    Transform _playerTransform;
+
+    // From RailPiecesFormHandler
+    RailPiecesFormHandler _railPiecesFormHandler;
     RailPiecesFormHandler.RailPiecesForm _railPiecesForm;
+    Transform _railPiecesParent; // Will be use when drop down
 
-    bool _isCarried;
-
+    // Local
     SpriteRenderer _spriteRenderer;
+    bool _isCarried;
 
     #endregion
 
@@ -28,9 +34,13 @@ public class RailPieces : Interactible
 
     void Start()
     {
+        _playerTransform = Player.PlayerTransform;
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        _railPiecesForm = RailPiecesFormHandler.Instance.GetRailFormSprites(railPiecesFormType);
+        _railPiecesFormHandler = RailPiecesFormHandler.Instance;
+
+        _railPiecesForm = _railPiecesFormHandler.GetRailFormValues(railPiecesFormType);
+        _railPiecesParent = _railPiecesFormHandler.railPiecesParent;
 
         UpdateSprite();
     }
@@ -53,6 +63,27 @@ public class RailPieces : Interactible
         _isCarried = p_newValue;
 
         UpdateSprite();
+
+        UpdatePosition();
+    }
+
+    void UpdatePosition()
+    {
+        if (_isCarried)
+        {
+            transform.position = new Vector3(
+                _playerTransform.position.x,
+                _playerTransform.position.y + _playerTransform.localScale.y / 2 + transform.localScale.y / 2,
+                _playerTransform.position.z
+            );
+
+            transform.parent = _playerTransform;
+        }
+        else
+        {
+            Debug.LogWarning("WARNING ! Not implemented yet.");
+            // TODO: Launch object (use Egnima1 code)
+        }
     }
 
     void UpdateSprite()
