@@ -1340,6 +1340,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7168583005195188315, guid: 710ce19a5d710454cab02ea03422b0be, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7792920406615819031, guid: 710ce19a5d710454cab02ea03422b0be, type: 3}
       propertyPath: m_Name
       value: CheckPoint
@@ -1751,6 +1755,7 @@ GameObject:
   - component: {fileID: 660626540}
   - component: {fileID: 660626539}
   - component: {fileID: 660626538}
+  - component: {fileID: 660626541}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1876,6 +1881,26 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &660626541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660626536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ac1de8953e5c34ab54b492174656c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxX: 100
+  _minX: -100
+  _maxY: 100
+  _minY: -100
+  _player: {fileID: 1977828132}
+  _offset: {x: 0, y: 0}
+  _smoothSpeed: 0
+  _animDuration: 3
 --- !u!1001 &665651382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1924,6 +1949,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7168583005195188315, guid: 710ce19a5d710454cab02ea03422b0be, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7792920406615819031, guid: 710ce19a5d710454cab02ea03422b0be, type: 3}
       propertyPath: m_Name
       value: CheckPoint (1)
@@ -1963,10 +1992,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1977828131}
+  _camera: {fileID: 660626541}
   _rangeRadius: 0
   _interactibleMask:
     serializedVersion: 2
     m_Bits: 0
+  _maxDezoom: 0
+  _levelCenter: {x: 0, y: 0, z: 0}
 --- !u!4 &666653975
 Transform:
   m_ObjectHideFlags: 0
@@ -3236,7 +3268,7 @@ GameObject:
   - component: {fileID: 1977828133}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3297,7 +3329,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977828130}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -3345,7 +3377,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -3854,6 +3886,10 @@ PrefabInstance:
     - target: {fileID: 589962453779779385, guid: bf9c4eaaac90cc84ca039ce4ff6bb71f, type: 3}
       propertyPath: m_Name
       value: RockTrap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7222050240369062827, guid: bf9c4eaaac90cc84ca039ce4ff6bb71f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

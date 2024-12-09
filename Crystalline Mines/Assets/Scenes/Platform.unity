@@ -3903,10 +3903,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 848414421}
+  _camera: {fileID: 0}
   _rangeRadius: 0
   _interactibleMask:
     serializedVersion: 2
     m_Bits: 0
+  _maxDezoom: 0
+  _levelCenter: {x: 0, y: 0, z: 0}
 --- !u!4 &2056115284
 Transform:
   m_ObjectHideFlags: 0

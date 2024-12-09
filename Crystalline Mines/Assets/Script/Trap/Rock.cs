@@ -16,7 +16,10 @@ public class Rock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _player.transform.position = _player.zoneRespawnOfPlayer;
+        if (collision.CompareTag("Player"))
+        {
+            _player.transform.position = _player.zoneRespawnOfPlayer;
+        }
         Destroy(gameObject);
     }
 }
