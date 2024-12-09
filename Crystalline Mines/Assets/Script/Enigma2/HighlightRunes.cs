@@ -5,29 +5,35 @@ using UnityEngine;
 
 public class HighlightRunes : Interactible
 {
-    [SerializeField] GameObject _rune;
     [SerializeField] private float _timerDuration;
-    
-    public void Highlight()
+    [SerializeField] private GameObject _rune;
+    private SpriteRenderer _runeColor;
+
+    private void Start()
     {
-        _rune.SetActive(true);
-        
-        TimerManager.StartTimer(_timerDuration, () =>
-        {
-            _rune.SetActive(false);
-        });
-        // TODO: change the colour of the decorative crystals to match the rune
-        Crystals.crystals.ForEach(crystal =>
-        {
-            crystal.GetComponent<SpriteRenderer>().color = _rune.GetComponent<SpriteRenderer>().color;
-        });
-        
-        
+        _runeColor = _rune.GetComponent<SpriteRenderer>();
     }
 
+    public void Highlight()
+    {
+        if (Crystals.crystalsColor[0].color == Color.white) // Check if lights already lit up
+        {
+        
+            _rune.SetActive(true);
+            Crystals.ChangeColor(_runeColor.color); // transform the color of the crystals to the color of the rune
+
+            TimerManager.StartTimer(_timerDuration, () =>
+            {
+                _rune.SetActive(false);
+                Crystals.ChangeColor(Color.white); // transform the color of the crystals to white
+            });
+        }
+    }
+    
     public override void PlayerInteract()
     {
         base.PlayerInteract();
         Highlight();
+        
     }
 }
