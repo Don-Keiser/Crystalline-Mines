@@ -15,6 +15,7 @@ public class SimonGame : MonoBehaviour
 
     private bool _animationTime = false;
     private int _cristalIndex = 1;
+    private bool _hasWin = false;
 
     private List<GameObject> _cristalPlayerChoose = new();
 
@@ -105,6 +106,8 @@ public class SimonGame : MonoBehaviour
 
     public void PlayerInteractCristal(GameObject choosedCristal)
     {
+        if (_hasWin)
+            return;
         bool reset = false;
 
         if (choosedCristal == _startingCristal && !EnigmaIsLaunched)
@@ -135,6 +138,7 @@ public class SimonGame : MonoBehaviour
                 if (_cristalPlayerChoose.Count >= _maxSequencelength)
                 {
                     print("you win!");
+                    _hasWin = true;
                     return;
                 }
 
