@@ -1,13 +1,11 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Interact_TutoPanel : Interactible
 {
-    public Sprite InfoImage;
-    public GameObject InfoPanel;
     private bool _isActive;
+    [Header("Explanory text")]
+    [SerializeField] private string _explanatoryText;
 
     public void ActivePanel()
     {
@@ -22,7 +20,7 @@ public class Interact_TutoPanel : Interactible
         base.PlayerInteract();
 
         _isActive = !_isActive;
-        InfoPanel.SetActive(_isActive);
-        InfoPanel.transform.GetChild(0).GetComponent<Image>().sprite = InfoImage;
+        gameObject.SetActive(_isActive);
+        gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _explanatoryText;
     }
 }

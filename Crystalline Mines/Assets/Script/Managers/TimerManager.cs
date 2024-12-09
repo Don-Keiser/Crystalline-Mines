@@ -14,7 +14,7 @@ public class TimerManager : MonoBehaviour
             _helper = obj.AddComponent<TimerHelper>();
             //UnityEngine.Object.DontDestroyOnLoad(obj); 
         }
-    }
+    } 
     public static void StartTimer(float duration, Action callback)
     {
         EnsureHelperExists();
