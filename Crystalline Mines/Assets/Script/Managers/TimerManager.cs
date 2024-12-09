@@ -12,7 +12,7 @@ public class TimerManager : MonoBehaviour
         {
             GameObject obj = new GameObject("GlobalTimerHelper");
             _helper = obj.AddComponent<TimerHelper>();
-            //UnityEngine.Object.DontDestroyOnLoad(obj); 
+            DontDestroyOnLoad(obj); 
         }
     } 
     public static void StartTimer(float duration, Action callback)
