@@ -1,11 +1,12 @@
-using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [NonSerialized] public Vector3 zoneRespawnOfPlayer;
+    [HideInInspector] public Vector3 zoneRespawnOfPlayer;
+
     public static Transform PlayerTransform;
-    
+    public static GameObject CarriedObject;
+
     [Header("Coyotte Time")]
     [SerializeField] private float _coyoteTimeDuration = 0.2f;
     private float _coyoteTimeCounter;
