@@ -26,7 +26,6 @@ public class Controller : MonoBehaviour
         Vector2 _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         _player.SetMoveInput(_moveInput);
 
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _player.Jump();
