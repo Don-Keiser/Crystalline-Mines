@@ -1,19 +1,19 @@
-using UnityEngine;
 public class Interact_TutoKey : Interactible
 {
-    private bool _playerCarriesKey = false;
-    private void OnEnable()
-    {
-        EventManager.OnGetTutoKey += PlayerGetKey;
-    }
+
     public override void PlayerInteract()
     {
+        Player.TutorialKeyObtained = true;
         base.PlayerInteract();
-        _playerCarriesKey = true;
+    }
+    public override void StartAnim()
+    {
+        base.StartAnim();
+        Destroy(gameObject);
     }
 
-    private void PlayerGetKey()
+    public override void StartSFXAndVFX()
     {
-        _playerCarriesKey = true;
+        base.StartSFXAndVFX();
     }
 }
