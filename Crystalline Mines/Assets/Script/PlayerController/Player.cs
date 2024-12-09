@@ -5,7 +5,10 @@ public class Player : MonoBehaviour
 {
     [NonSerialized] public Vector3 zoneRespawnOfPlayer;
     public static Transform PlayerTransform;
-    
+
+    [Header("Player Ressources")]
+    public static bool TutorialKeyObtained = false;
+
     [Header("Coyotte Time")]
     [SerializeField] private float _coyoteTimeDuration = 0.2f;
     private float _coyoteTimeCounter;

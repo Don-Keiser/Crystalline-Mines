@@ -5,42 +5,36 @@ public class UpdateTutoPanel : MonoBehaviour
 {
     private bool _isActive;
     private GameObject _currentGo;
-    private string _canvasText;
+    private TextMeshProUGUI _canvasText;
+    private GameObject _panel;
 
-    private void OnEnable()
+    private void Awake()
     {
-        EventManager.ActiveTutoPanel += UpdatePanelPos;
-        EventManager.ActiveTutoPanel += UpdatePanelText;
+        GetComponent();
         EventManager.ActiveTutoPanel += ShowPanel;
-
-        GetTextComponent();
     }
-    private void OnDisable()
+    private void GetComponent()
     {
-        EventManager.ActiveTutoPanel -= UpdatePanelPos;
-        EventManager.ActiveTutoPanel -= UpdatePanelText;
-        EventManager.ActiveTutoPanel -= ShowPanel;
-    }
-
-    private void GetTextComponent()
-    {
-        _canvasText = transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text;
+        _canvasText = transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        _panel = gameObject.transform.GetChild(0).gameObject;
     }
     private void ShowPanel(GameObject go)
     {
-        if(_currentGo == go || _currentGo is null || (!_isActive && _currentGo != go) )
+        if(_currentGo == go || _currentGo == null || (!_isActive && _currentGo != go))
         {
             _isActive = !_isActive;
-            gameObject.transform.GetChild(0).gameObject.SetActive(_isActive);
+            _panel.SetActive(_isActive);
         }
         _currentGo = go;
+        UpdatePanelPosition(go);
+        UpdatePanelText(go);
     }
-    private void UpdatePanelPos(GameObject go)
+    private void UpdatePanelPosition(GameObject go)
     {
         transform.position = go.transform.position;
     }
     private void UpdatePanelText(GameObject go)
     {
-        _canvasText = go.GetComponent<Interact_TutoPanel>().ExplanatoryText;
+        _canvasText.text = go.GetComponent<Interact_TutoPanel>().ExplanatoryText;
     }
 }
