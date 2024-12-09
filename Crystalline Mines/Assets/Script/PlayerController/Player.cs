@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [NonSerialized] public Vector3 zoneRespawnOfPlayer;
+    public static Transform PlayerTransform;
     
     [Header("Coyotte Time")]
     [SerializeField] private float _coyoteTimeDuration = 0.2f;
@@ -48,7 +49,12 @@ public class Player : MonoBehaviour
     private bool _climbingSlope;
     private float _currentSlopeAngle;
     private float _oldSlopeAngle;
-    
+
+    private void Awake()
+    {
+        PlayerTransform = gameObject.transform;
+    }
+
     private void Start()
     {
         _velocity = Vector2.zero;
@@ -99,6 +105,8 @@ public class Player : MonoBehaviour
 
     public void DropThroughPlatform(int raySign)
     {
+        if (!_hasFloor && !_coyotteJump) return;
+
         float rayDirection = Mathf.Sign(raySign);
 
         //box settings
