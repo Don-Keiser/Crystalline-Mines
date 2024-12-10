@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3608549979649360708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 442937414835091505}
+  - component: {fileID: 8635121418640250096}
+  m_Layer: 0
+  m_Name: RailPiecesFormHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &442937414835091505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608549979649360708}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8635121418640250096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608549979649360708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8215e68f1f9cf5e4ab388e6aaf7a6426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  railPiecesParent: {fileID: 0}
+  railPiecesForms:
+  - railPiecesFormTypes: 0
+    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteWhenCarried: {fileID: 21300000, guid: ca09384bef2140b43b1bee89e42bc351, type: 3}
+  - railPiecesFormTypes: 1
+    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteWhenCarried: {fileID: 21300000, guid: 6a9adc676b08ec149bff0a66156078dc, type: 3}
+  - railPiecesFormTypes: 2
+    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteWhenCarried: {fileID: 21300000, guid: aeb007e1699be9a47a4de7ac4e911909, type: 3}
+  - railPiecesFormTypes: 3
+    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteWhenCarried: {fileID: 21300000, guid: 413aeea0e38a59c49b9d0130fd6782af, type: 3}
+  - railPiecesFormTypes: 4
+    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteWhenCarried: {fileID: 21300000, guid: 700ebdba2e1793c4fa94d488b3e1748c, type: 3}
+  - railPiecesFormTypes: 5
+    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteWhenCarried: {fileID: 21300000, guid: f9be9fec73d4f2e46a9fdd060e7a495a, type: 3}
