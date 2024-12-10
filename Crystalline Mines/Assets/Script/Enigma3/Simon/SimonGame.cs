@@ -11,13 +11,17 @@ public class SimonGame : MonoBehaviour
     [Header("Cristal Sequence")]
     [SerializeField] private int _maxSequencelength;
     private List<GameObject> _cristalSequence = new();
-    public bool EnigmaIsLaunched {get; private set;}
+    public bool EnigmaIsLaunched { get; private set; }
 
     private bool _animationTime = false;
     private int _cristalIndex = 1;
     private bool _hasWin = false;
 
     private List<GameObject> _cristalPlayerChoose = new();
+
+
+    [Header("Victory Screen TEST")]
+    [SerializeField] private GameObject _victoryPanel;
 
     private void Start()
     {
@@ -137,8 +141,7 @@ public class SimonGame : MonoBehaviour
             {
                 if (_cristalPlayerChoose.Count >= _maxSequencelength)
                 {
-                    print("you win!");
-                    _hasWin = true;
+                    WinEnigma();
                     return;
                 }
 
@@ -150,6 +153,29 @@ public class SimonGame : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void WinEnigma()
+    {
+        Player.CanOpenTheDoor = true;
+
+        TimerManager.StartTimer(0.5f, () =>
+        {
+            foreach (var crystal in _allCristals)
+            {
+                crystal.GetComponent<SpriteRenderer>().color = Color.black;
+                crystal.layer = 0;
+            }
+            _startingCristal.GetComponent<SpriteRenderer>().color = Color.black;
+            _startingCristal.layer = 0;
+        });
+
+        //TEST BUILD
+        TimerManager.StartTimer(3.0f, () =>
+        {
+            _victoryPanel.gameObject.SetActive(true);
+            Time.timeScale = 0.0f;
+        });
     }
 
     private bool ResetEnigma()

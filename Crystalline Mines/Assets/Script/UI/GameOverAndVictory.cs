@@ -10,7 +10,6 @@ public class GameOverAndVictory : MonoBehaviour
     private void Start()
     {
         _player = FindAnyObjectByType<Player>();
-        Timer();
     }
 
     public void Exit(string sceneName)
@@ -22,11 +21,11 @@ public class GameOverAndVictory : MonoBehaviour
     {
         _gameOverPanel.SetActive(false);
         Time.timeScale = 1;
-        Timer();
         _player.transform.position = _checkpoint._checkpointFinal.transform.position;
     }
 
-    private void Timer()
+    [ContextMenu("ShowDefeat")]
+    private void ShowDefeat()
     {
         TimerManager.StartTimer(10, EndOfTimer);
     }
