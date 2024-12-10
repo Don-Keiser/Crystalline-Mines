@@ -9,8 +9,9 @@ public class Rail : Interactible
 
     // - Public variables - //
 
-    [Header("Rail statistics :")]
-    public RailFormHandler.RailStates railState;
+    [field: Header("Rail statistics :")]
+    [field: SerializeField]
+    public RailFormHandler.RailStates railState { get; private set; }
     public RailPiecesFormHandler.RailPiecesFormTypes missingRailPieces;
 
     // - Private variables - //
@@ -22,6 +23,7 @@ public class Rail : Interactible
 
     // Local
     SpriteRenderer _spriteRenderer;
+    RailFormHandler.RailStates _initialRailState;
 
     #endregion
 
@@ -30,6 +32,7 @@ public class Rail : Interactible
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _initialRailState = railState;
 
         _railFormHandler = RailFormHandler.Instance;
 
@@ -39,14 +42,73 @@ public class Rail : Interactible
         UpdateSprite();
     }
 
+    #region Interactible methods
+
     public override void PlayerInteract()
     {
-        base.PlayerInteract();
+        if (DoesPlayerCarryRailPieces(out RailPieces railPieces))
+        {
+            if (DoesRailPiecesCanRepairMe(railPieces))
+            {
+                // The rail will not have any layers, it can't be interact again, and the in-game tooltip will not appeared
+                gameObject.layer = 0;
+
+                railPieces.Disable();
+
+                SetRailState(RailFormHandler.RailStates.NonDamaged);
+            }
+            else
+            {
+                // TODO: Show the little bubble with the correct sprite
+            }
+        }
+        else
+        {
+            // TODO: Show the little bubble with the correct sprite
+        }
     }
 
     public override void StartSFXAndVFX()
     {
         
+    }
+    #endregion
+
+    public void Reinitialize()
+    {
+        gameObject.SetActive(true);
+
+        SetRailState(_initialRailState);
+    }
+
+    void SetRailState(RailFormHandler.RailStates p_newRailState)
+    {
+        railState = p_newRailState;
+
+        UpdateSprite();
+    }
+
+    bool DoesPlayerCarryRailPieces(out RailPieces p_railPieces)
+    {
+        p_railPieces = null;
+
+        if (Player.CarriedObject != null)
+        {
+            if (Player.CarriedObject.TryGetComponent(out p_railPieces))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool DoesRailPiecesCanRepairMe(RailPieces p_railPieces)
+    {
+        if (p_railPieces.railPiecesFormType == missingRailPieces)
+            return true;
+
+        return false;
     }
 
     void UpdateSprite()
@@ -62,7 +124,7 @@ public class Rail : Interactible
                 break;
 
             default:
-                Debug.LogError($"ERROR ! The given railState {railState} is not planned in the switch.");
+                Debug.LogError($"ERROR ! The given railState '{railState}' is not planned in the switch.");
                 break;
         }
     }

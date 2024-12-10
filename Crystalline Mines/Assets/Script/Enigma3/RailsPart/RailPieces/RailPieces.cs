@@ -23,6 +23,8 @@ public class RailPieces : Interactible
     Transform _railPiecesParent; // Will be use when drop down
 
     // Local
+    Transform _transform;
+    Vector3 _initialPosition;
     SpriteRenderer _spriteRenderer;
     bool _isCarried;
 
@@ -34,8 +36,11 @@ public class RailPieces : Interactible
 
     void Start()
     {
-        _playerTransform = Player.PlayerTransform;
+        _transform = transform;
+        _initialPosition = _transform.position;
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        _playerTransform = Player.PlayerTransform;
 
         _railPiecesFormHandler = RailPiecesFormHandler.Instance;
 
@@ -45,6 +50,8 @@ public class RailPieces : Interactible
         UpdateSprite();
     }
     #endregion
+
+    #region Interactible methods
 
     public override void PlayerInteract()
     {
@@ -57,33 +64,39 @@ public class RailPieces : Interactible
     {
 
     }
+    #endregion
+
+    public void Disable()
+    {
+        _isCarried = false;
+
+        _transform.parent = _railPiecesParent;
+
+        gameObject.SetActive(false);
+    }
+
+    public void Reinitialize()
+    {
+        gameObject.SetActive(true);
+
+        _transform.parent = _railPiecesParent;
+        _transform.position = _initialPosition;
+
+        _isCarried = false;
+
+        UpdateSprite();
+    }
 
     void SetIsCarried(bool p_newValue)
     {
         _isCarried = p_newValue;
 
+        if (_isCarried && Player.CarriedObject == null)
+            Player.CarriedObject = gameObject;
+
         UpdateSprite();
 
         UpdatePosition();
-    }
-
-    void UpdatePosition()
-    {
-        if (_isCarried)
-        {
-            transform.position = new Vector3(
-                _playerTransform.position.x,
-                _playerTransform.position.y + _playerTransform.localScale.y / 2 + transform.localScale.y / 2,
-                _playerTransform.position.z
-            );
-
-            transform.parent = _playerTransform;
-        }
-        else
-        {
-            Debug.LogWarning("WARNING ! Not implemented yet.");
-            // TODO: Launch object (use Egnima1 code)
-        }
     }
 
     void UpdateSprite()
@@ -95,6 +108,25 @@ public class RailPieces : Interactible
         else
         {
             _spriteRenderer.sprite = _railPiecesForm.spriteOnGround;
+        }
+    }
+
+    void UpdatePosition()
+    {
+        if (_isCarried)
+        {
+            _transform.position = new Vector3(
+                _playerTransform.position.x,
+                _playerTransform.position.y + _playerTransform.localScale.y / 2 + _transform.localScale.y / 2,
+                _playerTransform.position.z
+            );
+
+            _transform.parent = _playerTransform;
+        }
+        else
+        {
+            Debug.LogWarning("WARNING ! Not implemented yet.");
+            // TODO: Launch object (use Egnima1 code)
         }
     }
     #endregion
