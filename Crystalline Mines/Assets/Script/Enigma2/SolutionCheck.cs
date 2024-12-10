@@ -28,6 +28,7 @@ public class SolutionCheck : MonoBehaviour
         if (isCorrect)
         {
             _outDoor.SetActive(false);
+            _lightPoints.ForEach(lightPoint => lightPoint.canInteract = false);
         }
     }
 }
