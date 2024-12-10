@@ -26,9 +26,6 @@ public class RailPiecesFormHandler : MonoBehaviour
 
     public static RailPiecesFormHandler Instance;
 
-    [Header("External references :")]
-    public Transform railPiecesParent;
-
     [Header("Statistics :")]
     [Space]
     public List<RailPiecesForm> railPiecesForms = new();
@@ -49,14 +46,9 @@ public class RailPiecesFormHandler : MonoBehaviour
     }
     #endregion
 
-    void IsHandlerDefinedProperly()
+    bool IsHandlerDefinedProperly()
     {
-        if (railPiecesParent == null)
-        {
-            Debug.LogError(
-                "ERROR ! The railParent Transform variable is not defined."
-            );
-        }
+        bool isDefinedProperly = true;
 
         int atStartRailPiecesFormsLenght = railPiecesForms.Count;
         int enumLenght = Enum.GetValues(typeof(RailPiecesFormTypes)).Length;
@@ -67,7 +59,11 @@ public class RailPiecesFormHandler : MonoBehaviour
                 "ERROR ! The lenght of the List 'railForms' is not equal to the size of the 'RailPiecesFormTypes' Enum lenght " +
                 $": {atStartRailPiecesFormsLenght} is not equal to {enumLenght}."
             );
+
+            isDefinedProperly = false;
         }
+
+        return isDefinedProperly;
     }
 
     public RailPiecesForm GetRailFormValues(RailPiecesFormTypes p_railPiecesFormType)

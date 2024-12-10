@@ -50,17 +50,7 @@ public class RailFormHandler : MonoBehaviour
     {
         Instance = Instantiator.ReturnInstance(this, Instantiator.InstanceConflictResolutions.WarningAndPause);
     }
-
-    void Start()
-    {
-        IsHandlerDefinedProperly();
-    }
     #endregion
-
-    void IsHandlerDefinedProperly()
-    {
-        
-    }
 
     public RailForm GetRailFormValues(RailStates p_railType, RailPiecesFormHandler.RailPiecesFormTypes p_railPiecesFormType)
     {
@@ -75,6 +65,5 @@ public class RailFormHandler : MonoBehaviour
     
         return new RailForm();
     }
-
     #endregion
 }

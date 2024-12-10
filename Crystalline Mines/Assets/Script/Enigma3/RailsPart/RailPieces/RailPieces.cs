@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
-public class RailPieces : Interactible
+public class RailPieces : Interactible, IRail
 {
     #region Variables
 
@@ -20,6 +18,8 @@ public class RailPieces : Interactible
     // From RailPiecesFormHandler
     RailPiecesFormHandler _railPiecesFormHandler;
     RailPiecesFormHandler.RailPiecesForm _railPiecesForm;
+
+    // From RailManager
     Transform _railPiecesParent; // Will be use when drop down
 
     // Local
@@ -45,7 +45,7 @@ public class RailPieces : Interactible
         _railPiecesFormHandler = RailPiecesFormHandler.Instance;
 
         _railPiecesForm = _railPiecesFormHandler.GetRailFormValues(railPiecesFormType);
-        _railPiecesParent = _railPiecesFormHandler.railPiecesParent;
+        _railPiecesParent = RailManager.Instance.railPiecesParent;
 
         UpdateSprite();
     }
@@ -75,6 +75,8 @@ public class RailPieces : Interactible
         gameObject.SetActive(false);
     }
 
+    #region IRail methods
+
     public void Reinitialize()
     {
         gameObject.SetActive(true);
@@ -86,6 +88,7 @@ public class RailPieces : Interactible
 
         UpdateSprite();
     }
+    #endregion
 
     void SetIsCarried(bool p_newValue)
     {

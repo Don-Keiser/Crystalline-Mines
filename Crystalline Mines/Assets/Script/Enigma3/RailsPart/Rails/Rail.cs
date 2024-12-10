@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
-public class Rail : Interactible
+public class Rail : Interactible, IRail
 {
     #region Variables
 
@@ -18,7 +16,7 @@ public class Rail : Interactible
 
     // From RailFormHandler
     RailFormHandler _railFormHandler;
-    RailFormHandler.RailForm _railForm;
+    RailFormHandler.RailForm _railForm; // Will be use for the showing of the little bubble
     RailFormHandler.RailSpritesOnGround _railFormSpritesOnGround;
 
     // Local
@@ -59,7 +57,7 @@ public class Rail : Interactible
             }
             else
             {
-                // TODO: Show the little bubble with the correct sprite
+                // TODO: Show the little bubble with the correct sprite, and do not throw the carried object
             }
         }
         else
@@ -74,12 +72,15 @@ public class Rail : Interactible
     }
     #endregion
 
+    #region IRail methods
+
     public void Reinitialize()
     {
         gameObject.SetActive(true);
 
         SetRailState(_initialRailState);
     }
+    #endregion
 
     void SetRailState(RailFormHandler.RailStates p_newRailState)
     {
