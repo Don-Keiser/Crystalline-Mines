@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-public class Roch : MonoBehaviour
+public class TrapRock : MonoBehaviour
 {
     private bool _spawned;
-    [SerializeField] private GameObject _roch;
+    [SerializeField] private GameObject _trapRock;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_spawned == false)
         {
-            Instantiate(_roch, transform.position, transform.rotation);
+            Instantiate(_trapRock, transform.position, transform.rotation);
             StartCoroutine(WaitForSpawn());
         }
     }

@@ -7,6 +7,8 @@ public static class EventManager
     //public static event UnityAction OnLevelUnload;
     public static event UnityAction<Vector3, float> CameraCinematic;
     public static event UnityAction WagonCinematic;
+    public static event UnityAction<GameObject> ActiveTutoPanel;
+    public static event UnityAction OnGetTutoKey;
     //public static void LevelLoad()
     //{
     //    OnLevelLoad?.Invoke();
@@ -22,5 +24,13 @@ public static class EventManager
     public static void StartWagonAnimation()
     {
         WagonCinematic?.Invoke();
+    }
+    public static void StartActiveTutoPanel(GameObject currentObject)
+    {
+        ActiveTutoPanel(currentObject);
+    }
+    public static void PlayerGetTutoGet()
+    {
+        OnGetTutoKey?.Invoke();
     }
 }
