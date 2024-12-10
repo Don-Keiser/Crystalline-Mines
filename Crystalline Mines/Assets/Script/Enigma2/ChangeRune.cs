@@ -15,16 +15,15 @@ public class ChangeRune : Interactible
     private int _runeIndex;
     GameObject _displayRune;
     [SerializeField] GameObject _goodRune;
-    [SerializeField] SolutionCheck _solutionCheck;
     private Color _color;
     private Color _alpha;
     
     public bool canInteract = true;
     [NonSerialized] public bool isGoodRune = false;
+    public event Action OnRuneChanged;
 
     private void Start()
     {
-        _solutionCheck.AddLightPoint(this);
         _color = GetComponent<Light2D>().color;
         
         foreach (GameObject rune in _runes)
@@ -96,7 +95,7 @@ public class ChangeRune : Interactible
         }
         light.gameObject.SetActive(false);
         canInteract = true;
-        _solutionCheck.CheckSolution();
+        OnRuneChanged?.Invoke();
     }
     private IEnumerator FadeIn(float duration, SpriteRenderer sprite, Light2D light)
     {
