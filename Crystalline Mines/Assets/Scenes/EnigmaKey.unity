@@ -174,9 +174,29 @@ PrefabInstance:
       propertyPath: m_Simulated
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6020630765214110507, guid: 9720962785e95754393cbd50a6d01859, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020630765214110507, guid: 9720962785e95754393cbd50a6d01859, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173001082833981171, guid: 9720962785e95754393cbd50a6d01859, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7745875454596185072, guid: 9720962785e95754393cbd50a6d01859, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_Name
       value: Purple_Cristal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269427306450912759, guid: 9720962785e95754393cbd50a6d01859, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -206,11 +226,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.9800005
+      value: 6.68
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -5.33
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_LocalPosition.z
@@ -250,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_Size.y
-      value: 3.3001554
+      value: 2.2956831
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_Enabled
@@ -262,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_Offset.y
-      value: -1.1500777
+      value: -0.6478416
       objectReference: {fileID: 0}
     - target: {fileID: 7745875454596185072, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_Enabled
@@ -270,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_Name
-      value: Purple_Cristal (1)
+      value: Purple_Cristal
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       propertyPath: m_Layer
@@ -290,6 +310,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: 9720962785e95754393cbd50a6d01859, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1077288002}
+    - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: 9720962785e95754393cbd50a6d01859, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1077288005}
   m_SourcePrefab: {fileID: 100100000, guid: 9720962785e95754393cbd50a6d01859, type: 3}
 --- !u!4 &58841210 stripped
 Transform:
@@ -344,7 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7588fceef5f07344294472592605eaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterDoorText: {fileID: 2032624650}
 --- !u!1 &569961715 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8269427306450912759, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
@@ -379,11 +401,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 966903797}
   - {fileID: 58841210}
-  - {fileID: 938134211}
-  - {fileID: 796625734}
   - {fileID: 875681129}
+  - {fileID: 796625734}
+  - {fileID: 938134211}
+  - {fileID: 966903797}
   m_Father: {fileID: 1249067559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &700687245
@@ -397,6 +419,14 @@ PrefabInstance:
     - target: {fileID: -2988299184448238474, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Simulated
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2988299184448238474, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2988299184448238474, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2990869579777212406, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: gameManager
@@ -449,6 +479,10 @@ PrefabInstance:
     - target: {fileID: 8269427306450912759, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Name
       value: Red_Cristal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269427306450912759, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2990869579777212406, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
@@ -539,11 +573,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.72
+      value: 10.44
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -5.33
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -583,7 +617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_Size.y
-      value: 3.257561
+      value: 2.2266548
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_Enabled
@@ -595,11 +629,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_Offset.y
-      value: -1.1287805
+      value: -0.6133274
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_Name
-      value: Green_Cristal (1)
+      value: Green_Cristal
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_Layer
@@ -619,6 +653,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1481324074}
+    - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1481324077}
   m_SourcePrefab: {fileID: 100100000, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
 --- !u!4 &796625734 stripped
 Transform:
@@ -641,7 +678,7 @@ GameObject:
   - component: {fileID: 845323123}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -830,14 +867,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34388458e9bcee04cb7e10f9126f884c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabbed: 0
-  distance: 2
-  holdpoint: {fileID: 965493905}
-  throwforce: 10
-  notgrabbed:
+  hasCrystal: 0
+  grabDistance: 2
+  holdPoint: {fileID: 965493905}
+  interactableLayer:
     serializedVersion: 2
-    m_Bits: 0
-  grabedObject: {fileID: 0}
+    m_Bits: 512
+  holdObject: {fileID: 0}
+  holdObjectRb: {fileID: 0}
+  forceThrow: 10
 --- !u!1001 &875681128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -860,11 +898,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.42
+      value: 8.63
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -5.33
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -904,7 +942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_Size.y
-      value: 3.3001564
+      value: 2.2163837
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_Enabled
@@ -916,11 +954,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_Offset.y
-      value: -1.1500782
+      value: -0.60819185
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_Name
-      value: Orange_Cristal (1)
+      value: Orange_Cristal
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_Layer
@@ -940,6 +978,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1181135655}
+    - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1181135658}
   m_SourcePrefab: {fileID: 100100000, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
 --- !u!4 &875681129 stripped
 Transform:
@@ -964,11 +1005,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.25
+      value: 12.33
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -5.33
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1008,7 +1049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Size.y
-      value: 3.3001564
+      value: 2.2163837
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Enabled
@@ -1020,7 +1061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7173001082833981171, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Offset.y
-      value: -1.1500782
+      value: -0.60819185
       objectReference: {fileID: 0}
     - target: {fileID: 7555494052135675455, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Enabled
@@ -1028,7 +1069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Name
-      value: Blue_Cristal (1)
+      value: Blue_Cristal
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Layer
@@ -1048,6 +1089,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       insertIndex: -1
       addedObject: {fileID: 938134216}
+    - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 938134219}
   m_SourcePrefab: {fileID: 100100000, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
 --- !u!4 &938134211 stripped
 Transform:
@@ -1066,7 +1110,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b6a6565b7c8bc4cb660428d76ef55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emplacementsCorrects: []
+  isOccupied: 0
+  playerNearby: 0
+  grabController: {fileID: 0}
+  _player: {fileID: 0}
+  crystalHere: {fileID: 0}
+  crystalrb: {fileID: 0}
+--- !u!114 &938134219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569961715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4ea44ef28ff494384fb4dcdce3a6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &965493904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,7 +1138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 965493905}
   m_Layer: 0
-  m_Name: Object Holder
+  m_Name: Hold Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1108,19 +1169,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -1872231355528844531, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Size.x
-      value: 1.3513627
+      value: 1.8395419
       objectReference: {fileID: 0}
     - target: {fileID: -1872231355528844531, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Size.y
-      value: 3.3214543
+      value: 2.2112482
       objectReference: {fileID: 0}
     - target: {fileID: -1872231355528844531, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Offset.x
-      value: 0.2342751
+      value: -0.009814501
       objectReference: {fileID: 0}
     - target: {fileID: -1872231355528844531, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Offset.y
-      value: -1.1607271
+      value: -0.6056241
       objectReference: {fileID: 0}
     - target: {fileID: 83112597358651417, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_SortingOrder
@@ -1136,11 +1197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.71
+      value: 14.43
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -5.33
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1180,7 +1241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Name
-      value: Red_Cristal (1)
+      value: Red_Cristal
       objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       propertyPath: m_Layer
@@ -1200,6 +1261,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
       insertIndex: -1
       addedObject: {fileID: 966903803}
+    - targetCorrespondingSourceObject: {fileID: 8269427306450912759, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 966903806}
   m_SourcePrefab: {fileID: 100100000, guid: 0a4f87cd8fd68f840895603e43493b52, type: 3}
 --- !u!4 &966903797 stripped
 Transform:
@@ -1223,7 +1287,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b6a6565b7c8bc4cb660428d76ef55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emplacementsCorrects: []
+  isOccupied: 0
+  playerNearby: 0
+  grabController: {fileID: 0}
+  _player: {fileID: 0}
+  crystalHere: {fileID: 0}
+  crystalrb: {fileID: 0}
+--- !u!114 &966903806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966903798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4ea44ef28ff494384fb4dcdce3a6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1067771301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1235,6 +1316,14 @@ PrefabInstance:
     - target: {fileID: -8738249575008915688, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Simulated
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8738249575008915688, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8738249575008915688, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1276,9 +1365,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7173001082833981171, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7555494052135675455, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
       propertyPath: m_Name
       value: Blue_Cristal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269427306450912759, guid: b2aa4d79a5f446843afe2995f9bdb703, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1307,7 +1408,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b6a6565b7c8bc4cb660428d76ef55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emplacementsCorrects: []
+  isOccupied: 0
+  playerNearby: 0
+  grabController: {fileID: 0}
+  _player: {fileID: 0}
+  crystalHere: {fileID: 0}
+  crystalrb: {fileID: 0}
+--- !u!114 &1077288005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077287997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4ea44ef28ff494384fb4dcdce3a6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1146211511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,7 +1511,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b6a6565b7c8bc4cb660428d76ef55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emplacementsCorrects: []
+  isOccupied: 0
+  playerNearby: 0
+  grabController: {fileID: 0}
+  _player: {fileID: 0}
+  crystalHere: {fileID: 0}
+  crystalrb: {fileID: 0}
+--- !u!114 &1181135658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181135650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4ea44ef28ff494384fb4dcdce3a6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1249067558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,6 +1841,18 @@ PrefabInstance:
       propertyPath: m_Simulated
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -826656478839537793, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -826656478839537793, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -591031416980072918, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.9593267
@@ -1746,9 +1893,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7173001082833981171, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
       propertyPath: m_Name
       value: Orange_Cristal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269427306450912759, guid: 641292e7cceb2f64cb9eaf4287b0c85b, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1777,7 +1932,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b6a6565b7c8bc4cb660428d76ef55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emplacementsCorrects: []
+  isOccupied: 0
+  playerNearby: 0
+  grabController: {fileID: 0}
+  _player: {fileID: 0}
+  crystalHere: {fileID: 0}
+  crystalrb: {fileID: 0}
+--- !u!114 &1481324077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481324069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4ea44ef28ff494384fb4dcdce3a6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1804735235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,17 +2158,6 @@ Transform:
   - {fileID: 1301106733}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2032624650 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6605474172973710700, guid: 336b16eca9b63a549a4fc79754e4a5c5, type: 3}
-  m_PrefabInstance: {fileID: 3443585203164545983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2073827746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2007,6 +2168,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -9101552767182210046, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -9101552767182210046, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -9101552767182210046, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2730924894344759072, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5876679014063715029, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
@@ -2049,9 +2222,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7173001082833981171, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8269427306450912759, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
       propertyPath: m_Name
       value: Green_Cristal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269427306450912759, guid: dbab075ff25fa6c43ad151d6a71d52a6, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2074,7 +2255,7 @@ GameObject:
   - component: {fileID: 2089942994}
   - component: {fileID: 2089942995}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: PuzzleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2107,9 +2288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370c65074662cb14fa9103cb56b8f762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleFinished: 0
-  puzzleCristalCorrect: 0
-  controller: {fileID: 1933383910}
+  totalCrystals: 5
+  placedCrystalObjects: []
 --- !u!1001 &3443585203164545983
 PrefabInstance:
   m_ObjectHideFlags: 0
