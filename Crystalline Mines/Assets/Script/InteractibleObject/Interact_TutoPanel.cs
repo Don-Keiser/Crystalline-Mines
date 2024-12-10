@@ -4,8 +4,11 @@ public class Interact_TutoPanel : Interactible
 {
     [Header("Anim scale")]
     [SerializeField] private Vector3 _animScale = new Vector3(0.5f, 0.5f, 0.5f);
+
     [Header("Explanory text")]
     public string ExplanatoryText;
+    public Sprite ExplanatoryImage;
+
     public override void PlayerInteract()
     {
         base.PlayerInteract();
