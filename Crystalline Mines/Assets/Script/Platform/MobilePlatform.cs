@@ -8,8 +8,15 @@ public class MobilePlatform : MonoBehaviour
     void Start()
     {
         transform.position = _waypoints[_waypointIndex].transform.position;
+        foreach (var waypoint in _waypoints)
+        {
+            if (waypoint.transform.position.z != 0)
+            {
+                waypoint.transform.position = new Vector3(waypoint.transform.position.x, waypoint.transform.position.y, 0);
+            }
+        }
     }
-    
+
     void Update()
     {
         Move();
@@ -32,7 +39,7 @@ public class MobilePlatform : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         Vector3 playerPosition = other.transform.position;
-        if (_waypointIndex == 0) 
+        if (_waypointIndex == 0)
             playerPosition.x += _moveSpeed * Time.deltaTime;
         if (_waypointIndex == 1)
             playerPosition.x += -_moveSpeed * Time.deltaTime;

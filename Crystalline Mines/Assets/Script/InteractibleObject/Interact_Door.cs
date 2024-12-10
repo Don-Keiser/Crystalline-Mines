@@ -5,9 +5,10 @@ public class Interact_Door : Interactible
     [SerializeField] private LayerMask _defaultMask;
     public override void PlayerInteract()
     {
-        if(Player.TutorialKeyObtained)
+        if(Player.CanOpenTheDoor)
         {
             base.PlayerInteract();
+            Player.CanOpenTheDoor = false;
         }
         else { print("you don't have the key !"); }
     }

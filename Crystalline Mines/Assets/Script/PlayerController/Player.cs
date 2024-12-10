@@ -7,10 +7,8 @@ public class Player : MonoBehaviour
     public static Transform PlayerTransform;
 
     [Header("Player Ressources")]
-    public static bool TutorialKeyObtained = false;
-
+    public static bool CanOpenTheDoor = false;
     public static GameObject CarriedObject;
-
 
     [Header("Coyotte Time")]
     [SerializeField] private float _coyoteTimeDuration = 0.2f;
@@ -73,7 +71,7 @@ public class Player : MonoBehaviour
         ApplyGravity();
 
         Vector2 deltaMovement = _velocity * Time.deltaTime;
-
+        //print($"delata movement X {deltaMovement.x} and Y {deltaMovement.y}");
         if (deltaMovement.x != 0)
         {
             DetectWallAndSlopes(ref deltaMovement);
@@ -111,14 +109,15 @@ public class Player : MonoBehaviour
 
     public void DropThroughPlatform(int raySign)
     {
-        if (!_hasFloor && !_coyotteJump) return;
-
         float rayDirection = Mathf.Sign(raySign);
+        Vector2 boxSize = (rayDirection > 0) ? Vector2.one * 2 : Vector2.one / 2;
+
+        if (!_hasFloor && !_coyotteJump) { return; }
+
 
         //box settings
         Vector2 boxDirection = (rayDirection > 0) ? Vector2.up : Vector2.down;
         Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + ((Vector2.right * _size.x) / 2) : (_bottomLeft + _bottomRight) / 2;
-        Vector2 boxSize = Vector2.one;
 
         RaycastHit2D hitInfo = Physics2D.BoxCast(boxOrigin, boxSize, 0f, boxDirection, 1f, _passThroughMask);
 

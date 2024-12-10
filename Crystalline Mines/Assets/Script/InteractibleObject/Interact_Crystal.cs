@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Interact_Crystal : Interactible
 {
-    private SimonGame simonGame;
+    private SimonGame _simonGame;
     private void Awake()
     {
-        simonGame = GameObject.Find("Controller").GetComponent<SimonGame>();
-        if (simonGame is null)
+        _simonGame = GameObject.Find("Manager").GetComponent<SimonGame>();
+        if (_simonGame is null)
         {
             Debug.LogError("the object Controller not found on scene");
         }
@@ -19,6 +19,6 @@ public class Interact_Crystal : Interactible
 
     private void InteractForSimonGame()
     {
-        simonGame.PlayerInteractCristal(gameObject); //mettre verif pour si on est dans la salle su simon (dans script simonGame)
+        _simonGame.PlayerInteractCristal(gameObject); //check if you are in the simonGame room (in the simonGame script)
     }
 }

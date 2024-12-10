@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
- [SerializeField] private GameObject _settings;
- [SerializeField] private GameObject _credits;
+    [SerializeField] private GameObject _settings;
+    [SerializeField] private GameObject _credits;
     public void Quit()
     {
         Application.Quit();
@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     public void Play(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1.0f;
     }
 
     public void Settings()

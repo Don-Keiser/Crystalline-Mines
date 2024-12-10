@@ -3,7 +3,7 @@ public class Interact_TutoKey : Interactible
 
     public override void PlayerInteract()
     {
-        Player.TutorialKeyObtained = true;
+        Player.CanOpenTheDoor = true;
         base.PlayerInteract();
     }
     public override void StartAnim()
