@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SolutionCheck : MonoBehaviour
 {
-    private List<ChangeRune> _lightPoints = new List<ChangeRune>(); // TODO: modify to eliminate the call loop and be more flexible
+    private List<ChangeRune> _lightPoints = new List<ChangeRune>(); 
     [SerializeField] GameObject _outDoor;
 
     private void Start()
