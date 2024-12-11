@@ -20,4 +20,12 @@ public class Interact_TutoPanel : Interactible
         gameObject.transform.localScale += _animScale;
         TimerManager.StartTimer(0.15f, () => gameObject.transform.localScale -= _animScale);
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+           EventManager.StartDisableTutoPanel(gameObject);
+        }
+    }
 }

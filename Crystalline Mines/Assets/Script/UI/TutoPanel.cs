@@ -17,6 +17,7 @@ public class UpdateTutoPanel : MonoBehaviour
     {
         GetComponent();
         EventManager.ActiveTutoPanel += ShowPanel;
+        EventManager.DisableTutoPanel += HidePanel;
     }
     private void GetComponent()
     {
@@ -39,6 +40,14 @@ public class UpdateTutoPanel : MonoBehaviour
 
         ShowAndUpdateRightComponent(go);
         UpdatePanelPosition(go);
+    }
+
+    private void HidePanel(GameObject go)
+    {
+        if (!_isActive) { return; }
+
+        _isActive = false;
+        _panel.SetActive(false);
     }
     private void UpdatePanelPosition(GameObject go)
     {
@@ -69,3 +78,4 @@ public class UpdateTutoPanel : MonoBehaviour
         _canvasImage.sprite = _tutoPanel.ExplanatoryImage;
     }
 }
+
