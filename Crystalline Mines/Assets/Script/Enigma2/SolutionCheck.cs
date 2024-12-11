@@ -14,7 +14,6 @@ public class SolutionCheck : MonoBehaviour
         {
             _lightPoints.Add(child.GetComponent<ChangeRune>());
             AddLightPoint(child.GetComponent<ChangeRune>());
-            print(child.name);
         }
     }
 

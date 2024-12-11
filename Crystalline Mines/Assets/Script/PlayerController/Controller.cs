@@ -18,11 +18,6 @@ public class Controller : MonoBehaviour
     [SerializeField] private GameObject _interactibleText;
     private bool _textIsActive;
 
-    [ContextMenu("StartCamAnim")]
-    public void StartCamAnim()
-    {
-        EventManager.StartCameraAnimation(_levelCenter, _maxDezoom);
-    }
     private void Update()
     {
         if (!_camera.FinishAnim) { return; }
