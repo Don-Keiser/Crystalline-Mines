@@ -17,7 +17,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _smoothSpeed;
 
     [Header("Camera Animation Settings")]
-    [SerializeField] private float _animDuration = 3f;
+    [SerializeField] private float _animDuration = 2f;
+    [SerializeField] private float _fullScreenDuration = 2f;
     private Vector3 _startPos;
     private float _startFOV;
     private float _initialFOV;
@@ -76,10 +77,12 @@ public class CameraController : MonoBehaviour
         _targetZoom = targetZoom;
     }
 
-    public void GoToMapCenter(Vector3 mapCenter, float zoomOutLevel)
+    public void GoToMapCenter(Vector3 mapCenter, float zoomOutLevel, float fullScreenDuration , float animDuration)
     {
         FinishAnim = false;
         _levelCenter = mapCenter;
+        _fullScreenDuration = fullScreenDuration;
+        _animDuration = animDuration;
         StartAnimation(mapCenter, zoomOutLevel);
     }
 
@@ -107,7 +110,7 @@ public class CameraController : MonoBehaviour
 
             if (_targetPosition == _levelCenter)
             {
-                TimerManager.StartTimer(2.0f, ReturnToPlayer);
+                TimerManager.StartTimer(_fullScreenDuration, ReturnToPlayer);
             }
             else if (_targetPosition == _player.position)
             {
