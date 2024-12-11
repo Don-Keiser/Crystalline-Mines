@@ -5,52 +5,51 @@ namespace Script.Enigma1
 {
     public class PlayerGrabController : MonoBehaviour
     {
-        public bool hasCrystal; // Indique si un cristal est saisi
+        [Header("Cristal")]
+        public bool hasCrystal; // Indicates whether a crystal is being held
+        public GameObject holdObject;
+        private Rigidbody2D _holdObjectRb; // Reference to the Rigidbody2D of the held object
+        
+        [Header("Raycast")]
         private RaycastHit2D _hit;
         public float grabDistance = 2f;
-        public Transform holdPoint; // Position où placer l'objet saisi
+        public Transform holdPoint; // Position where the grabbed object is held
         public LayerMask interactableLayer;
-        private Vector2 _direction = Vector2.right; // Direction du raycast
-        public GameObject holdObject;
-        public Rigidbody2D holdObjectRb; // Référence au Rigidbody2D de l'objet saisi
-        private PuzzleSlotController _puzzleSlotController;
+        private Vector2 _direction = Vector2.right; // Direction of the raycast
         public float forceThrow = 10f;
         private PuzzleSlotController _nearbySlot;
-
-        void Start()
-        {
-            _puzzleSlotController = GetComponent<PuzzleSlotController>();
-        }
+        
+        
         void Update()
         {
             UpdateDirection();
     
             if (hasCrystal && holdObject != null)
             {
-                // Assure-toi que la position est mise à jour à chaque frame
+                // Ensures the position is updated every frame
                 holdObject.transform.position = holdPoint.position;
             }
 
-            if (Input.GetKeyDown(KeyCode.E)) // Appuyez sur 'E' pour interagir ou jeter
+            if (Input.GetKeyDown(KeyCode.E)) // Press 'E' to interact or throw
             {
                 if (!hasCrystal)
-                    TryGrabObject(); // Si le joueur n'a pas de cristal, essaye de le saisir
+                    TryGrabObject(); // If the player has no crystal, try grabbing one
                 else
-                    DropObject(); // Sinon, lâche ou jette le cristal
+                    DropObject(); // Otherwise, drop or throw the crystal
             }
         }
 
 
         private void UpdateDirection()
         {
-            // Suppose que le joueur utilise les touches gauche/droite pour se déplacer
+            // Assumes the player uses left/right keys to move
             float horizontalInput = Input.GetAxisRaw("Horizontal");
 
-            if (horizontalInput < 0) // Si le joueur va à gauche
+            if (horizontalInput < 0) // If the player moves left
             {
                 _direction = Vector2.left;
             }
-            else if (horizontalInput > 0) // Si le joueur va à droite
+            else if (horizontalInput > 0) // If the player moves right
             {
                 _direction = Vector2.right;
             }
@@ -58,67 +57,68 @@ namespace Script.Enigma1
 
         public void TryGrabObject()
         {
-            Debug.Log("TryGrabObject appelé");  // Pour vérifier si la méthode est appelée
+            Debug.Log("TryGrabObject called");  // To check if the method is invoked
             Physics2D.queriesStartInColliders = false;
             _hit = Physics2D.Raycast(transform.position, _direction, grabDistance, interactableLayer);
 
             if (_hit.collider != null)
             {
-                Rigidbody2D rb = _hit.collider.GetComponent<Rigidbody2D>();
+                // Rigidbody2D rb = _hit.collider.GetComponent<Rigidbody2D>();
 
                 if (_hit.collider.CompareTag("Grabbable"))
                 {
-                    Debug.Log("L'objet est Grabbable");  // Vérifie si l'objet est bien "Grabbable"
+                    Debug.Log("The object is Grabbable");  // Check if the object is indeed "Grabbable"
                     hasCrystal = true;
                     holdObject = _hit.collider.gameObject;
-                    holdObjectRb = holdObject.GetComponent<Rigidbody2D>();
+                    _holdObjectRb = holdObject.GetComponent<Rigidbody2D>();
 
-                    if (holdObjectRb != null)
+                    if (_holdObjectRb != null)
                     {
-                        holdObjectRb.isKinematic = true;
-                        Debug.Log("Cristal saisi : " + holdObject.name);  // Affiche le nom de l'objet saisi
+                        _holdObjectRb.isKinematic = true;
+                        Debug.Log("Crystal grabbed: " + holdObject.name);  // Displays the name of the grabbed object
                     }
                     else
                     {
-                        Debug.LogError("Rigidbody2D de l'objet saisi est null.");
+                        Debug.LogError("Rigidbody2D of the grabbed object is null.");
                     }
                 }
             }
             else
             {
-                Debug.Log("Aucun objet détecté dans le rayon.");
+                Debug.Log("No object detected in the ray.");
             }
         }
 
         public void SetNearbySlot(PuzzleSlotController slot)
         {
-            _nearbySlot = slot; // Met à jour la référence au slot proche
+            _nearbySlot = slot; // Updates the reference to the nearby slot
         }
 
         public void DropObject()
         {
             if (holdObject == null)
             {
-                Debug.LogError("holdObject est null au début de DropObject.");
+                Debug.LogError("holdObject is null at the start of DropObject.");
                 return;
             }
 
             if (_nearbySlot != null && !_nearbySlot.isOccupied)
             {
+                _holdObjectRb.velocity = Vector2.zero;
                 _nearbySlot.PlaceCrystal(holdObject);
             }
             else
             {
-                holdObjectRb.isKinematic = false;
-                holdObjectRb.velocity = Vector2.zero;
-                holdObjectRb.AddForce(_direction * forceThrow, ForceMode2D.Impulse);
-                Debug.Log("Cristal jeté.");
+                _holdObjectRb.isKinematic = false;
+                _holdObjectRb.velocity = Vector2.zero;
+                _holdObjectRb.AddForce(_direction * forceThrow, ForceMode2D.Impulse);
+                Debug.Log("Crystal thrown.");
             }
 
-            // Réinitialise l'état après avoir placé ou jeté l'objet
+            // Resets the state after placing or throwing the object
             hasCrystal = false;
             holdObject = null;
-            holdObjectRb = null;
+            _holdObjectRb = null;
         }
 
 
@@ -128,12 +128,12 @@ namespace Script.Enigma1
             if (holdObject != null)
             {
                 hasCrystal = true;
-                holdObjectRb = holdObject.GetComponent<Rigidbody2D>();
-                if (holdObjectRb != null)
+                _holdObjectRb = holdObject.GetComponent<Rigidbody2D>();
+                if (_holdObjectRb != null)
                 {
-                    holdObjectRb.isKinematic = true;
-                    holdObjectRb.velocity = Vector2.zero;
-                    holdObjectRb.angularVelocity = 0f;
+                    _holdObjectRb.isKinematic = true;
+                    _holdObjectRb.velocity = Vector2.zero;
+                    _holdObjectRb.angularVelocity = 0f;
                 }
             }
         }
