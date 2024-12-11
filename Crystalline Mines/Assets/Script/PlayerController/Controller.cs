@@ -35,7 +35,7 @@ public class Controller : MonoBehaviour
         {
             _player.DropThroughPlatform(-1);
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.E))
         {
             GameObject nearestObject = GetNearestInteractableObject();
             if (nearestObject != null)
@@ -74,8 +74,7 @@ public class Controller : MonoBehaviour
     private GameObject GetNearestInteractableObject()
     {
         RaycastHit2D[] allHits = Physics2D.CircleCastAll(_player.transform.position, _rangeRadius, Vector2.zero, 0f, _interactibleMask);
-        if (allHits.Length == 0)
-            return null;
+        if (allHits.Length == 0) { return null; }
 
         return allHits.OrderBy(hit => (hit.transform.position - _player.transform.position).sqrMagnitude).FirstOrDefault().collider.gameObject;
     }

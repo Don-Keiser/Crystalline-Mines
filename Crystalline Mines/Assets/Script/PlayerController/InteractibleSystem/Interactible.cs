@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Interactible : MonoBehaviour, IInteractible
 {
-    public virtual void PlayerInteract() //mettre comportement commun a tout les objet interactible
+    public virtual void PlayerInteract() //common behaviour of all interactive objects
     {
         //print($"Interact with {name}");
         StartAnim();
