@@ -1,31 +1,44 @@
-using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [HideInInspector] public Vector3 zoneRespawnOfPlayer;
+
+    public static Transform PlayerTransform;
+
+    [Header("Player Ressources")]
+    public static bool CanOpenTheDoor = false;
+    public static GameObject CarriedObject;
+
     [Header("Coyotte Time")]
-    [SerializeField] private float _coyoteTimeDuration = 0.2f; // Temps où on permet encore de sauter après avoir quitté le sol
+    [SerializeField] private float _coyoteTimeDuration = 0.2f;
     private float _coyoteTimeCounter;
 
     [Header("Player Size and Physics")]
     [SerializeField] private Vector2 _size;
-    [SerializeField] private float _skinWidth = 0.01f;
-    [SerializeField] private float _gravity = 10f;
+    [SerializeField] private Transform _playerFeet;
+    [SerializeField] private float _skinWidth;
+    [SerializeField] private float _gravity;
+    [SerializeField] private bool _hasFloor;
+    [SerializeField] private bool _coyotteJump;
 
     [Header("Raycast Settings")]
-    [SerializeField] private float _verticalRaySpacing; //distance entre les raycasts vertical
-    [SerializeField] private float _horizontalRaySpacing; // distance horizontal
+    [SerializeField] private float _verticalRaySpacing; //distance between vertical beams
+    [SerializeField] private float _horizontalRaySpacing; // horizontal distance
 
     [Header("Movement Settings")]
-    [SerializeField] private float _moveSpeed = 8f;
-    [SerializeField] private float _jumpForce = 10f;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _jumpForce;
 
     [Header("Collision and Slope Settings")]
-    [SerializeField] private LayerMask _solidMask;  // layers détecter pour les collisions
-    [SerializeField] private LayerMask _passThroughMask; //layer pour les platformes que le joueur peut traverser
+    [SerializeField] private LayerMask _solidMask;  //layers detect for collisions
+    [SerializeField] private LayerMask _passThroughMask; //layer for the platforms that the player can cross
     private int _platformLayerIndex;
     private GameObject _passThroughPlatform;
-    [SerializeField] private float _maxSlopeAngle = 50f; // Angle maximal que le joueur peut monter ou descendre
+    [SerializeField] private float _maxSlopeAngle; //Maximum angle the player can go up or down
+
+    [Header("Environnement")]
+    [SerializeField] private float _platformHeight;
 
     [Header("Internal States")]
     private Bounds _bounds;
@@ -41,10 +54,10 @@ public class Player : MonoBehaviour
     private float _currentSlopeAngle;
     private float _oldSlopeAngle;
 
-    [Header("debug")]
-    [SerializeField] private bool _hasFloor;
-    [SerializeField] private bool _coyotteJump;
-    [SerializeField] private bool _doubleJump;
+    private void Awake()
+    {
+        PlayerTransform = gameObject.transform;
+    }
 
     private void Start()
     {
@@ -58,12 +71,14 @@ public class Player : MonoBehaviour
         ApplyGravity();
 
         Vector2 deltaMovement = _velocity * Time.deltaTime;
-        //print($" Y velocity {deltaMovement.y}");
-
+        //print($"delata movement X {deltaMovement.x} and Y {deltaMovement.y}");
         if (deltaMovement.x != 0)
         {
             DetectWallAndSlopes(ref deltaMovement);
-            DownSlope();
+            if (deltaMovement.y != 0)
+            {
+                DownSlope();
+            }
         }
         if (deltaMovement.y != 0)
         {
@@ -71,10 +86,10 @@ public class Player : MonoBehaviour
             if (deltaMovement.y > 0)
             {
                 DropThroughPlatform(1);
+                ReenablePlatformCollision();
             }
         }
         HandleCoyoteTime();
-
         transform.Translate(deltaMovement);
     }
 
@@ -94,36 +109,48 @@ public class Player : MonoBehaviour
 
     public void DropThroughPlatform(int raySign)
     {
-        float raycastLenth = 10f;
         float rayDirection = Mathf.Sign(raySign);
+        Vector2 boxSize = (rayDirection > 0) ? Vector2.one * 2 : Vector2.one / 2;
 
-        //parametre de la box
+        if (!_hasFloor && !_coyotteJump) { return; }
+
+
+        //box settings
         Vector2 boxDirection = (rayDirection > 0) ? Vector2.up : Vector2.down;
-        Vector2 rayOrigin = (rayDirection > 0) ? _topLeft + ((Vector2.right * _size.x) / 2) : (_bottomLeft + _bottomRight) / 2;
-        Vector2 boxSize = Vector2.one;
+        Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + ((Vector2.right * _size.x) / 2) : (_bottomLeft + _bottomRight) / 2;
 
-        RaycastHit2D hitInfo = Physics2D.BoxCast(rayOrigin, boxSize, 0f, boxDirection, 1f, _passThroughMask);
+        RaycastHit2D hitInfo = Physics2D.BoxCast(boxOrigin, boxSize, 0f, boxDirection, 1f, _passThroughMask);
 
         if (hitInfo.collider != null)
         {
 
-            _coyoteTimeCounter = 0; //desactive le jump et coyotte time
+            _coyoteTimeCounter = 0; //disable jump and coyotte time
             _coyotteJump = false;
 
             _passThroughPlatform = hitInfo.collider.gameObject;
 
-            _platformLayerIndex = _passThroughPlatform.layer; //prend le layer d'origine de la platform
-            _passThroughPlatform.layer = 0 /*LayerMask.NameToLayer("IgnorePlayer")*/; //met le layer a default ou ignorePlayer le temps que le joueur passe
-
-            StartCoroutine(ReenableCollision(hitInfo.collider));
+            _platformLayerIndex = _passThroughPlatform.layer; //takes the original layer of the platform
+            _passThroughPlatform.layer = 0;
         }
     }
-    private IEnumerator ReenableCollision(Collider2D platformCollider)
+
+
+    private void ReenablePlatformCollision()
     {
-        yield return new WaitForSeconds(0.5f);
-        _passThroughPlatform.layer = _platformLayerIndex;
-        _passThroughPlatform = null;
+        if (_passThroughPlatform == null) return;
+
+        float playerFeetHeight = _playerFeet.position.y + _skinWidth * 2;
+        float platformTopHeight = _passThroughPlatform.transform.position.y + _platformHeight / 2;
+
+        if (playerFeetHeight > platformTopHeight)
+        {
+            _passThroughPlatform.layer = _platformLayerIndex;
+            _passThroughPlatform = null;
+        }
     }
+
+
+
     private void UpdateColliderInfos()
     {
         _bounds.center = transform.position;
@@ -142,7 +169,7 @@ public class Player : MonoBehaviour
         _velocity.y -= _gravity * Time.deltaTime;
     }
 
-    private void DetectWallAndSlopes(ref Vector2 deltaMovement) //detection des obstacles 
+    private void DetectWallAndSlopes(ref Vector2 deltaMovement) //obstacle detection 
     {
         float horizontalDirection = Mathf.Sign(deltaMovement.x);
         float rayDistance = Mathf.Abs(deltaMovement.x) + _skinWidth;
@@ -186,7 +213,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ClimbSlope(ref Vector2 deltaMovement, float slopeAngle) //permet de se déplace sur les surfaces diagonale praticables
+    private void ClimbSlope(ref Vector2 deltaMovement, float slopeAngle) //allows you to move on diagonal surfaces that can be walked on
     {
         float magnitude = Mathf.Abs(deltaMovement.x);
         float slopeMouvementY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * magnitude;
@@ -198,7 +225,6 @@ public class Player : MonoBehaviour
 
             _climbingSlope = true;
             _hasFloor = true;
-            _doubleJump = true;
             _currentSlopeAngle = slopeAngle;
         }
     }
@@ -218,7 +244,6 @@ public class Player : MonoBehaviour
             RaycastHit2D hit = Physics2D.Linecast(rayOrigin, rayEnd, _solidMask | _passThroughMask);
             if (hit)
             {
-                // Ignore la plateforme en cours de traversée
                 if (_passThroughPlatform != null && hit.collider.gameObject == _passThroughPlatform)
                 {
                     continue;
@@ -227,17 +252,17 @@ public class Player : MonoBehaviour
                 deltaMovement.y = (Mathf.Max(hit.distance - _skinWidth, 0) * verticalDirection);
                 _velocity.y = deltaMovement.y;
                 rayDistance = hit.distance;
+
                 if (verticalDirection < 0)
                 {
-                    _hasFloor = true; // Le joueur touche le sol
-                    _doubleJump = true;
-                    _coyoteTimeCounter = _coyoteTimeDuration; // Réinitialiser le coyote time dès qu'on touche le sol
+                    _hasFloor = true;
+                    _coyoteTimeCounter = _coyoteTimeDuration; // Reset coyote time as soon as you touch the ground
 
-                    //if (_passThroughPlatform != null) // si le joueur a traverser un platform remettre le layer a l'etat d'origine
-                    //{
-                    //    _passThroughPlatform.layer = _platformLayerIndex;
-                    //    _passThroughPlatform = null;
-                    //}
+                    if (_passThroughPlatform != null) // if the player has crossed a platform, return the layer to its original state
+                    {
+                        _passThroughPlatform.layer = _platformLayerIndex;
+                        _passThroughPlatform = null;
+                    }
                 }
             }
         }
@@ -262,63 +287,39 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
-        if (_hasFloor || _coyotteJump /*|| _doubleJump*/)
+        if (_hasFloor || _coyotteJump)
         {
-            //if (!_hasFloor && !_coyotteJump && _doubleJump)
-            //{
-            //    Debug.Log("Double Jump executed");
-            //    _doubleJump = false;
-            //}
-
-
-            Debug.Log("Jump executed");
             _velocity.y = _jumpForce;
-            _hasFloor = false; // Définir à false immédiatement après le saut
-            _coyoteTimeCounter = 0; // Réinitialiser le coyote time dès le saut
+            _hasFloor = false;
+            _coyoteTimeCounter = 0;
 
         }
     }
-
-    private void OnDrawGizmosSelected() // debug raycast
+    private void DownSlope() //allows you to go down a ramp 
     {
-        _bounds = new Bounds(transform.position, _size);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_bounds.center, _bounds.size);
-
-        _bounds.Expand(-2 * _skinWidth);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(_bounds.center, _bounds.size);
-    }
-    private void DownSlope() //permet de descendre une rampe 
-    {
-        if (!_hasFloor && !_coyotteJump && !_doubleJump) return;
+        if (!_hasFloor && !_coyotteJump) return;
 
         Vector2 rayOrigin = _velocity.x < 0 ? _bottomRight : _bottomLeft;
         Vector2 rayEnd = rayOrigin + Vector2.up * (_velocity.y * Time.deltaTime + Mathf.Sign(_velocity.y) * _skinWidth);
-        RaycastHit2D hitInfo = Physics2D.Linecast(rayOrigin, rayEnd);
+        RaycastHit2D hitInfo = Physics2D.Linecast(rayOrigin, rayEnd, _solidMask | _passThroughMask);
         Debug.DrawRay(rayOrigin, (rayEnd - rayOrigin) * 10, Color.magenta);
 
         if (hitInfo.collider is null)
         {
             return;
         }
-        Debug.Log("down slope");
-
         float angle = Vector2.Angle(hitInfo.normal, Vector2.up);
         if (angle > _maxSlopeAngle)
         {
             return;
         }
 
-        _velocity = ProjectOnLine(_velocity, hitInfo.normal);  //adapte la velocity en fonction de l'inclinaison de la rampe 
+        _velocity = ProjectOnLine(_velocity, hitInfo.normal);  //adapts velocity according to ramp inclination 
         _hasFloor = true;
-        _doubleJump = true;
         Debug.DrawRay(transform.position, _velocity * 50, Color.green);
     }
 
-    public static Vector2 ProjectOnLine(Vector2 vector, Vector2 normal) //retourne un vecteur qui varies en fonction de la rampe
+    public static Vector2 ProjectOnLine(Vector2 vector, Vector2 normal) //returns a vector which varies according to the ramp
     {
         Vector2 direction = new(-normal.y, normal.x);
 
