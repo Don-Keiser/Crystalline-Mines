@@ -4,7 +4,6 @@ public class Interact_SlotCrystal : Interactible
 {
     private PlayerGrabController _grabController;
     private PuzzleSlotController _slotController;
-
     private void Start()
     {
         _grabController = PlayerGrabController.Instance;

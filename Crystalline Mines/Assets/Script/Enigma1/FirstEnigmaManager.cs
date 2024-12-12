@@ -6,20 +6,21 @@ namespace Script.Enigma1
     public class FirstEnigmaManager : MonoBehaviour
     {
         public static FirstEnigmaManager Instance;
-        public int totalCrystals = 5; 
-        private int _placedCrystals = 0;
+        public bool IsPuzzleCompleted { get; private set; }
 
-        private List<GameObject> _placedCrystalObjects = new List<GameObject>();
+        [Header("Enigma data")]
+        [SerializeField] private int _totalCrystals = 5; 
         [SerializeField] private List<PuzzleSlotController> puzzleSlots; // List of puzzle slots
-        public bool IsPuzzleCompleted { get; private set; } = false;
+
+        [Header("Crystal Placed")]
+        private int _placedCrystals = 0;
+        private List<GameObject> _placedCrystalObjects = new List<GameObject>();
 
         void Awake()
         {
             if(Instance == null)
                 Instance = this;
         }
-
-        
         public void RegisterCrystal(GameObject crystal, bool isPlaced)
         {
             if (isPlaced)
@@ -44,14 +45,14 @@ namespace Script.Enigma1
 
         private void CheckPuzzleCompletion()
         {
-            if (_placedCrystals == totalCrystals && CheckAllSlots())
+            if (_placedCrystals == _totalCrystals && CheckAllSlots())
             {
                 Debug.Log("Puzzle successfully completed!");
                 IsPuzzleCompleted = true;
                 Player.CanOpenTheDoor = true; //make open door logique 
 
             }
-            else if (_placedCrystals == totalCrystals)
+            else if (_placedCrystals == _totalCrystals)
             {
                 Debug.Log("All crystals are placed, but some are incorrect.");
             }

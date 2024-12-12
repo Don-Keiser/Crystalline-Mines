@@ -4,14 +4,21 @@ namespace Script.Enigma1
 {
     public class PuzzleSlotController : MonoBehaviour
     {
+        [Header("Manager References")]
         private FirstEnigmaManager _puzzleManager;
-        public bool isOccupied = false;
-        [SerializeField] private bool playerNearby = false;
+
+        [Header("Player Interaction")]
         [SerializeField] private PlayerGrabController grabController;
         [SerializeField] public GameObject correctCrystal;
+
+        [Header("Slot State")]
+        public bool isOccupied = false;
+        private bool playerNearby = false;
         public GameObject crystalHere;
 
+        [Header("Cooldown")]
         private bool _interactionCooldown = false; // Variable to manage cooldown
+
 
         void Start()
         {

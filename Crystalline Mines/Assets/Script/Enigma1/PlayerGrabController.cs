@@ -5,16 +5,15 @@ namespace Script.Enigma1
     public class PlayerGrabController : MonoBehaviour
     {
         public static PlayerGrabController Instance;
+        public PuzzleSlotController _nearbySlot { get; private set; }
 
-        [Header("Cristal")]
+        [Header("Cristal Carried")]
         public bool hasCrystal; // Indicates whether a crystal is being held
         public GameObject holdObject;
         public Rigidbody2D holdObjectRb;
-        Vector2 direction;
-        public PuzzleSlotController _nearbySlot { get; private set; }
 
-        [SerializeField] private LayerMask InteractibleMask;
-
+        [Header("Player Launching Direction")]
+        private Vector2 direction;
         private Vector2 lastDirection;
         private void Awake()
         {
