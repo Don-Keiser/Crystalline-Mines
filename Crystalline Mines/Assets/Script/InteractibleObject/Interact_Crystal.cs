@@ -3,18 +3,9 @@ using UnityEngine;
 
 public class Interact_Crystal : Interactible
 {
-    private SimonGame _simonGame;
+    [SerializeField] private SimonGame _simonGame;
     [SerializeField] private PlayerGrabController _grabController;
     private Rigidbody2D _holdObjectRb;
-    private void Awake()
-    {
-        _simonGame = FindObjectOfType<SimonGame>();
-        if (_simonGame is null)
-        {
-            Debug.LogError("the object Controller not found on scene");
-        }
-        //_grabController = PlayerGrabController.Instance;
-    }
     public override void PlayerInteract()
     {
         base.PlayerInteract();
@@ -24,11 +15,15 @@ public class Interact_Crystal : Interactible
 
     private void InteractForSimonGame()
     {
+        if(_simonGame is null) { return; }
+
         _simonGame.PlayerInteractCristal(gameObject); //check if you are in the simonGame room (in the simonGame script)
     }
 
     private void TryGrabObject() //notice and update GrabController Info
     {
+        if( _grabController is null) { return; }
+
         if (_grabController.holdObject != null)
         {
             _grabController.DropObject();

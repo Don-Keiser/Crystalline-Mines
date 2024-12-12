@@ -17,8 +17,6 @@ namespace Script.Enigma1
         {
             if(Instance == null)
                 Instance = this;
-            //// Automatically finds all slots with the PuzzleSlotController script in the scene
-            //puzzleSlots = new List<PuzzleSlotController>(FindObjectsOfType<PuzzleSlotController>());
         }
 
         
@@ -52,15 +50,6 @@ namespace Script.Enigma1
                 IsPuzzleCompleted = true;
                 Player.CanOpenTheDoor = true; //make open door logique 
 
-                //var allCrystalPieceInteractions = FindObjectsOfType<CrystalPieceInteraction>();
-                //foreach (var crystalPieceInteraction in allCrystalPieceInteractions)
-                //{
-                //    var canvas = crystalPieceInteraction.GetComponentInChildren<Canvas>();
-                //    if (canvas != null)
-                //    {
-                //        canvas.gameObject.SetActive(false);
-                //    }
-                //}
             }
             else if (_placedCrystals == totalCrystals)
             {

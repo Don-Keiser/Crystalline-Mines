@@ -18,14 +18,6 @@ namespace Script.Enigma1
             _puzzleManager = FirstEnigmaManager.Instance;
             grabController = PlayerGrabController.Instance;
         }
-
-        //private void Update()
-        //{
-        //    if (playerNearby && Input.GetKeyDown(KeyCode.E) && !_interactionCooldown)
-        //    {
-        //        InteractWithSlot();
-        //    }
-        //}
         public bool IsCorrectCrystal()
         {
             return crystalHere == correctCrystal;
@@ -98,25 +90,11 @@ namespace Script.Enigma1
                 PlaceCrystal(grabController.holdObject);
             }
         }
-
-
         private void HandleInteractionCooldown()
         {
             _interactionCooldown = true;
             TimerManager.StartTimer(0.5f, () => _interactionCooldown = false);
         }
-
-        //private void OnTriggerEnter2D(Collider2D other)
-        //{
-        //    PlayerGrabController playerGrabController = other.GetComponent<PlayerGrabController>();
-        //    if (playerGrabController != null)
-        //    {
-        //        playerGrabController.SetNearbySlot(this); // Notifies the player that they are near this slot
-        //        playerNearby = true;
-        //        // Debug.Log("Player near the slot: " + gameObject.name);
-        //    }
-        //}
-
         private void OnTriggerExit2D(Collider2D other)
         {
             PlayerGrabController.Instance.SetNearbySlot(null);
