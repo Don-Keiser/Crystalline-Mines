@@ -28,7 +28,9 @@ public class ChangeRune : Interactible
         
         foreach (GameObject rune in _runes)
         {
-            GameObject _instantiateRune = Instantiate(rune, new Vector3(transform.position.x,transform.position.y + 3,transform.position.z), Quaternion.identity, transform);
+            GameObject _instantiateRune = Instantiate(rune, new Vector3(transform.position.x,transform.position.y + 3
+                ,transform.position.z), Quaternion.identity, transform);
+            _instantiateRune.GetComponent<SpriteRenderer>().color = _color;
             _instantiateRune.SetActive(false);
             _instantiateRune.name = rune.name;
             _instantiateRunes.Add(_instantiateRune);
