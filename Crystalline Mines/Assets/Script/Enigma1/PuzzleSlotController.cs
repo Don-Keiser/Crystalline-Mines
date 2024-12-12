@@ -1,49 +1,45 @@
 using UnityEngine;
-using System.Collections;
 
 namespace Script.Enigma1
 {
     public class PuzzleSlotController : MonoBehaviour
     {
-        private PuzzleManager _puzzleManager;
-        public bool isOccupied = false;
-        [SerializeField] private bool playerNearby = false;
+        [Header("Manager References")]
+        private FirstEnigmaManager _puzzleManager;
+
+        [Header("Player Interaction")]
         [SerializeField] private PlayerGrabController grabController;
-        [SerializeField] private GameObject player;
-        [SerializeField] private GameObject correctCrystal;
+        [SerializeField] public GameObject correctCrystal;
+
+        [Header("Slot State")]
+        public bool isOccupied = false;
+        private bool playerNearby = false;
         public GameObject crystalHere;
 
+        [Header("Cooldown")]
         private bool _interactionCooldown = false; // Variable to manage cooldown
+
 
         void Start()
         {
-            _puzzleManager = FindObjectOfType<PuzzleManager>();
-            player = GameObject.FindGameObjectWithTag("Player");
-            grabController = player.GetComponent<PlayerGrabController>();
-        }
-
-        private void Update()
-        {
-            if (playerNearby && Input.GetKeyDown(KeyCode.E) && !_interactionCooldown)
-            {
-                InteractWithSlot();
-            }
+            _puzzleManager = FirstEnigmaManager.Instance;
+            grabController = PlayerGrabController.Instance;
         }
         public bool IsCorrectCrystal()
         {
             return crystalHere == correctCrystal;
         }
-        
+
         public void PlaceCrystal(GameObject crystal)
         {
-            StartCoroutine(HandleInteractionCooldown()); // Starts the cooldown
+            HandleInteractionCooldown(); // Starts the cooldown
             if (isOccupied) return;
             crystal.transform.position = transform.position; // Places the crystal in the slot
             isOccupied = true;
             crystalHere = crystal;
 
             Debug.Log("Crystal placed!");
-    
+
             if (IsCorrectCrystal())
             {
                 Debug.Log("The placed crystal is correct!");
@@ -59,7 +55,7 @@ namespace Script.Enigma1
 
         public void RemoveCrystal()
         {
-            StartCoroutine(HandleInteractionCooldown()); // Starts the cooldown
+            HandleInteractionCooldown(); // Starts the cooldown
             if (!isOccupied) return;
 
             // Assign the crystal to the PlayerGrabController's holdObject
@@ -90,7 +86,7 @@ namespace Script.Enigma1
             if (isOccupied && !grabController.hasCrystal) // The slot is occupied and the player wants to pick up
             {
                 RemoveCrystal();
-                grabController.PickUpCrystal();
+                //grabController.PickUpCrystal();
                 Debug.Log("Removed");
                 return;
             }
@@ -101,35 +97,14 @@ namespace Script.Enigma1
                 PlaceCrystal(grabController.holdObject);
             }
         }
-
-
-        private IEnumerator HandleInteractionCooldown()
+        private void HandleInteractionCooldown()
         {
             _interactionCooldown = true;
-            yield return new WaitForSeconds(0.5f); // Cooldown duration
-            _interactionCooldown = false;
+            TimerManager.StartTimer(0.5f, () => _interactionCooldown = false);
         }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            PlayerGrabController playerGrabController = other.GetComponent<PlayerGrabController>();
-            if (playerGrabController != null)
-            {
-                playerGrabController.SetNearbySlot(this); // Notifies the player that they are near this slot
-                playerNearby = true;
-                // Debug.Log("Player near the slot: " + gameObject.name);
-            }
-        }
-
         private void OnTriggerExit2D(Collider2D other)
         {
-            PlayerGrabController playerGrabController = other.GetComponent<PlayerGrabController>();
-            if (playerGrabController != null)
-            {
-                playerGrabController.SetNearbySlot(null); // Resets the reference to the slot
-                playerNearby = false;
-                // Debug.Log("Player away from the slot: " + gameObject.name);
-            }
+            PlayerGrabController.Instance.SetNearbySlot(null);
         }
     }
 }
