@@ -20,7 +20,7 @@ public class ChangeRune : Interactible
     [Header("Animation")]
     [SerializeField] float _duration = 2.0f; // duration of the fade in and fade out
     
-    public bool canInteract = true;
+    [NonSerialized] public bool canInteract = true;
     [NonSerialized] public bool isGoodRune = false;
     public event Action OnRuneChanged;
 
