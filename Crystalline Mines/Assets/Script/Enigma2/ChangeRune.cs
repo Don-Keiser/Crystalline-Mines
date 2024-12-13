@@ -105,7 +105,6 @@ public class ChangeRune : Interactible
             sprite.color = _alpha;
             yield return null;
         }
-        sprite.gameObject.SetActive(false);
     }
     private IEnumerator FadeIn(float duration, SpriteRenderer sprite)
     {
@@ -130,6 +129,7 @@ public class ChangeRune : Interactible
          }
          
          light2D.pointLightInnerRadius = 1.5f;
+         light2D.gameObject.SetActive(false);
          light2D.enabled = false;
          OnRuneChanged?.Invoke();
      }
