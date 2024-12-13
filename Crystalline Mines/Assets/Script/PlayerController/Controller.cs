@@ -1,9 +1,11 @@
+using Script.Enigma1;
 using System.Linq;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    private PlayerGrabController _grabController;
     [SerializeField] private CameraController _camera;
 
     [Header("Player Interaction Range")]
@@ -18,6 +20,10 @@ public class Controller : MonoBehaviour
     [SerializeField] private GameObject _interactibleText;
     private bool _textIsActive;
 
+    private void Awake()
+    {
+        _grabController = _player.GetComponent<PlayerGrabController>();
+    }
     private void Update()
     {
         if (!_camera.FinishAnim) { return; }
@@ -44,7 +50,12 @@ public class Controller : MonoBehaviour
                 if (interactible != null)
                 {
                     interactible.PlayerInteract();
+                    return;
                 }
+            }
+            if(_grabController.hasCrystal)
+            {
+                _grabController.DropObject();
             }
         }
     }
@@ -74,9 +85,9 @@ public class Controller : MonoBehaviour
     private GameObject GetNearestInteractableObject()
     {
         RaycastHit2D[] allHits = Physics2D.CircleCastAll(_player.transform.position, _rangeRadius, Vector2.zero, 0f, _interactibleMask);
-        if (allHits.Length == 0)
-            return null;
+        if (allHits.Length == 0) { return null; }
 
-        return allHits.OrderBy(hit => (hit.transform.position - _player.transform.position).sqrMagnitude).FirstOrDefault().collider.gameObject;
+        GameObject nearestObject = allHits.OrderBy(hit => (hit.transform.position - _player.transform.position).sqrMagnitude).FirstOrDefault().collider.gameObject;
+        return nearestObject;
     }
 }

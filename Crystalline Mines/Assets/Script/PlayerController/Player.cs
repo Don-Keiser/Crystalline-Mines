@@ -43,7 +43,6 @@ public class Player : MonoBehaviour
     [Header("Internal States")]
     private Bounds _bounds;
     private Vector2 _velocity;
-
     private int _verticalRaysCount;
     private int _horizontalRaysCount;
     private Vector2 _bottomLeft;
@@ -314,7 +313,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        _velocity = ProjectOnLine(_velocity, hitInfo.normal);  //adapts velocity according to ramp inclination 
+        _velocity = ProjectOnLine(_velocity, hitInfo.normal);  //adapts _velocity according to ramp inclination 
         _hasFloor = true;
         Debug.DrawRay(transform.position, _velocity * 50, Color.green);
     }

@@ -8,6 +8,7 @@ public static class EventManager
     public static event UnityAction<Vector3, float, float, float> CameraCinematic;
     public static event UnityAction WagonCinematic;
     public static event UnityAction<GameObject> ActiveTutoPanel;
+    public static event UnityAction<GameObject> DisableTutoPanel;
     public static event UnityAction OnGetTutoKey;
     //public static void LevelLoad()
     //{
@@ -28,6 +29,10 @@ public static class EventManager
     public static void StartActiveTutoPanel(GameObject currentObject)
     {
         ActiveTutoPanel(currentObject);
+    }
+    public static void StartDisableTutoPanel(GameObject currentObject)
+    {
+        DisableTutoPanel(currentObject);
     }
     public static void PlayerGetTutoGet()
     {
