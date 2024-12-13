@@ -57,12 +57,15 @@ public class SimonGame : MonoBehaviour
     }
     private IEnumerator FirstCristalAnim()
     {
-        while (!EnigmaIsLaunched)
+        if (_startingCristal != null)
         {
-            yield return new WaitForSeconds(0.25f);
-            _startingCristal.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
-            yield return new WaitForSeconds(0.25f);
-            _startingCristal.transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+            while (!EnigmaIsLaunched)
+            {
+                yield return new WaitForSeconds(0.25f);
+                _startingCristal.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+                yield return new WaitForSeconds(0.25f);
+                _startingCristal.transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+            }
         }
     }
     private IEnumerator CristalAnimation()

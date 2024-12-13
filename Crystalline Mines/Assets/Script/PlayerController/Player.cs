@@ -186,6 +186,7 @@ public class Player : MonoBehaviour
                 if (i == 0)
                 {
                     float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                    print($"slope Angle is {slopeAngle}");
 
                     if (slopeAngle <= _maxSlopeAngle)
                     {
@@ -200,13 +201,12 @@ public class Player : MonoBehaviour
                         ClimbSlope(ref deltaMovement, slopeAngle);
                         deltaMovement.x += movementToSlope;
                     }
-                }
-
-                if (!_climbingSlope)
-                {
-                    deltaMovement.x = (Mathf.Max(hit.distance - _skinWidth, 0) * horizontalDirection);
-                    _velocity.x = 0;
-                    rayDistance = hit.distance;
+                    if (!_climbingSlope)
+                    {
+                        deltaMovement.x = (Mathf.Max(hit.distance - _skinWidth, 0) * horizontalDirection);
+                        _velocity.x = 0;
+                        rayDistance = hit.distance;
+                    }
                 }
             }
         }
@@ -298,7 +298,10 @@ public class Player : MonoBehaviour
     {
         if (!_hasFloor && !_coyotteJump) return;
 
-        Vector2 rayOrigin = _velocity.x < 0 ? _bottomRight : _bottomLeft;
+        print($"velocity x is {_velocity.x}");
+
+        Vector2 rayOrigin = _velocity.x > 0 ? _bottomLeft : _bottomRight; // 
+
         Vector2 rayEnd = rayOrigin + Vector2.up * (_velocity.y * Time.deltaTime + Mathf.Sign(_velocity.y) * _skinWidth);
         RaycastHit2D hitInfo = Physics2D.Linecast(rayOrigin, rayEnd, _solidMask | _passThroughMask);
         Debug.DrawRay(rayOrigin, (rayEnd - rayOrigin) * 10, Color.magenta);
