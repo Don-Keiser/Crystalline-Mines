@@ -23,6 +23,9 @@ public class Rail : Interactible, IRail
     SpriteRenderer _spriteRenderer;
     RailFormHandler.RailStates _initialRailState;
 
+    [Tooltip("Contains the layer Interactible and maybe others")]
+    int _initialLayer;
+
     #endregion
 
     #region Methods
@@ -31,13 +34,17 @@ public class Rail : Interactible, IRail
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _initialRailState = railState;
+        _initialLayer = gameObject.layer;
 
         _railFormHandler = RailFormHandler.Instance;
 
-        _railForm = _railFormHandler.GetRailFormValues(railState, missingRailPieces);
+        if (railState == RailFormHandler.RailStates.Damaged)
+            _railForm = _railFormHandler.GetRailFormValues(railState, missingRailPieces);
+
         _railFormSpritesOnGround = _railFormHandler.railSpritesOnGround;
 
         UpdateSprite();
+        UpdateLayer();
     }
 
     #region Interactible methods
@@ -57,11 +64,13 @@ public class Rail : Interactible, IRail
             }
             else
             {
+                Debug.LogWarning("WARNING ! Not implemented yet.");
                 // TODO: Show the little bubble with the correct sprite, and do not throw the carried object
             }
         }
         else
         {
+            Debug.LogWarning("WARNING ! Not implemented yet.");
             // TODO: Show the little bubble with the correct sprite
         }
     }
@@ -86,16 +95,20 @@ public class Rail : Interactible, IRail
     {
         railState = p_newRailState;
 
+        if (railState != _initialRailState && railState == RailFormHandler.RailStates.NonDamaged)
+            RailManager.Instance.IsAllDamagedRailRepared();
+
         UpdateSprite();
+        UpdateLayer();
     }
 
     bool DoesPlayerCarryRailPieces(out RailPieces p_railPieces)
     {
         p_railPieces = null;
 
-        if (Player.CarriedObject != null)
+        if (Player.carriedObject != null)
         {
-            if (Player.CarriedObject.TryGetComponent(out p_railPieces))
+            if (Player.carriedObject.TryGetComponent(out p_railPieces))
             {
                 return true;
             }
@@ -125,7 +138,25 @@ public class Rail : Interactible, IRail
                 break;
 
             default:
-                Debug.LogError($"ERROR ! The given railState '{railState}' is not planned in the switch.");
+                Debug.LogError($"ERROR ! The railState '{railState}' is not planned in the switch.");
+                break;
+        }
+    }
+
+    void UpdateLayer()
+    {
+        switch (railState)
+        {
+            case RailFormHandler.RailStates.NonDamaged:
+                gameObject.layer = 0;
+                break;
+
+            case RailFormHandler.RailStates.Damaged:
+                gameObject.layer = _initialLayer;
+                break;
+
+            default:
+                Debug.LogError($"ERROR ! The railState '{railState}' is not planned in the switch.");
                 break;
         }
     }

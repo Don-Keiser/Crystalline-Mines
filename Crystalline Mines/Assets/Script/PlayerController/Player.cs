@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [HideInInspector] public Vector3 zoneRespawnOfPlayer;
-
     public static Transform PlayerTransform;
 
     [Header("Player Ressources")]
     public static bool TutorialKeyObtained = false;
 
-    public static GameObject CarriedObject;
+    public static GameObject carriedObject;
+
+    [HideInInspector] public Vector3 respawnPosition;
 
 
     [Header("Coyotte Time")]
@@ -330,5 +330,24 @@ public class Player : MonoBehaviour
         Vector2 projectedVector = dotProduct * direction;
 
         return projectedVector;
+    }
+
+    /// <summary>
+    /// Moves the player to the respawn position, and reinitialize the carried object. </summary>
+    public void Respawn()
+    {
+        // Position handling
+
+        transform.position = respawnPosition;
+
+        // Carried object handling 
+
+        if (carriedObject == null)
+            return;
+
+        if (carriedObject.TryGetComponent(out ICarriable p_ICarriable))
+            p_ICarriable.Reinitialize();
+        else
+            Debug.LogError($"ERROR ! The carried object by the player '{carriedObject.name}' don't implement the '{nameof(ICarriable)}' Interface.");
     }
 }
