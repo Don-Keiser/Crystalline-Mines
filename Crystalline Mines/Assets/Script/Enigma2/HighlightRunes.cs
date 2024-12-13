@@ -27,7 +27,7 @@ public class HighlightRunes : Interactible
         if (_crystals.crystalsSpriteRenderers[0].color == Color.white) // Check if lights already lit up
         {
             _rune.SetActive(true);
-            _runeSprite.enabled = false;
+            _runeSprite.enabled = false; // hide the rune
             EventManager.StartCameraAnimation(_cameraCenter, _maxDezoom, _fullScreenDuration,_animationDuration);
             
             // display the rune
