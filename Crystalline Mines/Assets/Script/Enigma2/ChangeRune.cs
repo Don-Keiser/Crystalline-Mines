@@ -56,7 +56,7 @@ public class ChangeRune : Interactible
         if (_displayRune is not null)
         {
             StartCoroutine(FadeOut(_duration, _displayRune.GetComponent<SpriteRenderer>()));
-            //StartCoroutine(LightFadeIn(_duration, _displayRune.GetComponent<Light2D>()));
+            StartCoroutine(LightFadeIn(_duration, _displayRune.GetComponent<Light2D>()));
         }
 
         // Go to next index
@@ -74,9 +74,12 @@ public class ChangeRune : Interactible
         
         if (_displayRune is not null)
         {
-            _displayRune.SetActive(true);
-            StartCoroutine(FadeIn(_duration, _displayRune.GetComponent<SpriteRenderer>()));
-            //StartCoroutine(LightFadeOut(_duration, _displayRune.GetComponent<Light2D>()));
+            TimerManager.StartTimer(_duration, () =>
+            {
+                _displayRune.SetActive(true);
+                StartCoroutine(FadeIn(_duration, _displayRune.GetComponent<SpriteRenderer>()));
+                StartCoroutine(LightFadeOut(_duration, _displayRune.GetComponent<Light2D>()));
+            });
         }
         
         
@@ -115,38 +118,34 @@ public class ChangeRune : Interactible
             yield return null;
         }
     }
-    // private IEnumerator LightFadeIn(float duration, Light2D light2D)
-    // {
-    //     light2D.enabled = true;
-    //     for(float t = 0.00f; t < duration ; t += Time.deltaTime)
-    //     {
-    //         // fade out the light
-    //         light2D.pointLightInnerRadius = t/1.5f;
-    //         
-    //         yield return null;
-    //     }
-    //
-    //     light2D.pointLightInnerRadius = 1.5f;
-    // }
-    //
-    // private IEnumerator LightFadeOut(float duration, Light2D light2D)
-    // {
-    //     canInteract = false;
-    //     for(float t = duration; t > 0.00f ; t -= Time.deltaTime)
-    //     {
-    //         // fade out the light
-    //         light2D.pointLightInnerRadius = t/duration;
-    //         
-    //         yield return null;
-    //     }
-    //     
-    //     light2D.pointLightInnerRadius = 0f;
-    //     light2D.enabled = false;
-    //     light2D.gameObject.SetActive(false);
-    //     canInteract = true;
-    //     OnRuneChanged?.Invoke();
-    // }
+     private IEnumerator LightFadeIn(float duration, Light2D light2D)
+     {
+         light2D.enabled = true;
+         for(float t = 0.00f; t < duration ; t += Time.deltaTime)
+         {
+             // fade out the light
+             light2D.pointLightInnerRadius = t/duration * 1.5f;
+             
+             yield return null;
+         }
+         
+         light2D.pointLightInnerRadius = 1.5f;
+         light2D.enabled = false;
+     }
     
+    private IEnumerator LightFadeOut(float duration, Light2D light2D)
+    {
+        light2D.enabled = true;
+        for(float t = duration; t > 0.00f ; t -= Time.deltaTime)
+        {
+            // fade out the light
+            light2D.pointLightInnerRadius = t/duration * 1.5f;
+            
+            yield return null;
+        }
+        light2D.pointLightInnerRadius = 0.0f;
+        light2D.enabled = false;
+    }
     
     public override void PlayerInteract()
     {
