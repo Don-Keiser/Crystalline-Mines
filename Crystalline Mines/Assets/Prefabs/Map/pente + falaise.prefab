@@ -40,7 +40,7 @@ EdgeCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6700205241695655509}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 1c20f8e2fe0056b49ba8ec6a4d2e4338, type: 2}
   m_IncludeLayers:
