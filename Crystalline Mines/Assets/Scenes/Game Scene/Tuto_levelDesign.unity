@@ -29289,9 +29289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c097e8221845f344bd04c082ac807d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _checkpoint: {fileID: 0}
-  _gameOverPanel: {fileID: 1963708678}
-  _victoryPanel: {fileID: 148521298}
+  _escapingTimeInSeconds: 180
 --- !u!114 &1708925016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29956,6 +29954,14 @@ PrefabInstance:
     - target: {fileID: 3033581013471863507, guid: 00292e49ec517dd448c8798ae2b4fc13, type: 3}
       propertyPath: _minY
       value: -1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384684717206383992, guid: 00292e49ec517dd448c8798ae2b4fc13, type: 3}
+      propertyPath: _gravity
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384684717206383992, guid: 00292e49ec517dd448c8798ae2b4fc13, type: 3}
+      propertyPath: _jumpForce
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3384684717206383992, guid: 00292e49ec517dd448c8798ae2b4fc13, type: 3}
       propertyPath: _skinWidth

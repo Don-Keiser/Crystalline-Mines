@@ -5,7 +5,6 @@ public class Player : MonoBehaviour
     [HideInInspector] public Vector3 zoneRespawnOfPlayer;
 
     public static bool CameraAnimationTime = false;
-
     public static Transform PlayerTransform;
 
     [Header("Player Ressources")]

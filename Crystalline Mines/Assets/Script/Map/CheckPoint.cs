@@ -1,5 +1,3 @@
-using System;
-using System.Security.Claims;
 using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
@@ -13,6 +11,9 @@ public class CheckPoint : MonoBehaviour
 
     [field: SerializeField]
     public CheckPointState state { get; private set; }
+
+    [SerializeField] private GameObject _finalCheckpoint;
+
 
     [Header("Camera Animation Parameter")]
     [SerializeField] private GameObject _levelCenter;
@@ -34,20 +35,23 @@ public class CheckPoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D p_collider2D)
     {
+        //if (!p_collider2D.gameObject.CompareTag("Player"))
+        //    return;
+
+        Player player = p_collider2D?.GetComponent<Player>();
+        if (player is null) { return; }
+
+
         if (_finalCheckpoint == false)
         {
             EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _animDuration, _fullscreenDureation);
-            _player.zoneRespawnOfPlayer = _checkpoint.transform.position;
-            Destroy(_collider);
+
+            player.zoneRespawnOfPlayer = gameObject.transform.position;
+            Destroy(this);
         }
         if (_finalCheckpoint)
 
-        if (!p_collider2D.gameObject.CompareTag("Player"))
-            return;
-
-        Player player = p_collider2D.gameObject.GetComponent<Player>();
-
-        player.respawnPosition = respawnPosition;
+            player.respawnPosition = respawnPosition;
 
         SetNewState(CheckPointState.Claimed);
     }
