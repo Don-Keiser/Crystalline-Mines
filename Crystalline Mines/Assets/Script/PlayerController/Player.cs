@@ -121,7 +121,6 @@ public class Player : MonoBehaviour
 
     public void DropThroughPlatform(int raySign) //make a list of crossed platforms with a boxCastAll  
     {
-
         float rayDirection = Mathf.Sign(raySign);
 
         if (rayDirection < 0)
@@ -191,37 +190,35 @@ public class Player : MonoBehaviour
         for (int i = 0; i < _horizontalRaysCount; i++)
         {
             Vector2 rayOrigin = horizontalDirection > 0 ? _bottomRight : _bottomLeft;
-
             rayOrigin += Vector2.up * (_horizontalRaySpacing * i);
             Vector2 rayEnd = rayOrigin + Vector2.right * (rayDistance * horizontalDirection);
+
+            Debug.DrawLine(rayOrigin, rayEnd, Color.yellow);
 
             RaycastHit2D hit = Physics2D.Linecast(rayOrigin, rayEnd, _solidMask | _passThroughMask);
             if (hit)
             {
-                if (i == 0)
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                //print($"slope Angle is {slopeAngle}");
+
+                if (slopeAngle <= _maxSlopeAngle)
                 {
-                    float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-                    //print($"slope Angle is {slopeAngle}");
+                    float movementToSlope = 0f;
 
-                    if (slopeAngle <= _maxSlopeAngle)
+                    if (Mathf.Approximately(slopeAngle, _oldSlopeAngle))
                     {
-                        float movementToSlope = 0f;
-
-                        if (Mathf.Approximately(slopeAngle, _oldSlopeAngle))
-                        {
-                            movementToSlope = (hit.distance - _skinWidth) * horizontalDirection;
-                        }
-
-                        deltaMovement.x -= movementToSlope;
-                        ClimbSlope(ref deltaMovement, slopeAngle);
-                        deltaMovement.x += movementToSlope;
+                        movementToSlope = (hit.distance - _skinWidth) * horizontalDirection;
                     }
-                    if (!_climbingSlope)
-                    {
-                        deltaMovement.x = (Mathf.Max(hit.distance - _skinWidth, 0) * horizontalDirection);
-                        _velocity.x = 0;
-                        rayDistance = hit.distance;
-                    }
+
+                    deltaMovement.x -= movementToSlope;
+                    ClimbSlope(ref deltaMovement, slopeAngle);
+                    deltaMovement.x += movementToSlope;
+                }
+                if (!_climbingSlope)
+                {
+                    deltaMovement.x = (Mathf.Max(hit.distance - _skinWidth, 0) * horizontalDirection);
+                    _velocity.x = 0;
+                    rayDistance = hit.distance;
                 }
             }
         }
@@ -315,7 +312,7 @@ public class Player : MonoBehaviour
 
         //print($"velocity x is {_velocity.x}");
 
-        Vector2 rayOrigin = _velocity.x > 0 ? _bottomLeft : _bottomRight; // 
+        Vector2 rayOrigin = _velocity.x > 0 ? _bottomLeft : _bottomRight;
 
         Vector2 rayEnd = rayOrigin + Vector2.up * (_velocity.y * Time.deltaTime + Mathf.Sign(_velocity.y) * _skinWidth);
         RaycastHit2D hitInfo = Physics2D.Linecast(rayOrigin, rayEnd, _solidMask | _passThroughMask);
@@ -353,8 +350,8 @@ public class Player : MonoBehaviour
     public void Respawn()
     {
         // Position handling
-
         transform.position = respawnPosition;
+        _velocity = Vector2.zero;
 
         // Carried object handling 
 
