@@ -300,6 +300,7 @@ public class Player : MonoBehaviour
     {
         if (_hasFloor || _coyotteJump)
         {
+            Animation.Instance.JumpAnimation();
             _velocity.y = _jumpForce;
             _hasFloor = false;
             _coyoteTimeCounter = 0;

@@ -34,7 +34,7 @@ public class Controller : MonoBehaviour
         _player.SetMoveInput(_moveInput);
 
         ShowTextOnNearestObject();
-
+        Animation.Instance.MoveAnimation();
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _player.Jump();
