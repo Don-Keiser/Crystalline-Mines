@@ -50635,7 +50635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8915320465254021183, guid: a5ae74c54c20bd449b25be0b8299487e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35.98
+      value: 34.32
       objectReference: {fileID: 0}
     - target: {fileID: 8915320465254021183, guid: a5ae74c54c20bd449b25be0b8299487e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -51957,6 +51957,10 @@ PrefabInstance:
       propertyPath: _finalCheckpoint
       value: 
       objectReference: {fileID: 408506856}
+    - target: {fileID: 3742711859456348165, guid: f2fae4c918a92e344a5d42f3c90c015e, type: 3}
+      propertyPath: <state>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3768618101206454281, guid: f2fae4c918a92e344a5d42f3c90c015e, type: 3}
       propertyPath: _levelCenter
       value: 
