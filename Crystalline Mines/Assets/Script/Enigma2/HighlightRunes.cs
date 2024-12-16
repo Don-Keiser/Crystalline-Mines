@@ -36,7 +36,6 @@ public class HighlightRunes : Interactible
                 _runeSprite.enabled = true;
             });
             
-            // TODO: remplacer ca pour l'onde de lumiere
             _crystals.ChangeColor(_runeSprite.color); // transform the color of the crystals to the color of the rune
 
             TimerManager.StartTimer((_timerDuration + _fullScreenDuration + (2 * _animationDuration)), () =>
