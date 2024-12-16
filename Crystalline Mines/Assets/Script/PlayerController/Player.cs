@@ -350,8 +350,8 @@ public class Player : MonoBehaviour
     public void Respawn()
     {
         // Position handling
-
         transform.position = respawnPosition;
+        _velocity = Vector2.zero;
 
         // Carried object handling 
 
