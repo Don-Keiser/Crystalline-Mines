@@ -44,14 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd0f35708ddeef42b027ef09303de02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railParent: {fileID: 0}
   railSpritesOnGround:
     NonDamaged: {fileID: 21300000, guid: 77ecc2ed70b08b1439edb55ab9877ba4, type: 3}
     Damaged: {fileID: 21300000, guid: a30c9a2b259c55f49bab2becb3ea753d, type: 3}
   railForms:
-  - railState: 0
-    spriteShownWhenInteracted: {fileID: 0}
-    missingRailPieces: 0
   - railState: 1
     spriteShownWhenInteracted: {fileID: 21300000, guid: a30c9a2b259c55f49bab2becb3ea753d, type: 3}
     missingRailPieces: 1

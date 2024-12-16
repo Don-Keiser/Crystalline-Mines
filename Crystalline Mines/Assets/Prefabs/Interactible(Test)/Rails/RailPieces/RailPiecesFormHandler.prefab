@@ -44,23 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8215e68f1f9cf5e4ab388e6aaf7a6426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railPiecesParent: {fileID: 0}
   railPiecesForms:
   - railPiecesFormTypes: 0
-    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteOnGround: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
     spriteWhenCarried: {fileID: 21300000, guid: ca09384bef2140b43b1bee89e42bc351, type: 3}
   - railPiecesFormTypes: 1
-    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteOnGround: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
     spriteWhenCarried: {fileID: 21300000, guid: 6a9adc676b08ec149bff0a66156078dc, type: 3}
   - railPiecesFormTypes: 2
-    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteOnGround: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
     spriteWhenCarried: {fileID: 21300000, guid: aeb007e1699be9a47a4de7ac4e911909, type: 3}
   - railPiecesFormTypes: 3
-    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteOnGround: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
     spriteWhenCarried: {fileID: 21300000, guid: 413aeea0e38a59c49b9d0130fd6782af, type: 3}
   - railPiecesFormTypes: 4
-    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteOnGround: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
     spriteWhenCarried: {fileID: 21300000, guid: 700ebdba2e1793c4fa94d488b3e1748c, type: 3}
   - railPiecesFormTypes: 5
-    spriteOnGround: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    spriteOnGround: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
     spriteWhenCarried: {fileID: 21300000, guid: f9be9fec73d4f2e46a9fdd060e7a495a, type: 3}

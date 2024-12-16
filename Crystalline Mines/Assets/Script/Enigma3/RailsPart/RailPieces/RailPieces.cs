@@ -24,6 +24,7 @@ public class RailPieces : Interactible, IRail
 
     // Local
     Transform _transform;
+    int _initialLayer;
     Vector3 _initialPosition;
     SpriteRenderer _spriteRenderer;
     bool _isCarried;
@@ -37,6 +38,7 @@ public class RailPieces : Interactible, IRail
     void Start()
     {
         _transform = transform;
+        _initialLayer = gameObject.layer;
         _initialPosition = _transform.position;
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -55,9 +57,9 @@ public class RailPieces : Interactible, IRail
 
     public override void PlayerInteract()
     {
-        StartSFXAndVFX();
-
         SetIsCarried(!_isCarried);
+
+        StartSFXAndVFX();
     }
 
     public override void StartSFXAndVFX()
@@ -69,6 +71,9 @@ public class RailPieces : Interactible, IRail
     public void Disable()
     {
         _isCarried = false;
+
+        if (Player.carriedObject == gameObject)
+            Player.carriedObject = null;
 
         _transform.parent = _railPiecesParent;
 
@@ -84,22 +89,45 @@ public class RailPieces : Interactible, IRail
         _transform.parent = _railPiecesParent;
         _transform.position = _initialPosition;
 
+        if (Player.carriedObject == gameObject)
+            Player.carriedObject = null;
+
         _isCarried = false;
 
+        UpdateLayer();
         UpdateSprite();
     }
     #endregion
 
     void SetIsCarried(bool p_newValue)
     {
-        _isCarried = p_newValue;
+        if (p_newValue && _isCarried == false && Player.carriedObject == null)
+        {
+            Player.carriedObject = gameObject;
+            _isCarried = true;
+        }
 
-        if (_isCarried && Player.CarriedObject == null)
-            Player.CarriedObject = gameObject;
+        else if (p_newValue == false && _isCarried && Player.carriedObject == gameObject)
+        {
+            Player.carriedObject = null;
+            _isCarried = false;
+        }
 
+        UpdateLayer();
         UpdateSprite();
-
         UpdatePosition();
+    }
+
+    void UpdateLayer()
+    {
+        if (_isCarried)
+        {
+            gameObject.layer = 0;
+        }
+        else
+        {
+            gameObject.layer = _initialLayer;
+        }
     }
 
     void UpdateSprite()
