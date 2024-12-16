@@ -34,7 +34,7 @@ public static class EventManager
     {
         DisableTutoPanel(currentObject);
     }
-    public static void PlayerGetTutoGet()
+    public static void PlayerGetTutoKey()
     {
         OnGetTutoKey?.Invoke();
     }

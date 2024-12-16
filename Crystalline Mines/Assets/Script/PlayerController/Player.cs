@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [HideInInspector] public Vector3 zoneRespawnOfPlayer;
+
+    public static bool CameraAnimationTime = false;
+
     public static Transform PlayerTransform;
 
     [Header("Player Ressources")]
@@ -55,9 +59,17 @@ public class Player : MonoBehaviour
     private float _currentSlopeAngle;
     private float _oldSlopeAngle;
 
+
     private void Awake()
     {
         PlayerTransform = gameObject.transform;
+        EventManager.CameraCinematic += FixedPlayerPosition;
+    }
+
+    private void FixedPlayerPosition(Vector3 arg0, float arg1, float arg2, float arg3)
+    {
+        _velocity = Vector2.zero;
+        CameraAnimationTime = true;
     }
 
     private void Start()
@@ -68,6 +80,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (CameraAnimationTime) { return; }
         UpdateColliderInfos();
         ApplyGravity();
 
@@ -93,7 +106,6 @@ public class Player : MonoBehaviour
         HandleCoyoteTime();
         transform.Translate(deltaMovement);
     }
-
     private void HandleCoyoteTime()
     {
         if (!_hasFloor)
@@ -108,31 +120,30 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void DropThroughPlatform(int raySign) //make a list of  DropThrough platforms with a boxCastAll  
+    public void DropThroughPlatform(int raySign) //make a list of crossed platforms with a boxCastAll  
     {
+
         float rayDirection = Mathf.Sign(raySign);
 
-        Vector2 boxSize = (rayDirection > 0) ? (Vector2.up * rayDirection) * 2 : (Vector2.up * rayDirection) /2; 
+        if (rayDirection < 0)
+        {
+            if (!_hasFloor && !_coyotteJump) { return; }
+        }
+        Vector2 boxSize = new Vector2(_size.x * 0.8f, _size.y * 0.5f);
         Vector2 boxDirection = (rayDirection > 0) ? Vector2.up : Vector2.down;
         Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + (Vector2.right * _size.x / 2) : (_bottomLeft + _bottomRight) / 2;
 
-        Debug.DrawRay(boxOrigin, boxDirection * 1f, Color.red, 0.1f); 
-        Debug.DrawRay(boxOrigin, Vector2.right * boxSize.x, Color.blue, 0.1f);
-        Debug.DrawRay(boxOrigin, Vector2.up * boxSize.y * rayDirection, Color.green, 0.1f);
-
-
+        //Debug.DrawRay(boxOrigin, boxDirection * 1f, Color.red, 0.1f); 
+        //Debug.DrawRay(boxOrigin, Vector2.up * boxSize, Color.blue, 0.1f);
 
         RaycastHit2D hitInfo = Physics2D.BoxCast(boxOrigin, boxSize, 0f, boxDirection, 1f, _passThroughMask);
         if (hitInfo.collider != null)
         {
-            Debug.Log($"BoxCast hit: {hitInfo.collider.name}");
-            Debug.DrawRay(hitInfo.point, Vector2.up * 0.5f, Color.yellow, 1f); 
-
             _coyoteTimeCounter = 0;
             _coyotteJump = false;
 
             _passThroughPlatform = hitInfo.collider.gameObject;
-            _platformLayerIndex = _passThroughPlatform.layer; 
+            _platformLayerIndex = _passThroughPlatform.layer;
             _passThroughPlatform.layer = 0;
         }
     }
@@ -303,7 +314,7 @@ public class Player : MonoBehaviour
     {
         if (!_hasFloor && !_coyotteJump) return;
 
-        print($"velocity x is {_velocity.x}");
+        //print($"velocity x is {_velocity.x}");
 
         Vector2 rayOrigin = _velocity.x > 0 ? _bottomLeft : _bottomRight; // 
 

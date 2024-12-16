@@ -14,11 +14,19 @@ public class CheckPoint : MonoBehaviour
     [field: SerializeField]
     public CheckPointState state { get; private set; }
 
+    [Header("Camera Animation Parameter")]
+    [SerializeField] private GameObject _levelCenter;
+    [SerializeField] private float _maxCameraDezoom;
+    [SerializeField] private float _animDuration;
+    [SerializeField] private float _fullscreenDureation;
+
+
     [HideInInspector] public Vector3 respawnPosition;
 
     Collider2D _collider2D;
 
     void Start()
+
     {
         _collider2D = GetComponent<Collider2D>();
         respawnPosition = transform.GetChild(0).position;
@@ -26,6 +34,14 @@ public class CheckPoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D p_collider2D)
     {
+        if (_finalCheckpoint == false)
+        {
+            EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _animDuration, _fullscreenDureation);
+            _player.zoneRespawnOfPlayer = _checkpoint.transform.position;
+            Destroy(_collider);
+        }
+        if (_finalCheckpoint)
+
         if (!p_collider2D.gameObject.CompareTag("Player"))
             return;
 
