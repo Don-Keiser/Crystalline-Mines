@@ -8,6 +8,7 @@ public class Crystals : MonoBehaviour
 {
     [NonSerialized] public List<SpriteRenderer> crystalsSpriteRenderers = new List<SpriteRenderer>();
     [NonSerialized] public List<Light2D> crystalsLights = new List<Light2D>();
+    public Light2D _globalLight;
     
     void Start()
     {
@@ -18,7 +19,7 @@ public class Crystals : MonoBehaviour
         }
     }
     
-    public void ChangeColor(Color color)
+    public void ChangeColor(Color color, bool isSrtartAnimation)
     {
         crystalsSpriteRenderers.ForEach(crystalsColor =>
         {
@@ -28,5 +29,19 @@ public class Crystals : MonoBehaviour
         {
             crystalsLightColor.color = color;
         });
+
+        if (isSrtartAnimation)
+        {
+            _globalLight.color = color;
+            Color.RGBToHSV(_globalLight.color, out float h, out float s, out float v);
+            s = 0.5f; // Reduce saturation to 50%
+            _globalLight.color = Color.HSVToRGB(h, s, v);
+        }
+        else
+        {
+            _globalLight.color = Color.white;
+        }
+        
+        
     }
 }

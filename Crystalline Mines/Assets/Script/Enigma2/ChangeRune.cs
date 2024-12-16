@@ -9,16 +9,16 @@ using Random = UnityEngine.Random;
 
 public class ChangeRune : Interactible
 {
-    [SerializeField] List<GameObject> _runes = new List<GameObject>();
+    [SerializeField] private List<GameObject> _runes = new List<GameObject>();
     private List<GameObject> _instantiateRunes = new List<GameObject>();
     private int _runeIndex;
     private GameObject _displayRune;
-    [SerializeField] GameObject _goodRune;
+    [SerializeField] private GameObject _goodRune;
     private Color _color;
     private Color _alpha;
     
     [Header("Animation")]
-    [SerializeField] float _duration = 2.0f; // duration of the fade in and fade out
+    [SerializeField] private float _duration = 2.0f; // duration of the fade in and fade out
     
     [NonSerialized] public bool canInteract = true;
     [NonSerialized] public bool isGoodRune = false;
