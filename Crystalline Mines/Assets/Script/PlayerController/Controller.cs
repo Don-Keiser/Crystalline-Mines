@@ -2,7 +2,6 @@ using Script.Enigma1;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerGrabController))]
 
 public class Controller : MonoBehaviour
 {
