@@ -115,6 +115,7 @@ public class CameraController : MonoBehaviour
             else if (_targetPosition == _player.position)
             {
                 FinishAnim = true;
+                Player.CameraAnimationTime = false;
             }
         }
     }

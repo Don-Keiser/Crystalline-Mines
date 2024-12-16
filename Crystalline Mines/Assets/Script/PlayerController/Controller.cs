@@ -2,6 +2,8 @@ using Script.Enigma1;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerGrabController))]
+
 public class Controller : MonoBehaviour
 {
     [SerializeField] private Player _player;
@@ -23,6 +25,7 @@ public class Controller : MonoBehaviour
     private void Awake()
     {
         _grabController = _player.GetComponent<PlayerGrabController>();
+        if(_grabController is null) { Debug.LogError("Player has not PlayerGrabController script"); }
     }
     private void Update()
     {
@@ -53,7 +56,7 @@ public class Controller : MonoBehaviour
                     return;
                 }
             }
-            if(_grabController.hasCrystal)
+            if(_grabController != null && _grabController.hasCrystal)
             {
                 _grabController.DropObject();
             }

@@ -8,6 +8,13 @@ public class CheckPoint : MonoBehaviour
     private Collider2D _collider;
     [SerializeField] private bool _finalCheckpoint;
 
+    [Header("Camera Animation Parameter")]
+    [SerializeField] private GameObject _levelCenter;
+    [SerializeField] private float _maxCameraDezoom;
+    [SerializeField] private float _animDuration;
+    [SerializeField] private float _fullscreenDureation;
+
+
     private void Start()
     {
         _collider = GetComponent<Collider2D>();
@@ -18,6 +25,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (_finalCheckpoint == false)
         {
+            EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _animDuration, _fullscreenDureation);
             _player.zoneRespawnOfPlayer = _checkpoint.transform.position;
             Destroy(_collider);
         }
