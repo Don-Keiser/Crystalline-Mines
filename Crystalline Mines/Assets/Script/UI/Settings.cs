@@ -1,11 +1,18 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
+    public static Settings Instance;
+    
+    public bool settingsActive;
+    public AudioSource audioSource;
+    public bool isInOnDestroyOnLoad;
+
     [Header("UI Panels")]
-    [SerializeField] private GameObject _settingsPanel;
+    [SerializeField] public GameObject _settingsPanel;
     [SerializeField] private GameObject _videoPanel;
     [SerializeField] private GameObject _soundPanel;
 
@@ -13,18 +20,23 @@ public class Settings : MonoBehaviour
     [SerializeField] private Dropdown _resolutionDropdown;
     [SerializeField] private Toggle _fullScreenToggle;
 
+    [Header("Audio Mixer")]
+    [SerializeField] private AudioMixer _audioMixer;
+
     [Header("Volume Settings")]
-    [SerializeField] private AudioSource _masterVolumeSource;
     [SerializeField] private Slider _masterVolumeSlider;
     [SerializeField] private TextMeshProUGUI _masterVolumeText;
     [Space(10)]
-    [SerializeField] private AudioSource _musicVolumeSource;
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private TextMeshProUGUI _musicVolumeText;
     [Space(10)]
-    [SerializeField] private AudioSource _uiVolumeSource;
     [SerializeField] private Slider _uiVolumeSlider;
     [SerializeField] private TextMeshProUGUI _uiVolumeText;
+
+    private void Awake()
+    {
+        Instance = Instantiator.ReturnInstance(this, Instantiator.InstanceConflictResolutions.DestructionOfTheSecondOneParent);
+    }
 
     private void Start()
     {
@@ -38,35 +50,39 @@ public class Settings : MonoBehaviour
         int savedResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", 0);
         _resolutionDropdown.value = savedResolutionIndex;
         _resolutionDropdown.RefreshShownValue();
-
         SetResolution();
         
-        InitializeVolume(_masterVolumeSource, _masterVolumeSlider, _masterVolumeText);
-        InitializeVolume(_musicVolumeSource, _musicVolumeSlider, _musicVolumeText);
-        InitializeVolume(_uiVolumeSource, _uiVolumeSlider, _uiVolumeText);
+        InitializeVolume("MasterVolume", _masterVolumeSlider, _masterVolumeText, "MasterVolumeValue");
+        InitializeVolume("MusicVolume", _musicVolumeSlider, _musicVolumeText, "MusicVolumeValue");
+        InitializeVolume("UIVolume", _uiVolumeSlider, _uiVolumeText, "UIVolumeValue");
     }
 
-    private void InitializeVolume(AudioSource source, Slider slider, TextMeshProUGUI volumeText)
+    private void InitializeVolume(string parameterName, Slider slider, TextMeshProUGUI volumeText, string playerPrefKey)
     {
-        slider.value = source.volume;
-        volumeText.text = (source.volume * 100).ToString("0") + "%";
+        float savedVolume = PlayerPrefs.GetFloat(playerPrefKey, 0.5f);
+        slider.value = savedVolume;
+        AdjustVolume(parameterName, slider, volumeText);
     }
 
     public void Resume()
     {
+        audioSource.Play();
         _settingsPanel.SetActive(false);
         _videoPanel.SetActive(false);
         _soundPanel.SetActive(false);
+        settingsActive = false;
     }
 
     public void OpenVideoSettings()
     {
+        audioSource.Play();
         _videoPanel.SetActive(true);
         _soundPanel.SetActive(false);
     }
 
     public void OpenSoundSettings()
     {
+        audioSource.Play();
         _soundPanel.SetActive(true);
         _videoPanel.SetActive(false);
     }
@@ -86,7 +102,7 @@ public class Settings : MonoBehaviour
         {
             var selected = resolutions[selectedIndex];
             Screen.SetResolution(selected.width, selected.height, _fullScreenToggle.isOn);
-            
+
             PlayerPrefs.SetInt("ResolutionIndex", selectedIndex);
             PlayerPrefs.Save();
         }
@@ -99,22 +115,62 @@ public class Settings : MonoBehaviour
 
     public void OnMasterVolumeChange()
     {
-        AdjustVolume(_masterVolumeSource, _masterVolumeSlider, _masterVolumeText);
+        AdjustVolume("MasterVolume", _masterVolumeSlider, _masterVolumeText, "MasterVolumeValue");
     }
 
     public void OnMusicVolumeChange()
     {
-        AdjustVolume(_musicVolumeSource, _musicVolumeSlider, _musicVolumeText);
+        AdjustVolume("MusicVolume", _musicVolumeSlider, _musicVolumeText, "MusicVolumeValue");
     }
 
     public void OnUiVolumeChange()
     {
-        AdjustVolume(_uiVolumeSource, _uiVolumeSlider, _uiVolumeText);
+        AdjustVolume("UIVolume", _uiVolumeSlider, _uiVolumeText, "UIVolumeValue");
     }
 
-    private void AdjustVolume(AudioSource source, Slider slider, TextMeshProUGUI volumeText)
+    private void AdjustVolume(string parameterName, Slider slider, TextMeshProUGUI volumeText, string playerPrefKey = "")
     {
-        source.volume = slider.value;
+        float volumeInDb = Mathf.Log10(slider.value) * 40 + 12;
+        _audioMixer.SetFloat(parameterName, volumeInDb);
         volumeText.text = (slider.value * 100).ToString("0") + "%";
+        
+        if (!string.IsNullOrEmpty(playerPrefKey))
+        {
+            PlayerPrefs.SetFloat(playerPrefKey, slider.value);
+            PlayerPrefs.Save();
+        }
     }
+    
+        public void Default()
+        {
+            const float defaultMasterVolume = 0.5f;
+            const float defaultMusicVolume = 0.5f;
+            const float defaultUiVolume = 0.5f;
+            const int defaultResolutionIndex = 0;
+            const bool defaultFullScreen = true;
+            
+            _masterVolumeSlider.value = defaultMasterVolume;
+            AdjustVolume("MasterVolume", _masterVolumeSlider, _masterVolumeText, "MasterVolumeValue");
+
+            _musicVolumeSlider.value = defaultMusicVolume;
+            AdjustVolume("MusicVolume", _musicVolumeSlider, _musicVolumeText, "MusicVolumeValue");
+
+            _uiVolumeSlider.value = defaultUiVolume;
+            AdjustVolume("UIVolume", _uiVolumeSlider, _uiVolumeText, "UIVolumeValue");
+            
+            _resolutionDropdown.value = defaultResolutionIndex;
+            _resolutionDropdown.RefreshShownValue();
+            SetResolution();
+            
+            _fullScreenToggle.isOn = defaultFullScreen;
+            ToggleFullScreen();
+            
+            PlayerPrefs.SetFloat("MasterVolumeValue", defaultMasterVolume);
+            PlayerPrefs.SetFloat("MusicVolumeValue", defaultMusicVolume);
+            PlayerPrefs.SetFloat("UIVolumeValue", defaultUiVolume);
+            PlayerPrefs.SetInt("ResolutionIndex", defaultResolutionIndex);
+            PlayerPrefs.SetInt("FullScreen", defaultFullScreen ? 1 : 0);
+            PlayerPrefs.Save();
+            
+        }
 }

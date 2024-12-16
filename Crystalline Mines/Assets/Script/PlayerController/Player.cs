@@ -4,11 +4,17 @@ public class Player : MonoBehaviour
 {
     [HideInInspector] public Vector3 zoneRespawnOfPlayer;
 
+    public static bool CameraAnimationTime = false;
+
     public static Transform PlayerTransform;
 
     [Header("Player Ressources")]
     public static bool CanOpenTheDoor = false;
-    public static GameObject CarriedObject;
+    public static bool TutorialKeyObtained = false;
+
+    public static GameObject carriedObject;
+
+    [HideInInspector] public Vector3 respawnPosition;
 
     [Header("Coyotte Time")]
     [SerializeField] private float _coyoteTimeDuration = 0.2f;
@@ -53,9 +59,17 @@ public class Player : MonoBehaviour
     private float _currentSlopeAngle;
     private float _oldSlopeAngle;
 
+
     private void Awake()
     {
         PlayerTransform = gameObject.transform;
+        EventManager.CameraCinematic += FixedPlayerPosition;
+    }
+
+    private void FixedPlayerPosition(Vector3 arg0, float arg1, float arg2, float arg3)
+    {
+        _velocity = Vector2.zero;
+        CameraAnimationTime = true;
     }
 
     private void Start()
@@ -66,6 +80,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (CameraAnimationTime) { return; }
         UpdateColliderInfos();
         ApplyGravity();
 
@@ -91,7 +106,6 @@ public class Player : MonoBehaviour
         HandleCoyoteTime();
         transform.Translate(deltaMovement);
     }
-
     private void HandleCoyoteTime()
     {
         if (!_hasFloor)
@@ -106,32 +120,34 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void DropThroughPlatform(int raySign)
+    public void DropThroughPlatform(int raySign) //make a list of crossed platforms with a boxCastAll  
     {
+
         float rayDirection = Mathf.Sign(raySign);
-        Vector2 boxSize = (rayDirection > 0) ? Vector2.one * 2 : Vector2.one / 2;
 
-        if (!_hasFloor && !_coyotteJump) { return; }
-
-
-        //box settings
+        if (rayDirection < 0)
+        {
+            if (!_hasFloor && !_coyotteJump) { return; }
+        }
+        Vector2 boxSize = new Vector2(_size.x * 0.8f, _size.y * 0.5f);
         Vector2 boxDirection = (rayDirection > 0) ? Vector2.up : Vector2.down;
-        Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + ((Vector2.right * _size.x) / 2) : (_bottomLeft + _bottomRight) / 2;
+        Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + (Vector2.right * _size.x / 2) : (_bottomLeft + _bottomRight) / 2;
+
+        //Debug.DrawRay(boxOrigin, boxDirection * 1f, Color.red, 0.1f); 
+        //Debug.DrawRay(boxOrigin, Vector2.up * boxSize, Color.blue, 0.1f);
 
         RaycastHit2D hitInfo = Physics2D.BoxCast(boxOrigin, boxSize, 0f, boxDirection, 1f, _passThroughMask);
-
         if (hitInfo.collider != null)
         {
-
-            _coyoteTimeCounter = 0; //disable jump and coyotte time
+            _coyoteTimeCounter = 0;
             _coyotteJump = false;
 
             _passThroughPlatform = hitInfo.collider.gameObject;
-
-            _platformLayerIndex = _passThroughPlatform.layer; //takes the original layer of the platform
+            _platformLayerIndex = _passThroughPlatform.layer;
             _passThroughPlatform.layer = 0;
         }
     }
+
 
 
     private void ReenablePlatformCollision()
@@ -186,7 +202,7 @@ public class Player : MonoBehaviour
                 if (i == 0)
                 {
                     float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-                    print($"slope Angle is {slopeAngle}");
+                    //print($"slope Angle is {slopeAngle}");
 
                     if (slopeAngle <= _maxSlopeAngle)
                     {
@@ -298,7 +314,7 @@ public class Player : MonoBehaviour
     {
         if (!_hasFloor && !_coyotteJump) return;
 
-        print($"velocity x is {_velocity.x}");
+        //print($"velocity x is {_velocity.x}");
 
         Vector2 rayOrigin = _velocity.x > 0 ? _bottomLeft : _bottomRight; // 
 
@@ -331,5 +347,24 @@ public class Player : MonoBehaviour
         Vector2 projectedVector = dotProduct * direction;
 
         return projectedVector;
+    }
+
+    /// <summary>
+    /// Moves the player to the respawn position, and reinitialize the carried object. </summary>
+    public void Respawn()
+    {
+        // Position handling
+
+        transform.position = respawnPosition;
+
+        // Carried object handling 
+
+        if (carriedObject == null)
+            return;
+
+        if (carriedObject.TryGetComponent(out ICarriable p_ICarriable))
+            p_ICarriable.Reinitialize();
+        else
+            Debug.LogError($"ERROR ! The carried object by the player '{carriedObject.name}' don't implement the '{nameof(ICarriable)}' Interface.");
     }
 }
