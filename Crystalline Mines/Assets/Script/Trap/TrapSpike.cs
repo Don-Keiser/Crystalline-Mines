@@ -12,6 +12,6 @@ public class TrapSpike : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        _player.transform.position = _player.zoneRespawnOfPlayer;
+        _player.transform.position = _player.respawnPosition;
     }
 }
