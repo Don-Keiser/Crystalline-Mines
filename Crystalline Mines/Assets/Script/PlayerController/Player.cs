@@ -108,32 +108,35 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void DropThroughPlatform(int raySign)
+    public void DropThroughPlatform(int raySign) //make a list of  DropThrough platforms with a boxCastAll  
     {
         float rayDirection = Mathf.Sign(raySign);
-        Vector2 boxSize = (rayDirection > 0) ? Vector2.one * 2 : Vector2.one / 2;
 
-        if (!_hasFloor && !_coyotteJump) { return; }
-
-
-        //box settings
+        Vector2 boxSize = (rayDirection > 0) ? (Vector2.up * rayDirection) * 2 : (Vector2.up * rayDirection) /2; 
         Vector2 boxDirection = (rayDirection > 0) ? Vector2.up : Vector2.down;
-        Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + ((Vector2.right * _size.x) / 2) : (_bottomLeft + _bottomRight) / 2;
+        Vector2 boxOrigin = (rayDirection > 0) ? _topLeft + (Vector2.right * _size.x / 2) : (_bottomLeft + _bottomRight) / 2;
+
+        Debug.DrawRay(boxOrigin, boxDirection * 1f, Color.red, 0.1f); 
+        Debug.DrawRay(boxOrigin, Vector2.right * boxSize.x, Color.blue, 0.1f);
+        Debug.DrawRay(boxOrigin, Vector2.up * boxSize.y * rayDirection, Color.green, 0.1f);
+
+
 
         RaycastHit2D hitInfo = Physics2D.BoxCast(boxOrigin, boxSize, 0f, boxDirection, 1f, _passThroughMask);
-
         if (hitInfo.collider != null)
         {
+            Debug.Log($"BoxCast hit: {hitInfo.collider.name}");
+            Debug.DrawRay(hitInfo.point, Vector2.up * 0.5f, Color.yellow, 1f); 
 
-            _coyoteTimeCounter = 0; //disable jump and coyotte time
+            _coyoteTimeCounter = 0;
             _coyotteJump = false;
 
             _passThroughPlatform = hitInfo.collider.gameObject;
-
-            _platformLayerIndex = _passThroughPlatform.layer; //takes the original layer of the platform
+            _platformLayerIndex = _passThroughPlatform.layer; 
             _passThroughPlatform.layer = 0;
         }
     }
+
 
 
     private void ReenablePlatformCollision()
@@ -188,7 +191,7 @@ public class Player : MonoBehaviour
                 if (i == 0)
                 {
                     float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-                    print($"slope Angle is {slopeAngle}");
+                    //print($"slope Angle is {slopeAngle}");
 
                     if (slopeAngle <= _maxSlopeAngle)
                     {
