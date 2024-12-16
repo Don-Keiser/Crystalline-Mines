@@ -1,4 +1,4 @@
-public interface IRail
+public interface IRail : ICarriable
 {
-    public void Reinitialize();
+    public new void Reinitialize();
 }

@@ -18,7 +18,7 @@ public class Rock : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            _player.transform.position = _player.zoneRespawnOfPlayer;
+            _player.transform.position = _player.respawnPosition;
         }
         Destroy(gameObject);
     }
