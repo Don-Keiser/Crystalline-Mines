@@ -23,9 +23,6 @@ public class Interact_TutoPanel : Interactible
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-           EventManager.StartDisableTutoPanel(gameObject);
-        }
+        EventManager.StartDisableTutoPanel(gameObject);
     }
 }
