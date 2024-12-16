@@ -46,7 +46,7 @@ public class Pause : MonoBehaviour
 
     public void Retry()
     {
-        _player.transform.position = _player.zoneRespawnOfPlayer;
+        _player.transform.position = _player.respawnPosition;
         Resume();
     }
     public void Settings()
