@@ -8,6 +8,8 @@ namespace Script.Enigma1
         public static FirstEnigmaManager Instance;
         public bool IsPuzzleCompleted { get; private set; }
 
+        [SerializeField] private DoorHandler.LevelRoom _doorToOpen; 
+        
         [Header("Enigma data")]
         [SerializeField] private int _totalCrystals = 5; 
         [SerializeField] private List<PuzzleSlotController> puzzleSlots; // List of puzzle slots
@@ -50,6 +52,8 @@ namespace Script.Enigma1
                 Debug.Log("Puzzle successfully completed!");
                 IsPuzzleCompleted = true;
                 Player.CanOpenTheDoor = true; //make open door logique 
+                
+                DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true);
 
             }
             else if (_placedCrystals == _totalCrystals)

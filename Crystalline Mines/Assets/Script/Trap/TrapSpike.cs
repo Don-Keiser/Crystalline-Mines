@@ -3,15 +3,19 @@ using UnityEngine;
 
 public class TrapSpike : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-
-    private void Start()
-    {
-        _player = FindAnyObjectByType<Player>();
-    }
-
+    
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        _player.transform.position = _player.respawnPosition;
+        Interact_Crystal crystal = collision.GetComponent<Interact_Crystal>();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<Player>().Respawn();
+        }
+        else if(crystal != null)
+        {
+            collision.transform.position = crystal.initialPosition;
+            crystal.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            crystal.GetComponent<Rigidbody2D>().isKinematic = true;
+        }
     }
 }
