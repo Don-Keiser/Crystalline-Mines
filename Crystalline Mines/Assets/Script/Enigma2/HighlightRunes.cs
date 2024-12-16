@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
 public class HighlightRunes : Interactible
@@ -10,6 +11,7 @@ public class HighlightRunes : Interactible
     [SerializeField] private float _timerDuration; // time during which the rune is displayed
     [SerializeField] private GameObject _rune;
     private SpriteRenderer _runeSprite;
+    private Light2D _runeLight;
 
     [Header("Anim on interact")]
     [SerializeField] private float _fullScreenDuration;
@@ -20,12 +22,14 @@ public class HighlightRunes : Interactible
     private void Start()
     {
         _runeSprite = _rune.GetComponent<SpriteRenderer>();
+        _runeLight = _rune.GetComponent<Light2D>();
     }
 
     public void Highlight()
     {
         if (_crystals.crystalsSpriteRenderers[0].color == Color.white) // Check if lights already lit up
         {
+            _runeLight.enabled = true;
             _rune.SetActive(true);
             _runeSprite.enabled = false; // hide the rune
             EventManager.StartCameraAnimation(_cameraCenter, _maxDezoom, _fullScreenDuration,_animationDuration);
@@ -33,16 +37,16 @@ public class HighlightRunes : Interactible
             // display the rune
             TimerManager.StartTimer((_fullScreenDuration + (2 * _animationDuration)), () =>
             {
+                _runeLight.enabled = false;
                 _runeSprite.enabled = true;
             });
             
-            // TODO: remplacer ca pour l'onde de lumiere
-            _crystals.ChangeColor(_runeSprite.color); // transform the color of the crystals to the color of the rune
+            _crystals.ChangeColor(_runeSprite.color, true); // transform the color of the crystals to the color of the rune
 
             TimerManager.StartTimer((_timerDuration + _fullScreenDuration + (2 * _animationDuration)), () =>
             {
                 _rune.SetActive(false);
-                _crystals.ChangeColor(Color.white); // transform the color of the crystals to white
+                _crystals.ChangeColor(Color.white, false); // transform the color of the crystals to white
             });
         }
     }
