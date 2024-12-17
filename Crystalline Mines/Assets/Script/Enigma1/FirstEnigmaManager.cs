@@ -73,19 +73,15 @@ namespace Script.Enigma1
             {
                 Debug.Log("Puzzle successfully completed!");
                 IsPuzzleCompleted = true;
-
-
-                foreach (var cristal in _placedCrystalObjects)
+                foreach (var cristal in DEBUGCRSITAL)
                 {
                     if (cristal.GetComponent<Light2D>() != null)
                     {
                         StartCoroutine(FinishEnigmaAnim(cristal.GetComponent<Light2D>()));
                     }
                 }
-                if(_animFinish)
-                {
-                    DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true);
-                }
+                TimerManager.StartTimer(3.0f, () => DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true));
+
             }
             else if (_placedCrystals == _totalCrystals)
             {
