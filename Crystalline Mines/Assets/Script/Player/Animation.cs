@@ -8,6 +8,7 @@ public class Animation : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Player _player;
+    [SerializeField] private Controller _controller;
 
     private bool _isMoving;
 
@@ -33,11 +34,11 @@ public class Animation : MonoBehaviour
         _animator.SetFloat("Fall", Falling);
         if (Falling == 0 && !_isMoving)
         {
-            _animator.Play("Stand", 0, 0f); // "IdleAnimation" est le nom de votre animation Idle
+            _animator.Play("Stand", 0, 0f);
         }
         if (Falling == 0 && _isMoving)
         {
-            _animator.Play("Run", 0, 0f); // "IdleAnimation" est le nom de votre animation Idle
+            _animator.Play("Run", 0, 0f);
         }
     }
 
@@ -52,5 +53,32 @@ public class Animation : MonoBehaviour
         {
             _spriteRenderer.flipX = horizontalInput < 0;
         }
+    }
+
+    public void DeadSpikeDownAnimation()
+    {
+        _controller.gameObject.SetActive(false);
+        _player.velocity = Vector2.zero;
+        _animator.Play("DeadSpikeDown", 0, 0f);
+        TimerManager.StartTimer(0.5f, (() => _animator.Play("Stand", 0, 0f)));
+        TimerManager.StartTimer(0.5f, (() => _controller.gameObject.SetActive(true)));
+    }
+    public void DeadSpikeUpAnimation()
+    {
+        _controller.gameObject.SetActive(false);
+        _player.velocity = Vector2.zero;
+        _animator.Play("DeadSpikeUp", 0, 0f);
+        TimerManager.StartTimer(0.5f, (() => _animator.Play("Stand", 0, 0f)));
+        TimerManager.StartTimer(0.5f, (() => _controller.gameObject.SetActive(true)));
+        TimerManager.StartTimer(0.5f, (() => _player.isDead = false));
+    }
+    public void DeadTrapCrystalAnimation()
+    {
+        _controller.gameObject.SetActive(false);
+        _player.velocity = Vector2.zero;
+        _animator.Play("DeadCrystal", 0, 0f);
+        TimerManager.StartTimer(0.5f, (() => _animator.Play("Stand", 0, 0f)));
+        TimerManager.StartTimer(0.5f, (() => _controller.gameObject.SetActive(true)));
+
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
 
     [Header("Internal States")]
     private Bounds _bounds;
-    private Vector2 _velocity;
+    public Vector2 velocity;
     private int _verticalRaysCount;
     private int _horizontalRaysCount;
     private Vector2 _bottomLeft;
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour
     private bool _climbingSlope;
     private float _currentSlopeAngle;
     private float _oldSlopeAngle;
-
+    public bool isDead;
 
     private void Awake()
     {
@@ -67,23 +68,23 @@ public class Player : MonoBehaviour
 
     private void FixedPlayerPosition(Vector3 arg0, float arg1, float arg2, float arg3)
     {
-        _velocity = Vector2.zero;
+        velocity = Vector2.zero;
         CameraAnimationTime = true;
     }
 
     private void Start()
     {
-        _velocity = Vector2.zero;
+        velocity = Vector2.zero;
         InitializeData();
     }
 
     private void Update()
     {
-        if (CameraAnimationTime) { return; }
+        if (CameraAnimationTime || isDead) { return; }
         UpdateColliderInfos();
         ApplyGravity();
 
-        Vector2 deltaMovement = _velocity * Time.deltaTime;
+        Vector2 deltaMovement = velocity * Time.deltaTime;
         //print($"delata movement X {deltaMovement.x} and Y {deltaMovement.y}");
         if (deltaMovement.x != 0)
         {
@@ -183,7 +184,7 @@ public class Player : MonoBehaviour
     }
     private void ApplyGravity()
     {
-        _velocity.y -= _gravity * Time.deltaTime;
+        velocity.y -= _gravity * Time.deltaTime;
     }
 
     private void DetectWallAndSlopes(ref Vector2 deltaMovement) //obstacle detection 
@@ -221,7 +222,7 @@ public class Player : MonoBehaviour
                 if (!_climbingSlope)
                 {
                     deltaMovement.x = (Mathf.Max(hit.distance - _skinWidth, 0) * horizontalDirection);
-                    _velocity.x = 0;
+                    velocity.x = 0;
                     rayDistance = hit.distance;
                 }
             }
@@ -265,7 +266,7 @@ public class Player : MonoBehaviour
                 }
 
                 deltaMovement.y = (Mathf.Max(hit.distance - _skinWidth, 0) * verticalDirection);
-                _velocity.y = deltaMovement.y;
+                velocity.y = deltaMovement.y;
                 rayDistance = hit.distance;
 
                 if (verticalDirection < 0)
@@ -297,7 +298,7 @@ public class Player : MonoBehaviour
 
     public void SetMoveInput(Vector2 moveInput)
     {
-        _velocity.x = _moveSpeed * moveInput.x;
+        velocity.x = _moveSpeed * moveInput.x;
     }
 
     public void Jump()
@@ -305,7 +306,7 @@ public class Player : MonoBehaviour
         if (_hasFloor || _coyotteJump)
         {
             Animation.Instance.JumpAnimation();
-            _velocity.y = _jumpForce;
+            velocity.y = _jumpForce;
             _hasFloor = false;
             _coyoteTimeCounter = 0;
 
@@ -317,9 +318,9 @@ public class Player : MonoBehaviour
 
         //print($"velocity x is {_velocity.x}");
 
-        Vector2 rayOrigin = _velocity.x > 0 ? _bottomLeft : _bottomRight;
+        Vector2 rayOrigin = velocity.x > 0 ? _bottomLeft : _bottomRight;
 
-        Vector2 rayEnd = rayOrigin + Vector2.up * (_velocity.y * Time.deltaTime + Mathf.Sign(_velocity.y) * _skinWidth);
+        Vector2 rayEnd = rayOrigin + Vector2.up * (velocity.y * Time.deltaTime + Mathf.Sign(velocity.y) * _skinWidth);
         RaycastHit2D hitInfo = Physics2D.Linecast(rayOrigin, rayEnd, _solidMask | _passThroughMask);
         Debug.DrawRay(rayOrigin, (rayEnd - rayOrigin) * 10, Color.magenta);
 
@@ -333,9 +334,9 @@ public class Player : MonoBehaviour
             return;
         }
 
-        _velocity = ProjectOnLine(_velocity, hitInfo.normal);  //adapts _velocity according to ramp inclination 
+        velocity = ProjectOnLine(velocity, hitInfo.normal);  //adapts _velocity according to ramp inclination 
         _hasFloor = true;
-        Debug.DrawRay(transform.position, _velocity * 50, Color.green);
+        Debug.DrawRay(transform.position, velocity * 50, Color.green);
     }
 
     public static Vector2 ProjectOnLine(Vector2 vector, Vector2 normal) //returns a vector which varies according to the ramp
@@ -356,7 +357,7 @@ public class Player : MonoBehaviour
     {
         // Position handling
         transform.position = respawnPosition;
-        _velocity = Vector2.zero;
+        velocity = Vector2.zero;
 
         // Carried object handling 
 
