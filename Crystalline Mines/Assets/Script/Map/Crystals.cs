@@ -8,7 +8,7 @@ public class Crystals : MonoBehaviour
 {
     [NonSerialized] public List<SpriteRenderer> crystalsSpriteRenderers = new List<SpriteRenderer>();
     [NonSerialized] public List<Light2D> crystalsLights = new List<Light2D>();
-    public Light2D _globalLight;
+    public Light2D globalLight;
     
     void Start()
     {
@@ -63,10 +63,10 @@ public class Crystals : MonoBehaviour
     {
         for (float t = 0.00f; t < duration; t += Time.deltaTime)
         {
-            _globalLight.color = Color.Lerp(_globalLight.color, color, t / duration);
-            Color.RGBToHSV(_globalLight.color, out float h, out float s, out float v);
+            globalLight.color = Color.Lerp(globalLight.color, color, t / duration);
+            Color.RGBToHSV(globalLight.color, out float h, out float s, out float v);
             s = saturation > 0 ? t/duration*saturation : Mathf.Lerp(s, 0, t / duration);
-            _globalLight.color = Color.HSVToRGB(h, s, v);
+            globalLight.color = Color.HSVToRGB(h, s, v);
             
             yield return null;
         }
