@@ -89,6 +89,10 @@ public class Player : MonoBehaviour
                 DropThroughPlatform(1);
                 ReenablePlatformCollision();
             }
+            else if (deltaMovement.y < 0)
+            {
+                Animation.Instance.FallAnimation();
+            }
         }
         HandleCoyoteTime();
         transform.Translate(deltaMovement);
@@ -357,4 +361,15 @@ public class Player : MonoBehaviour
         else
             Debug.LogError($"ERROR ! The carried object by the player '{carriedObject.name}' don't implement the '{nameof(ICarriable)}' Interface.");
     }
+
+    public bool CanJump()
+    {
+        if (_hasFloor || _coyotteJump)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    
 }
