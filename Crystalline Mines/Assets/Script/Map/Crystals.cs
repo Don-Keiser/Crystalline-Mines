@@ -19,8 +19,35 @@ public class Crystals : MonoBehaviour
         }
     }
     
-    public void ChangeColor(Color color, bool isSrtartAnimation)
+    public void ChangeColor(Color color, bool isSrtartAnimation, float animDuration)
     {
+        StartCoroutine(CrystalsColor(color, animDuration));
+
+        if (isSrtartAnimation)
+        {
+            StartCoroutine(GlobalColor(color, animDuration, 0.5f));
+        }
+        else
+        {
+            StartCoroutine(GlobalColor(Color.white, animDuration,0f));
+        }
+    }
+    
+    private IEnumerator CrystalsColor(Color color, float duration)
+    {
+        for (float t = 0.00f; t < duration; t += Time.deltaTime)
+        {
+            crystalsSpriteRenderers.ForEach(crystalsColor =>
+            {
+                crystalsColor.color = Color.Lerp(crystalsColor.color, color, t / duration);
+            });
+            crystalsLights.ForEach(crystalsLightColor =>
+            {
+                crystalsLightColor.color = Color.Lerp(crystalsLightColor.color, color, t / duration);
+            });
+            yield return null;
+        }
+        
         crystalsSpriteRenderers.ForEach(crystalsColor =>
         {
             crystalsColor.color = color;
@@ -29,19 +56,19 @@ public class Crystals : MonoBehaviour
         {
             crystalsLightColor.color = color;
         });
-
-        if (isSrtartAnimation)
+        
+    }
+    
+    private IEnumerator GlobalColor(Color color, float duration, float saturation)
+    {
+        for (float t = 0.00f; t < duration; t += Time.deltaTime)
         {
-            _globalLight.color = color;
+            _globalLight.color = Color.Lerp(_globalLight.color, color, t / duration);
             Color.RGBToHSV(_globalLight.color, out float h, out float s, out float v);
-            s = 0.5f; // Reduce saturation to 50%
+            s = saturation > 0 ? t/duration*saturation : Mathf.Lerp(s, 0, t / duration);
             _globalLight.color = Color.HSVToRGB(h, s, v);
+            
+            yield return null;
         }
-        else
-        {
-            _globalLight.color = Color.white;
-        }
-        
-        
     }
 }
