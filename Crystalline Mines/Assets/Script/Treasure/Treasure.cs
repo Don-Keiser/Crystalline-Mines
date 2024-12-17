@@ -1,3 +1,4 @@
+using Script.Enigma1;
 using System;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class Treasure : Interactible, ICarriable
     Transform _transform;
     Transform _playerTransform;
 
+    private PlayerGrabController _playerGrabController;
     void Start()
     {
         _initialLayer = gameObject.layer;
@@ -21,6 +23,7 @@ public class Treasure : Interactible, ICarriable
 
         _transform = gameObject.transform;
         _playerTransform = Player.PlayerTransform;
+        _playerGrabController = PlayerGrabController.Instance;
     }
 
     public override void PlayerInteract()
@@ -45,15 +48,15 @@ public class Treasure : Interactible, ICarriable
 
     void SetIsCarried(bool p_newValue)
     {
-        if (p_newValue && _isCarried == false && Player.carriedObject == null)
+        if (p_newValue && _isCarried == false && _playerGrabController.holdObject == null)
         {
-            Player.carriedObject = gameObject;
+            _playerGrabController.holdObject = gameObject;
             _isCarried = true;
         }
 
-        else if (p_newValue == false && _isCarried && Player.carriedObject == gameObject)
+        else if (p_newValue == false && _isCarried && _playerGrabController.holdObject == gameObject)
         {
-            Player.carriedObject = null;
+            _playerGrabController.holdObject = null;
             _isCarried = false;
         }
 

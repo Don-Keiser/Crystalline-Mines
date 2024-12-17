@@ -80,8 +80,8 @@ public class RailPieces : Interactible, IRail
     {
         _isCarried = false;
 
-        if (Player.carriedObject == gameObject)
-            Player.carriedObject = null;
+        if (_playerGrabController.holdObject == gameObject)
+            _playerGrabController.holdObject = null;
 
         _transform.parent = _railPiecesParent;
 
@@ -97,8 +97,8 @@ public class RailPieces : Interactible, IRail
         _transform.parent = _railPiecesParent;
         _transform.position = _initialPosition;
 
-        if (Player.carriedObject == gameObject)
-            Player.carriedObject = null;
+        if (_playerGrabController.holdObject == gameObject)
+            _playerGrabController.holdObject = null;
 
         _isCarried = false;
 
@@ -111,7 +111,7 @@ public class RailPieces : Interactible, IRail
     {
         if (p_newValue && _isCarried == false && _playerGrabController.holdObject == null)
         {
-            Player.carriedObject = gameObject;
+            _playerGrabController.holdObject = gameObject;
             _isCarried = true;
 
             _playerGrabController.holdObject = gameObject;

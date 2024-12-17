@@ -165,7 +165,6 @@ public class SimonGame : MonoBehaviour
 
     private void WinEnigma()
     {
-        Player.CanOpenTheDoor = true;
 
         TimerManager.StartTimer(0.5f, () =>
         {

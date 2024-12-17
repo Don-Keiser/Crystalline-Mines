@@ -50,5 +50,6 @@ public class Interact_Crystal : Interactible,ICarriable
     public void Reinitialize()
     {
         transform.position = initialPosition;
+
     }
 }

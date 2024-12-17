@@ -111,9 +111,9 @@ public class Rail : Interactible, IRail
     {
         p_railPieces = null;
 
-        if (Player.carriedObject != null)
+        if (PlayerGrabController.Instance.holdObject != null)
         {
-            if (Player.carriedObject.TryGetComponent(out p_railPieces))
+            if (PlayerGrabController.Instance.holdObject.TryGetComponent(out p_railPieces))
             {
                 return true;
             }
