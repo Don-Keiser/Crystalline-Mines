@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1029142583167263061}
   - component: {fileID: 7805448756213209445}
   m_Layer: 0
-  m_Name: OrangeCystal
+  m_Name: Crystal 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 211ffeb1336692d45ac1d2276b4631c3, type: 3}
-  m_Color: {r: 1, g: 0.59974253, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4642939da8ce0e645b1accdfcdfde8ff, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
-  m_LightCookieSprite: {fileID: 21300000, guid: 211ffeb1336692d45ac1d2276b4631c3, type: 3}
+  m_LightCookieSprite: {fileID: 21300000, guid: 4642939da8ce0e645b1accdfcdfde8ff, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
@@ -119,8 +119,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.0026500225, y: 0.013750076, z: 0}
-    m_Extent: {x: 5.1291504, y: 6.73255, z: 0}
+    m_Center: {x: 0.28960013, y: 0.43035007, z: 0}
+    m_Extent: {x: 5.4105997, y: 5.7379503, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -131,9 +131,13 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 4.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.00623703, y: -2.2181835, z: 0}
-  - {x: 0.6234169, y: -1.591774, z: 0}
-  - {x: 0.63282394, y: 1.6126938, z: 0}
-  - {x: -0.003753662, y: 2.2459917, z: 0}
-  - {x: -0.623333, y: 1.5880814, z: 0}
-  - {x: -0.6265297, y: -1.5875282, z: 0}
+  - {x: 0.82466125, y: -0.80678844, z: 0}
+  - {x: 1.2004204, y: 0.25152874, z: 0}
+  - {x: 1.0488014, y: 0.80166245, z: 0}
+  - {x: 0.600235, y: 0.4593382, z: 0}
+  - {x: 0.38777924, y: -0.21351147, z: 0}
+  - {x: 0.2695732, y: 1.0665436, z: 0}
+  - {x: -0.21455383, y: 1.6684742, z: 0}
+  - {x: -0.6212883, y: 0.9599199, z: 0}
+  - {x: -0.4996071, y: -0.7819643, z: 0}
+  - {x: 0.24827194, y: -0.6071806, z: 0}
