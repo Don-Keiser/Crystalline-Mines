@@ -18,7 +18,7 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] private GameObject _levelCenter;
     [SerializeField] private float _maxCameraDezoom;
     [SerializeField] private float _animDuration;
-    [SerializeField] private float _fullscreenDureation;
+    [SerializeField] private float _fullscreenDuration;
 
 
 
@@ -38,7 +38,7 @@ public class CheckPoint : MonoBehaviour
         if (player is null) { return; }
 
 
-        EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _animDuration, _fullscreenDureation);
+        EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _fullscreenDuration, _animDuration);
 
         player.respawnPosition = respawnPosition;
 
