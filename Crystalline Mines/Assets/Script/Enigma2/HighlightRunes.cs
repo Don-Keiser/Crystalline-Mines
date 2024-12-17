@@ -41,12 +41,12 @@ public class HighlightRunes : Interactible
                 _runeSprite.enabled = true;
             });
             
-            _crystals.ChangeColor(_runeSprite.color, true); // transform the color of the crystals to the color of the rune
+            _crystals.ChangeColor(_runeSprite.color, true, _animationDuration); // transform the color of the crystals to the color of the rune
 
             TimerManager.StartTimer((_timerDuration + _fullScreenDuration + (2 * _animationDuration)), () =>
             {
                 _rune.SetActive(false);
-                _crystals.ChangeColor(Color.white, false); // transform the color of the crystals to white
+                _crystals.ChangeColor(Color.white, false, _animationDuration); // transform the color of the crystals to white
             });
         }
     }
