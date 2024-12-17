@@ -1,3 +1,4 @@
+using Script.Enigma1;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
@@ -61,6 +62,10 @@ public class Rail : Interactible, IRail
                 railPieces.Disable();
 
                 SetRailState(RailFormHandler.RailStates.NonDamaged);
+
+                PlayerGrabController.Instance.hasCrystal = false;
+                PlayerGrabController.Instance.holdObject = null;
+                PlayerGrabController.Instance.holdObjectRb = null;
             }
             else
             {
