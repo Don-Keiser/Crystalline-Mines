@@ -6,7 +6,7 @@ using UnityEngine;
 public class SolutionCheck : MonoBehaviour
 {
     private List<ChangeRune> _lightPoints = new List<ChangeRune>(); 
-    [SerializeField] GameObject _outDoor;
+    [SerializeField] private GameObject _outDoor;
 
     private void Start()
     {

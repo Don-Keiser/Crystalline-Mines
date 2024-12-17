@@ -11,20 +11,16 @@ public class CheckPoint : MonoBehaviour
 
     [field: SerializeField]
     public CheckPointState state { get; private set; }
-
-    [SerializeField] private GameObject _finalCheckpoint;
-
+    [HideInInspector] public Vector3 respawnPosition;
+    Collider2D _collider2D;
 
     [Header("Camera Animation Parameter")]
     [SerializeField] private GameObject _levelCenter;
     [SerializeField] private float _maxCameraDezoom;
     [SerializeField] private float _animDuration;
-    [SerializeField] private float _fullscreenDureation;
+    [SerializeField] private float _fullscreenDuration;
 
 
-    [HideInInspector] public Vector3 respawnPosition;
-
-    Collider2D _collider2D;
 
     void Start()
 
@@ -35,23 +31,16 @@ public class CheckPoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D p_collider2D)
     {
-        //if (!p_collider2D.gameObject.CompareTag("Player"))
-        //    return;
+        if (!p_collider2D.gameObject.CompareTag("Player")) { return; }
+        
+        Player player = p_collider2D.gameObject.GetComponent<Player>();
 
-        Player player = p_collider2D?.GetComponent<Player>();
         if (player is null) { return; }
 
 
-        if (_finalCheckpoint == false)
-        {
-            EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _animDuration, _fullscreenDureation);
+        EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _fullscreenDuration, _animDuration);
 
-            player.zoneRespawnOfPlayer = gameObject.transform.position;
-            Destroy(this);
-        }
-        if (_finalCheckpoint)
-
-            player.respawnPosition = respawnPosition;
+        player.respawnPosition = respawnPosition;
 
         SetNewState(CheckPointState.Claimed);
     }

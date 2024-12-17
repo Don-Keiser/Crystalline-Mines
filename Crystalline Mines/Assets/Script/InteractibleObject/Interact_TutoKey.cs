@@ -1,10 +1,11 @@
+using UnityEngine;
 public class Interact_TutoKey : Interactible
 {
-
+    [SerializeField] private DoorHandler.LevelRoom _doorRoom;
     public override void PlayerInteract()
     {
-        Player.CanOpenTheDoor = true;
         base.PlayerInteract();
+        DoorHandler.Instance.GetDoor(_doorRoom).OpenDoor(() => true);
     }
     public override void StartAnim()
     {

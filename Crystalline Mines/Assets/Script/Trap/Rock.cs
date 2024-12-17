@@ -2,24 +2,20 @@ using UnityEngine;
 
 public class Rock : MonoBehaviour
 {
-    private Player _player;
-
-    private void Start()
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        _player = FindAnyObjectByType<Player>();
-    }
-
-    private void OnCollisionEnter2D()
-    {
-        Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            _player.transform.position = _player.respawnPosition;
+            if (gameObject.layer == LayerMask.NameToLayer("TrapCrystal"))
+            {
+                Animation.Instance.DeadTrapCrystalAnimation();
+                TimerManager.StartTimer(0.5f, (() => collision.gameObject.GetComponent<Player>().Respawn()));
+                Destroy(gameObject);
+            }
         }
-        Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

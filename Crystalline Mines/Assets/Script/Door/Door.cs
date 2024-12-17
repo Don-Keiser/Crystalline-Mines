@@ -48,7 +48,7 @@ public class Door : MonoBehaviour
     {
         // TEMPORARY : TO DEBUG
         GetComponent<SpriteRenderer>().color = Color.green;
-
+        TimerManager.StartTimer(3.0f, () => Destroy(gameObject));
         //animator.Play();
     }
 

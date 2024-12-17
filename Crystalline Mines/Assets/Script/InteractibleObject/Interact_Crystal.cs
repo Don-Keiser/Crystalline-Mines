@@ -1,11 +1,19 @@
 using Script.Enigma1;
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Interact_Crystal : Interactible
+public class Interact_Crystal : Interactible,ICarriable
 {
     [SerializeField] private SimonGame _simonGame;
     [SerializeField] private PlayerGrabController _grabController;
     private Rigidbody2D _holdObjectRb;
+    public Vector3 initialPosition{get; private set;}
+
+    private void Start()
+    {
+        initialPosition = transform.position;
+    }
     public override void PlayerInteract()
     {
         base.PlayerInteract();
@@ -37,5 +45,9 @@ public class Interact_Crystal : Interactible
             _grabController.holdObjectRb = GetComponent<Rigidbody2D>();
             _grabController.holdObjectRb.isKinematic = true;
         }
+    }
+    public void Reinitialize()
+    {
+        transform.position = initialPosition;
     }
 }

@@ -2,7 +2,6 @@ using Script.Enigma1;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerGrabController))]
 
 public class Controller : MonoBehaviour
 {
@@ -35,7 +34,7 @@ public class Controller : MonoBehaviour
         _player.SetMoveInput(_moveInput);
 
         ShowTextOnNearestObject();
-
+        Animation.Instance.MoveAnimation();
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _player.Jump();
