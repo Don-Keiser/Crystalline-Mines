@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1029142583167263061}
   - component: {fileID: 7805448756213209445}
   m_Layer: 0
-  m_Name: RedCrystal
+  m_Name: Crystal 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 211ffeb1336692d45ac1d2276b4631c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 36ca0874e5ff6a4499e4d23f1095e4c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -119,8 +119,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.0026500225, y: 0.013750076, z: 0}
-    m_Extent: {x: 5.1291504, y: 6.73255, z: 0}
+    m_Center: {x: 0.017099857, y: 0.12835002, z: 0}
+    m_Extent: {x: 5.7317, y: 5.76575, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -131,9 +131,18 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 4.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.00623703, y: -2.2181835, z: 0}
-  - {x: 0.6234169, y: -1.591774, z: 0}
-  - {x: 0.63282394, y: 1.6126938, z: 0}
-  - {x: -0.003753662, y: 2.2459917, z: 0}
-  - {x: -0.623333, y: 1.5880814, z: 0}
-  - {x: -0.6265297, y: -1.5875282, z: 0}
+  - {x: -0.2655487, y: -0.8532944, z: 0}
+  - {x: -0.06972504, y: -0.8409662, z: 0}
+  - {x: 0.30408096, y: -1.0202122, z: 0}
+  - {x: 1.2233963, y: 0.6794081, z: 0}
+  - {x: 1.2498016, y: 1.3946896, z: 0}
+  - {x: 0.6963272, y: 1.0066175, z: 0}
+  - {x: 0.17655563, y: 0.014030457, z: 0}
+  - {x: 0.18617249, y: 0.59473133, z: 0}
+  - {x: -0.07672119, y: 0.8519478, z: 0}
+  - {x: -0.31663132, y: 0.57965183, z: 0}
+  - {x: -0.33912277, y: 0.045194626, z: 0}
+  - {x: -0.6786728, y: 0.7490034, z: 0}
+  - {x: -1.1563644, y: 1.0330362, z: 0}
+  - {x: -1.2168922, y: 0.47680187, z: 0}
+  - {x: -0.37797546, y: -1.1385288, z: 0}

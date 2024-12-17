@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1029142583167263061}
   - component: {fileID: 7805448756213209445}
   m_Layer: 0
-  m_Name: BlueCrystal
+  m_Name: Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 211ffeb1336692d45ac1d2276b4631c3, type: 3}
-  m_Color: {r: 0, g: 0.04770422, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

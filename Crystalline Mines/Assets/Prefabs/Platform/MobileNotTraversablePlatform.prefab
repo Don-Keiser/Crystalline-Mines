@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1555980031962177829}
   - component: {fileID: 7169979876246103942}
   - component: {fileID: 4105045795403234965}
+  - component: {fileID: -1418839822348910098}
   m_Layer: 7
   m_Name: MobileNotTraversablePlatform
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 51.8514, y: 5.9731174, z: 0.0053672306}
-  m_LocalScale: {x: 6.9717784, y: -1.2839, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,8 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.101326115, g: 0.9339623, b: 0.54014796, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 19364d3e531a76b4d869232fe91b3ba1, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,21 +118,21 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00827527, y: -0.121159494}
+  m_Offset: {x: -0.005, y: 0.09}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.91724825, y: 0.7480277}
+  m_Size: {x: 2.23, y: 0.12}
   m_EdgeRadius: 0
 --- !u!61 &1555980031962177829
 BoxCollider2D:
@@ -165,18 +166,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010344118, y: 0.02246803}
+  m_Offset: {x: -0.005, y: 0.07}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9627612, y: 0.9550638}
+  m_Size: {x: 2.23, y: 0.12}
   m_EdgeRadius: 0
 --- !u!50 &7169979876246103942
 Rigidbody2D:
@@ -217,8 +218,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe32bb9a4965e94b876ecfa5e9fbc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  movespeed: 2
-  player: {fileID: 0}
+  _waypoints: []
+  _moveSpeed: 2
+--- !u!114 &-1418839822348910098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5397228780528507134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000cd8ffed615b1a9f2
+  m_ShapePath:
+  - {x: -1.2799988, y: -1.2800002, z: 0}
+  - {x: -1.2799988, y: 1.2800002, z: 0}
+  - {x: 1.2799988, y: 1.2800002, z: 0}
+  - {x: 1.2799988, y: -1.2800002, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -61776
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 1.2799988, y: 1.2800002, z: 0}

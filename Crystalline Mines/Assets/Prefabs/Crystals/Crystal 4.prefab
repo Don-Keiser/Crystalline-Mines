@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1029142583167263061}
   - component: {fileID: 7805448756213209445}
   m_Layer: 0
-  m_Name: PurpleCrsytal
+  m_Name: Crystal 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 211ffeb1336692d45ac1d2276b4631c3, type: 3}
-  m_Color: {r: 0.75640774, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: be644d46ed380164487c1c2b39fb8362, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -119,8 +119,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.0026500225, y: 0.013750076, z: 0}
-    m_Extent: {x: 5.1291504, y: 6.73255, z: 0}
+    m_Center: {x: -0.43019986, y: 0.6889498, z: 0}
+    m_Extent: {x: 5.4681997, y: 5.6866503, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -131,9 +131,13 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 4.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.00623703, y: -2.2181835, z: 0}
-  - {x: 0.6234169, y: -1.591774, z: 0}
-  - {x: 0.63282394, y: 1.6126938, z: 0}
-  - {x: -0.003753662, y: 2.2459917, z: 0}
-  - {x: -0.623333, y: 1.5880814, z: 0}
-  - {x: -0.6265297, y: -1.5875282, z: 0}
+  - {x: -0.7369385, y: -0.29983807, z: 0}
+  - {x: 0.10849762, y: -0.3952675, z: 0}
+  - {x: 0.5393715, y: 0.6778879, z: 0}
+  - {x: 0.4194107, y: 1.0781708, z: 0}
+  - {x: 0.050979614, y: 0.85617924, z: 0}
+  - {x: -0.11898041, y: 0.32437325, z: 0}
+  - {x: -0.28379822, y: 1.2953882, z: 0}
+  - {x: -0.894825, y: 1.8763399, z: 0}
+  - {x: -1.3991508, y: 1.1432467, z: 0}
+  - {x: -1.1769485, y: -0.4972191, z: 0}
