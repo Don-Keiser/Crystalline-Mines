@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 7898497156326184948}
   - component: {fileID: 1681358566941796794}
   - component: {fileID: 210411338895974343}
+  - component: {fileID: 3914734847655548771}
   m_Layer: 9
   m_Name: TutoPannel
   m_TagString: Untagged
@@ -231,3 +232,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &3914734847655548771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5357243719036593195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 1
+  m_Color: {r: 0.735849, g: 0.46660087, b: 0.18743317, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 00000000cd8ffed615b1a9f2
+  m_LightCookieSprite: {fileID: 21300000, guid: 9cef58e2ef684b24eba15c9fe098e857, type: 3}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: -0.002554208, y: 0.2726152, z: 0}
+    m_Extent: {x: 0.5958458, y: 0.26308483, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 2
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5978698, y: 0.064003825, z: 0}
+  - {x: 0.58263814, y: 0.009530336, z: 0}
+  - {x: 0.5932916, y: 0.53498864, z: 0}
+  - {x: -0.5954664, y: 0.48365942, z: 0}
+  - {x: -0.57348806, y: 0.19992362, z: 0}
+  - {x: -0.4468842, y: 0.14228953, z: 0}
+  - {x: -0.59797364, y: 0.1283539, z: 0}
