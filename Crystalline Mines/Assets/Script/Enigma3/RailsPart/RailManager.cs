@@ -8,6 +8,7 @@ public class RailManager : MonoBehaviour
 
     public static Action allRailsRepairedEvent;
     public static Action<Rail> newReparedRailEvent;
+    public static Action<Sprite> onShowDetailedDamagedRailEvent;
 
     public List<IRail> IRails { get; private set; } = new();
 
