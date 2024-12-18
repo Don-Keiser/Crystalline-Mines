@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +11,12 @@ public class UpdateTutoPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _canvasText;
     [SerializeField] private Image _canvasImage;
     [SerializeField] private GameObject _panel;
-
     private Interact_TutoPanel _tutoPanel;
+
+    [Header("Type writer effect")]
+    [SerializeField] private float _delay;
+    [SerializeField] private string _fullText;
+    [SerializeField] private string _currentText = "";
 
     private void Awake()
     {
@@ -30,6 +35,7 @@ public class UpdateTutoPanel : MonoBehaviour
     }
     private void ShowPanel(GameObject go)
     {
+        ResetText();
         if (_currentGo == go || _currentGo == null || (!_isActive && _currentGo != go))
         {
             _isActive = !_isActive;
@@ -38,8 +44,7 @@ public class UpdateTutoPanel : MonoBehaviour
         _currentGo = go;
         _tutoPanel = _currentGo.GetComponent<Interact_TutoPanel>();
 
-        ShowAndUpdateRightComponent(go);
-        UpdatePanelPosition(go);
+        ShowAndUpdateRightComponent();
     }
 
     private void HidePanel(GameObject go)
@@ -48,32 +53,49 @@ public class UpdateTutoPanel : MonoBehaviour
 
         _isActive = false;
         _panel.SetActive(false);
+        ResetText();
     }
-    private void UpdatePanelPosition(GameObject go)
-    {
-        transform.position = go.transform.position;
-    }
-    private void ShowAndUpdateRightComponent(GameObject go)
+    private void ShowAndUpdateRightComponent()
     {
         if (_tutoPanel.ExplanatoryText != string.Empty) //set Text
         {
             _canvasImage.gameObject.SetActive(false);
             _canvasText.gameObject.SetActive(true);
-            UpdatePanelText(go);
+            UpdatePanelText();
 
         }
         else if (_tutoPanel.ExplanatoryImage != null) // set Image
         {
             _canvasText.gameObject.SetActive(false);
             _canvasImage.gameObject.SetActive(true);
-            UpdatePanelImage(go);
+            UpdatePanelImage();
         }
     }
-    private void UpdatePanelText(GameObject go)
+    private void UpdatePanelText()
     {
-        _canvasText.text = _tutoPanel.ExplanatoryText;
+        _fullText = _tutoPanel.ExplanatoryText;
+        StartCoroutine(ShowText());
     }
-    private void UpdatePanelImage(GameObject go)
+
+    private IEnumerator ShowText()
+    {
+        for (int i = 0; 0 < _fullText.Length; i++)
+        {
+            if (!_panel.activeSelf) { ResetText(); break; }
+
+            _currentText = _fullText.Substring(0, i);
+            _canvasText.text = _currentText;
+            yield return new WaitForSeconds(_delay);
+        }
+    }
+
+    private void ResetText()
+    {
+        _fullText = string.Empty;
+        _currentText = string.Empty;
+        _canvasText.text = string.Empty;
+    }
+    private void UpdatePanelImage()
     {
         _canvasImage.sprite = _tutoPanel.ExplanatoryImage;
     }

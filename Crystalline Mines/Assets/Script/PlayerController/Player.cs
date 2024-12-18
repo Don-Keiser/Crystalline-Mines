@@ -1,3 +1,4 @@
+using Script.Enigma1;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,10 +10,7 @@ public class Player : MonoBehaviour
     public static Transform PlayerTransform;
 
     [Header("Player Ressources")]
-    public static bool CanOpenTheDoor = false;
     public static bool TutorialKeyObtained = false;
-
-    public static GameObject carriedObject;
 
     [HideInInspector] public Vector3 respawnPosition;
 
@@ -102,7 +100,7 @@ public class Player : MonoBehaviour
                 DropThroughPlatform(1);
                 ReenablePlatformCollision();
             }
-            else if (deltaMovement.y < 0)
+            else if (deltaMovement.y < 0 && _coyotteJump)
             {
                 Animation.Instance.FallAnimation();
             }
@@ -360,24 +358,25 @@ public class Player : MonoBehaviour
         velocity = Vector2.zero;
 
         // Carried object handling 
-
+        GameObject carriedObject = GetComponent<PlayerGrabController>().holdObject;
         if (carriedObject == null)
             return;
 
         if (carriedObject.TryGetComponent(out ICarriable p_ICarriable))
+        {
+            PlayerGrabController.Instance.DropObject();
             p_ICarriable.Reinitialize();
+        }
         else
             Debug.LogError($"ERROR ! The carried object by the player '{carriedObject.name}' don't implement the '{nameof(ICarriable)}' Interface.");
     }
 
     public bool CanJump()
     {
-        if (_hasFloor || _coyotteJump)
+        if (_coyotteJump)
         {
             return true;
         }
         return false;
     }
-    
-    
 }

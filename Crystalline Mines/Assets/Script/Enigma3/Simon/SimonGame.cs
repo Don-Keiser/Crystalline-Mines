@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class SimonGame : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class SimonGame : MonoBehaviour
     [Header("Cristal Sequence")]
     [SerializeField] private int _maxSequencelength;
     private List<GameObject> _cristalSequence = new();
-    public bool EnigmaIsLaunched { get; private set; }
+
+    [SerializeField] private bool _enigmaIsLaunched = false;
 
     private bool _animationTime = false;
     private int _cristalIndex = 1;
@@ -19,13 +21,14 @@ public class SimonGame : MonoBehaviour
 
     private List<GameObject> _cristalPlayerChoose = new();
 
+    [SerializeField] private DoorHandler.LevelRoom _levelRoom;
 
     [Header("Victory Screen TEST")]
     [SerializeField] private GameObject _victoryPanel;
 
     private void Start()
     {
-        EnigmaIsLaunched = false;
+        _enigmaIsLaunched = false;
         InitializeRandomSequence();
         FirstAnim();
     }
@@ -59,36 +62,40 @@ public class SimonGame : MonoBehaviour
     {
         if (_startingCristal != null)
         {
-            while (!EnigmaIsLaunched)
+            while (!_enigmaIsLaunched)
             {
                 yield return new WaitForSeconds(0.25f);
-                _startingCristal.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+                _startingCristal.GetComponent<Light2D>().pointLightOuterRadius++;
                 yield return new WaitForSeconds(0.25f);
-                _startingCristal.transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+                _startingCristal.GetComponent<Light2D>().pointLightOuterRadius--;
             }
         }
     }
+
     private IEnumerator CristalAnimation()
     {
         _animationTime = true;
-        if (_cristalIndex == 1) { yield return new WaitForSeconds(0.5f); }
+        //if (_cristalIndex == 1) { yield return new WaitForSeconds(0.5f); }
+
+        yield return new WaitForSeconds(0.5f);
 
         for (int i = 0; i < _cristalIndex; i++)
         {
             yield return new WaitForSeconds(0.25f);
-            _cristalSequence[i].transform.localScale += Vector3.one;
+            _cristalSequence[i].GetComponent<Light2D>().intensity += 2;
             yield return new WaitForSeconds(0.25f);
-            _cristalSequence[i].transform.localScale -= Vector3.one;
+            _cristalSequence[i].GetComponent<Light2D>().intensity -= 2;
         }
         _animationTime = false;
     }
 
+
     private IEnumerator ClickedAnim(GameObject cristal)
     {
         yield return new WaitForSeconds(0.1f);
-        cristal.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+        cristal.GetComponent<Light2D>().intensity += 2;
         yield return new WaitForSeconds(0.1f);
-        cristal.transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+        cristal.GetComponent<Light2D>().intensity -= 2;
     }
 
     private IEnumerator ResetAnim()
@@ -98,14 +105,14 @@ public class SimonGame : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
             foreach (var cristal in _allCristals)
             {
-                cristal.transform.localScale += Vector3.one;
+                cristal.GetComponent<Light2D>().intensity += 2;
             }
 
             yield return new WaitForSeconds(0.15f);
 
             foreach (var cristal in _allCristals)
             {
-                cristal.transform.localScale -= Vector3.one;
+                cristal.GetComponent<Light2D>().intensity -= 2;
             }
         }
     }
@@ -117,15 +124,15 @@ public class SimonGame : MonoBehaviour
             return;
         bool reset = false;
 
-        if (choosedCristal == _startingCristal && !EnigmaIsLaunched)
+        if (choosedCristal == _startingCristal && !_enigmaIsLaunched)
         {
-            EnigmaIsLaunched = true;
+            _enigmaIsLaunched = true;
             StopCoroutine(FirstCristalAnim());
             SimonIteration();
             return;
         }
 
-        if (choosedCristal != _startingCristal && EnigmaIsLaunched)
+        if (choosedCristal != _startingCristal && _enigmaIsLaunched)
         {
             if (_animationTime) { return; }
 
@@ -160,8 +167,6 @@ public class SimonGame : MonoBehaviour
 
     private void WinEnigma()
     {
-        Player.CanOpenTheDoor = true;
-
         TimerManager.StartTimer(0.5f, () =>
         {
             foreach (var crystal in _allCristals)
@@ -172,13 +177,7 @@ public class SimonGame : MonoBehaviour
             _startingCristal.GetComponent<SpriteRenderer>().color = Color.black;
             _startingCristal.layer = 0;
         });
-
-        //TEST BUILD
-        TimerManager.StartTimer(3.0f, () =>
-        {
-            _victoryPanel.gameObject.SetActive(true);
-            Time.timeScale = 0.0f;
-        });
+        DoorHandler.Instance.GetDoor(_levelRoom).OpenDoor(() => true);
     }
 
     private bool ResetEnigma()
@@ -188,7 +187,7 @@ public class SimonGame : MonoBehaviour
 
         _cristalPlayerChoose.Clear();
         _cristalIndex = 1;
-        EnigmaIsLaunched = false;
+        _enigmaIsLaunched = false;
 
         InitializeRandomSequence();
         FirstAnim();

@@ -37,9 +37,6 @@ namespace Script.Enigma1
             crystal.transform.position = transform.position; // Places the crystal in the slot
             isOccupied = true;
             crystalHere = crystal;
-
-            Debug.Log("Crystal placed!");
-
             if (IsCorrectCrystal())
             {
                 Debug.Log("The placed crystal is correct!");
@@ -52,6 +49,17 @@ namespace Script.Enigma1
             _puzzleManager.RegisterCrystal(crystal, true);
         }
 
+        private void SwapCrystal(GameObject holderCrystal, GameObject crystalAlreadyPlaced)
+        {
+            _puzzleManager.RegisterCrystal(crystalAlreadyPlaced, false);
+            crystalHere = holderCrystal;
+            holderCrystal.transform.position = transform.position;
+
+
+            grabController.holdObject = crystalAlreadyPlaced;
+            grabController.holdObjectRb = crystalAlreadyPlaced.GetComponent<Rigidbody2D>();
+            _puzzleManager.RegisterCrystal(crystalAlreadyPlaced, false);
+        }
 
         public void RemoveCrystal()
         {
@@ -63,7 +71,6 @@ namespace Script.Enigma1
             grabController.hasCrystal = true;
             isOccupied = false;
             crystalHere = null; // Removes the crystal from the slot
-            Debug.Log("Crystal removed!");
             // Informs the PuzzleManager that the crystal has been removed
             _puzzleManager.RegisterCrystal(crystalHere, false);
         }
@@ -73,7 +80,6 @@ namespace Script.Enigma1
         {
             if (_puzzleManager.IsPuzzleCompleted)
             {
-                Debug.Log("Puzzle is completed. Interaction is disabled.");
                 return; // Bloque toute interaction si le puzzle est terminé
             }
 
@@ -87,13 +93,16 @@ namespace Script.Enigma1
             {
                 RemoveCrystal();
                 //grabController.PickUpCrystal();
-                Debug.Log("Removed");
                 return;
+            }
+
+            if(isOccupied && grabController.hasCrystal)
+            {
+                SwapCrystal(grabController.holdObject, crystalHere);
             }
 
             if (!isOccupied && grabController.hasCrystal) // The slot is free and the player wants to place
             {
-                Debug.Log("Placed");
                 PlaceCrystal(grabController.holdObject);
             }
         }

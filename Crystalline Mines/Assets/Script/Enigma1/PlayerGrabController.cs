@@ -51,6 +51,8 @@ namespace Script.Enigma1
                 return;
             }
 
+            RailPieces railPieces = holdObject.GetComponent<RailPieces>();
+
             if (_nearbySlot != null && !_nearbySlot.isOccupied)
             {
                 holdObjectRb.velocity = Vector2.zero;
@@ -67,6 +69,11 @@ namespace Script.Enigma1
                 holdObject.layer = LayerInteractible;
 
                 Debug.Log("Crystal thrown.");
+            }
+            
+            if (railPieces != null)
+            {
+                railPieces.SetIsCarried(false);
             }
 
             // Resets the state after placing or throwing the object

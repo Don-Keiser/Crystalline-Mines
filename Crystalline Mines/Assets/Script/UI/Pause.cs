@@ -65,6 +65,10 @@ public class Pause : MonoBehaviour
     {
         global::Settings.Instance.audioSource.Play();
         
+        global::Settings.Instance.musicSource.Stop();
+        global::Settings.Instance.musicSource.clip = global::SoundManager.Instance.mainMenuSong;
+        global::Settings.Instance.musicSource.Play();
+        
         SceneManager.LoadScene(sceneName);
     }
 }
