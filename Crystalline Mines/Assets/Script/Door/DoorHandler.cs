@@ -8,9 +8,9 @@ public class DoorHandler : MonoBehaviour
     {
         Turorial,
         Level1,
-        Level2Part1,
-        Level2Part2,
-        Level3,
+        Level2,
+        Level3Part1,
+        Level3Part2,
     }
 
     public static DoorHandler Instance;
