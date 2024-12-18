@@ -6,9 +6,10 @@ using UnityEngine;
 public class CheatPanel : MonoBehaviour
 {
     [Header("enigma manager reference")]
-    [SerializeField] private GameObject _manager;
-    [SerializeField] private GameObject _secondEnigmaManager;
-    [SerializeField] private GameObject _railManager;
+    [SerializeField] private FirstEnigmaManager _firstEnigmaManager;
+    [SerializeField] private SimonGame _simonManager;
+    [SerializeField] private SolutionCheck _secondEnigmaManager;
+    [SerializeField] private RailManager _railManager;
 
 
     public void OpenTutoDoor(GameObject keys)
@@ -18,22 +19,22 @@ public class CheatPanel : MonoBehaviour
     }
     public void OpenFirstEnigma()
     {
-        _manager.GetComponent<FirstEnigmaManager>().EnigmaFinish();
+        _firstEnigmaManager.EnigmaFinish();
         OpenDoorAnim();
     }
     public void OpenSecondDoor()
     {
-        _secondEnigmaManager.GetComponent<SolutionCheck>().FinishEnigma();
+        _secondEnigmaManager.FinishEnigma();
         OpenDoorAnim();
     }
     public void OpenRailDoor()
     {
-        _railManager.GetComponent<RailManager>().FinishEnigma();
+        _railManager.FinishEnigma();
         OpenDoorAnim();
     }
     public void OpenSimonDoor()
     {
-        _manager.GetComponent<SimonGame>().FinishEnigma();
+        _simonManager.FinishEnigma();
         OpenDoorAnim();
     }
 
