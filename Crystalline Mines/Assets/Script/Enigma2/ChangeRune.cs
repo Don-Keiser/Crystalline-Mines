@@ -94,7 +94,7 @@ public class ChangeRune : Interactible
         }
     }
 
-    private IEnumerator FadeOut(float duration, SpriteRenderer sprite)
+    private IEnumerator FadeOut(float duration, SpriteRenderer sprite) //Sprite Fade Out
     {
         for (float t = duration; t > 0.01f; t -= Time.deltaTime)
         {
@@ -104,7 +104,7 @@ public class ChangeRune : Interactible
             yield return null;
         }
     }
-    private IEnumerator FadeIn(float duration, SpriteRenderer sprite)
+    private IEnumerator FadeIn(float duration, SpriteRenderer sprite) // Sprite Fade In
     {
         for (float t = 0.01f; t < duration; t += Time.deltaTime)
         {
@@ -114,10 +114,10 @@ public class ChangeRune : Interactible
             yield return null;
         }
     }
-    private IEnumerator LightFadeIn(float duration, Light2D light2D)
+    private IEnumerator LightFadeIn(float duration, Light2D light2D) // Light Fade In for Rune
     {
         canInteract = false;
-        light2D.enabled = true;
+        //light2D.enabled = true;
         for (float t = 0.00f; t < duration; t += Time.deltaTime)
         {
             // fade out the light
@@ -132,7 +132,7 @@ public class ChangeRune : Interactible
         OnRuneChanged?.Invoke();
     }
 
-    private IEnumerator LightFadeOut(float duration, Light2D light2D)
+    private IEnumerator LightFadeOut(float duration, Light2D light2D) // Light Fade Out for Rune
     {
         light2D.enabled = true;
         for (float t = duration; t > 0.00f; t -= Time.deltaTime)
@@ -143,33 +143,33 @@ public class ChangeRune : Interactible
             yield return null;
         }
         light2D.pointLightInnerRadius = 0.0f;
-        light2D.enabled = false;
+        //light2D.enabled = false;
         canInteract = true;
     }
 
 
-    private IEnumerator CrystalFadeOut(float duration, Light2D light2D)
+    private IEnumerator CrystalFadeOut(float duration, Light2D light2D) // Light Fade Out for Crystal light
     {
         for (float t = duration; t > 0.00f; t -= Time.deltaTime)
         {
             light2D.pointLightInnerRadius = t / duration * 0.5f;
-            light2D.pointLightOuterRadius = t / duration;
+            light2D.pointLightOuterRadius = t / duration * 2.0f;
             yield return null;
         }
         light2D.pointLightInnerRadius = 0.0f;
         light2D.pointLightOuterRadius = 0.0f;
     }
 
-    private IEnumerator CrystalFadeIn(float duration, Light2D light2D)
+    private IEnumerator CrystalFadeIn(float duration, Light2D light2D) // Light Fade In for Crystal light
     {
         for (float t = 0.00f; t < duration; t += Time.deltaTime)
         {
             light2D.pointLightInnerRadius = t / duration * 0.5f;
-            light2D.pointLightOuterRadius = t / duration;
+            light2D.pointLightOuterRadius = t / duration * 2.0f;
             yield return null;
         }
         light2D.pointLightInnerRadius = 0.5f;
-        light2D.pointLightOuterRadius = 1.0f;
+        light2D.pointLightOuterRadius = 2.0f;
     }
 
     public override void PlayerInteract()
