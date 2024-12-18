@@ -24,6 +24,8 @@ public class Animation : MonoBehaviour
     {
         SetAnimationBool();
     }
+
+
     private void SetAnimationBool()
     {
         if (_player.velocity.x != 0 && _player.CanJump())
@@ -43,7 +45,6 @@ public class Animation : MonoBehaviour
         }
         if (_player.CanJump())
         {
-            SoundManager.Instance.StopSound();
             _animator.SetBool("canJump", true);
             _alreadyPlayJumpSound = false;
             _animator.SetBool("fall", false);
@@ -58,41 +59,13 @@ public class Animation : MonoBehaviour
         }
         else
         {
+            SoundManager.Instance.StopSound();
             _animator.SetBool("fall", true);
             _animator.SetBool("isJumping", false);
             _animator.SetBool("canJump", false);
         }
         _spriteRenderer.flipX = (_player.velocity.x > 0) ? false : true;
     }
-    //public void MoveAnimation(float playerMovement)
-    //{
-    //    _isMoving = playerMovement != 0;
-    //    _animator.SetBool("PlayerMove", _isMoving);
-
-    //    if (_isMoving)
-    //    {
-    //        _spriteRenderer.flipX = playerMovement < 0;
-    //    }
-
-    //    HandleRunningSound(); // Gérer le son de la course
-    //}
-
-    //private void HandleRunningSound()
-    //{
-    //    bool isCurrentlyRunning = _isMoving && _player.CanJump();
-
-    //    if (isCurrentlyRunning && !_isRunning)
-    //    {
-    //        _isRunning = true;
-    //        SoundManager.Instance.PlaySound(SoundManager.Instance.runSound, true);
-    //    }
-    //    else if (!isCurrentlyRunning && _isRunning)
-    //    {
-    //        _isRunning = false;
-    //        SoundManager.Instance.StopSound();
-    //    }
-    //}
-
     public void DeadSpikeDownAnimation()
     {
         _controller.gameObject.SetActive(false);

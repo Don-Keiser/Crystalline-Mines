@@ -33,13 +33,13 @@ public class SoundManager : MonoBehaviour
         _musicSource = Settings.Instance.musicSource;
     }
 
-    // private void Start()
-    // {
-    //     _musicSource.Stop();
-    //     _musicSource.clip = inGameMusic;
-    //     _audioSource.loop = true;
-    //     _musicSource.Play();
-    // }
+    private void Start()
+    {
+        _musicSource.Stop();
+        _musicSource.clip = inGameMusic;
+        _audioSource.loop = true;
+        _musicSource.Play();
+    }
 
     public void PlaySound(AudioClip clip, bool loop = false)
     {
