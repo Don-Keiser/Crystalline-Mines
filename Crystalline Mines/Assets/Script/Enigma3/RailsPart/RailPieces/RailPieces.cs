@@ -1,6 +1,7 @@
+using Script.Enigma1;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
+[RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D))]
 public class RailPieces : Interactible, IRail
 {
     #region Variables
@@ -22,8 +23,12 @@ public class RailPieces : Interactible, IRail
     // From RailManager
     Transform _railPiecesParent; // Will be use when drop down
 
+    // From PlayerGrabController
+    private PlayerGrabController _playerGrabController;
+
     // Local
     Transform _transform;
+    Transform _initialParent;
     int _initialLayer;
     Vector3 _initialPosition;
     SpriteRenderer _spriteRenderer;
@@ -38,6 +43,7 @@ public class RailPieces : Interactible, IRail
     void Start()
     {
         _transform = transform;
+        _initialParent = _transform.parent;
         _initialLayer = gameObject.layer;
         _initialPosition = _transform.position;
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -48,6 +54,8 @@ public class RailPieces : Interactible, IRail
 
         _railPiecesForm = _railPiecesFormHandler.GetRailFormValues(railPiecesFormType);
         _railPiecesParent = RailManager.Instance.railPiecesParent;
+
+        _playerGrabController = PlayerGrabController.Instance;
 
         UpdateSprite();
     }
@@ -72,8 +80,8 @@ public class RailPieces : Interactible, IRail
     {
         _isCarried = false;
 
-        if (Player.carriedObject == gameObject)
-            Player.carriedObject = null;
+        if (_playerGrabController.holdObject == gameObject)
+            _playerGrabController.holdObject = null;
 
         _transform.parent = _railPiecesParent;
 
@@ -89,8 +97,8 @@ public class RailPieces : Interactible, IRail
         _transform.parent = _railPiecesParent;
         _transform.position = _initialPosition;
 
-        if (Player.carriedObject == gameObject)
-            Player.carriedObject = null;
+        if (_playerGrabController.holdObject == gameObject)
+            _playerGrabController.holdObject = null;
 
         _isCarried = false;
 
@@ -99,17 +107,23 @@ public class RailPieces : Interactible, IRail
     }
     #endregion
 
-    void SetIsCarried(bool p_newValue)
+    public void SetIsCarried(bool p_newValue)
     {
-        if (p_newValue && _isCarried == false && Player.carriedObject == null)
+        if (p_newValue && _isCarried == false && _playerGrabController.holdObject == null)
         {
-            Player.carriedObject = gameObject;
+            _playerGrabController.holdObject = gameObject;
             _isCarried = true;
+
+            _playerGrabController.holdObject = gameObject;
+            _playerGrabController.hasCrystal = true;
+
+            _playerGrabController.holdObjectRb = GetComponent<Rigidbody2D>();
+            _playerGrabController.holdObjectRb.isKinematic = true;
         }
 
-        else if (p_newValue == false && _isCarried && Player.carriedObject == gameObject)
+        else if (p_newValue == false && _isCarried && _playerGrabController.holdObject == gameObject)
         {
-            Player.carriedObject = null;
+            _playerGrabController.holdObject = null;
             _isCarried = false;
         }
 
@@ -156,8 +170,7 @@ public class RailPieces : Interactible, IRail
         }
         else
         {
-            Debug.LogWarning("WARNING ! Not implemented yet.");
-            // TODO: Launch object (use Egnima1 code)
+            transform.parent = _initialParent;
         }
     }
     #endregion
