@@ -73,12 +73,13 @@ namespace Script.Enigma1
             {
                 Debug.Log("Puzzle successfully completed!");
                 IsPuzzleCompleted = true;
-                foreach (var cristal in DEBUGCRSITAL)
+                foreach(var cristal in DEBUGCRSITAL)
                 {
-                    if (cristal.GetComponent<Light2D>() != null)
+                    if(cristal.GetComponent<Light2D>() != null)
                     {
                         StartCoroutine(FinishEnigmaAnim(cristal.GetComponent<Light2D>()));
                     }
+                    cristal.layer = 0;
                 }
                 TimerManager.StartTimer(3.0f, () => DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true));
 
@@ -95,6 +96,8 @@ namespace Script.Enigma1
             float endRadius = cristalLight.pointLightOuterRadius + _additionalRadius;
             float duration = 1.5f; 
             float elapsedTime = 0f;
+
+            cristalLight.intensity += 2.5f;
 
             while (elapsedTime < duration)
             {
@@ -118,7 +121,7 @@ namespace Script.Enigma1
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-
+            cristalLight.intensity = 0.0f;
             cristalLight.pointLightOuterRadius = 0f;
             _animFinish = true;
         }
