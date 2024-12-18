@@ -16,7 +16,7 @@ public class Rail : Interactible, IRail
 
     // From RailFormHandler
     RailFormHandler _railFormHandler;
-    RailFormHandler.RailForm _railForm; // Will be use for the showing of the little bubble
+    RailFormHandler.RailForm _railForm;
     RailFormHandler.RailSpritesOnGround _railFormSpritesOnGround;
 
     // Local
@@ -64,14 +64,14 @@ public class Rail : Interactible, IRail
             }
             else
             {
-                Debug.LogWarning("WARNING ! Not implemented yet.");
-                // TODO: Show the little bubble with the correct sprite, and do not throw the carried object
+                // Show the little bubble with the correct sprite, and do not throw the carried object
+                RailManager.onShowDetailedDamagedRailEvent?.Invoke(_railForm.spriteShownWhenInteracted);
             }
         }
         else
         {
-            Debug.LogWarning("WARNING ! Not implemented yet.");
-            // TODO: Show the little bubble with the correct sprite
+            // Show the little bubble with the correct sprite
+            RailManager.onShowDetailedDamagedRailEvent?.Invoke(_railForm.spriteShownWhenInteracted);
         }
     }
 
