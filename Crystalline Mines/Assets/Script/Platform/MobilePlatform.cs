@@ -38,11 +38,14 @@ public class MobilePlatform : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Vector3 playerPosition = other.transform.position;
-        if (_waypointIndex == 0)
-            playerPosition.x += _moveSpeed * Time.deltaTime;
-        if (_waypointIndex == 1)
-            playerPosition.x += -_moveSpeed * Time.deltaTime;
-        other.transform.position = playerPosition;
+        if (other.CompareTag("Player"))
+        {
+            Vector3 playerPosition = other.transform.position;
+            if (_waypointIndex == 0)
+                playerPosition.x += _moveSpeed * Time.deltaTime;
+            if (_waypointIndex == 1)
+                playerPosition.x += -_moveSpeed * Time.deltaTime;
+            other.transform.position = playerPosition;
+        }
     }
 }
