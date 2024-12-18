@@ -14,12 +14,18 @@ public class Wagon : MonoBehaviour
         public AnimationCurve speedCurve;
     }
 
-    [Header("Statistics :")]
-    [SerializeField] DoorHandler.LevelRoom _doorToOpen;
+    [Header("Camera movement statistics :")]
+    [SerializeField] private Transform _travellingTarget;
+    [SerializeField] private float _maximumCameraDezoom;
+    [SerializeField] private float _animationDurationInSeconds;
+    [SerializeField] private float _fullscreenDurationInSeconds;
+
+    [Header("Door statistics :")]
+    [SerializeField] private DoorHandler.LevelRoom _doorToOpen;
 
     [Header("Mouvement statistics :")]
-    [SerializeField] float _speed = 2;
-    [SerializeField] List<WaypointsValue> _waypointsValue = new();
+    [SerializeField] private float _speed = 2;
+    [SerializeField] private List<WaypointsValue> _waypointsValue = new();
 
     List<Vector3> _waypointsPositionAtStart = new();
 
@@ -30,12 +36,21 @@ public class Wagon : MonoBehaviour
         {
             _waypointsPositionAtStart.Add(_waypointsValue[i].waypointTransform.position);
         }
-
-        StartCoroutine(WagonMotionRoutine());
     }
 
     public IEnumerator WagonMotionRoutine()
     {
+        // Play cinematic
+        EventManager.StartCameraAnimation(
+            _travellingTarget.position,
+            _maximumCameraDezoom,
+            _fullscreenDurationInSeconds,
+            _animationDurationInSeconds
+        );
+
+        yield return new WaitForSeconds(_animationDurationInSeconds);
+
+        // Launch wagon mouvement
         for (int i = 0; i < _waypointsValue.Count; i++)
         {
             Vector3 startPointPosition = transform.position;
@@ -61,6 +76,7 @@ public class Wagon : MonoBehaviour
             }
         }
 
+        // Open the wanted door
         DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true);
     }
 }

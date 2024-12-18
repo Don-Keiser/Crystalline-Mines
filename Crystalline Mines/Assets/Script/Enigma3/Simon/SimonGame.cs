@@ -5,6 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class SimonGame : MonoBehaviour
 {
+    [Header("Wagon reference :")]
+    [SerializeField] private Wagon _wagonScript;
+
     [Header("Cristal refs")]
     [SerializeField] private List<GameObject> _allCristals = new();
     [SerializeField] private GameObject _startingCristal;
@@ -177,7 +180,8 @@ public class SimonGame : MonoBehaviour
             _startingCristal.GetComponent<SpriteRenderer>().color = Color.black;
             _startingCristal.layer = 0;
         });
-        DoorHandler.Instance.GetDoor(_levelRoom).OpenDoor(() => true);
+
+        StartCoroutine(_wagonScript.WagonMotionRoutine());
     }
 
     private bool ResetEnigma()

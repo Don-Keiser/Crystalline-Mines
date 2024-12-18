@@ -62,6 +62,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7787649282151403487}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6016632547240565468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2163528829978657024}
+  m_Layer: 7
+  m_Name: CameraCinematicPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2163528829978657024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6016632547240565468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7787649282151403487}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6646240913485375831
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +155,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2163528829978657024}
   - {fileID: 6229734202676114859}
   - {fileID: 4893343467143012622}
   - {fileID: 1253582182006017193}
@@ -197,6 +229,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae172b8a2144e4f4794920f34ca24c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _travellingTarget: {fileID: 2163528829978657024}
+  _maximumCameraDezoom: 22.5
+  _animationDurationInSeconds: 1.5
+  _fullscreenDurationInSeconds: 4.5
   _doorToOpen: 4
   _speed: 10
   _waypointsValue:
