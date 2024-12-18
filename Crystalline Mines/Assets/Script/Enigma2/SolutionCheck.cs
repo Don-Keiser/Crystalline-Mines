@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class SolutionCheck : MonoBehaviour
 {
-    private List<ChangeRune> _lightPoints = new List<ChangeRune>(); 
+    private List<ChangeRune> _lightPoints = new(); 
     [SerializeField] private DoorHandler.LevelRoom _outDoor;
+    [SerializeField] private List<GameObject> _masterCrystals;
 
     private void Start()
     {
@@ -37,7 +38,8 @@ public class SolutionCheck : MonoBehaviour
         if (isCorrect)
         {
             DoorHandler.Instance.GetDoor(_outDoor).OpenDoor(() => true);
-            _lightPoints.ForEach(lightPoint => lightPoint.canInteract = false);
+            _lightPoints.ForEach(lightPoint => lightPoint.gameObject.layer = 0);
+            _masterCrystals.ForEach(masterCrystals => masterCrystals.layer = 0);
         }
     }
 
@@ -45,6 +47,6 @@ public class SolutionCheck : MonoBehaviour
     public void FinishEnigma()
     {
         DoorHandler.Instance.GetDoor(_outDoor).OpenDoor(() => true);
-        _lightPoints.ForEach(lightPoint => lightPoint.canInteract = false);
+        _lightPoints.ForEach(lightPoint => lightPoint.gameObject.layer = 0);
     }
 }
