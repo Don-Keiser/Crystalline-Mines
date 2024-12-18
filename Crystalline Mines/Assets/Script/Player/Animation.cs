@@ -20,13 +20,7 @@ public class Animation : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        SetAnimationBool();
-    }
-
-
-    private void SetAnimationBool()
+    public void SetAnimationBool()
     {
         if (_player.velocity.x != 0 && _player.CanJump())
         {
