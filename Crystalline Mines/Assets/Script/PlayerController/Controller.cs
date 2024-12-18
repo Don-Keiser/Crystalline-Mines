@@ -33,12 +33,6 @@ public class Controller : MonoBehaviour
         Vector2 _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         _player.SetMoveInput(_moveInput);
         ShowTextOnNearestObject();
-
-        if(_player.CanJump())
-        {
-            Animation.Instance.MoveAnimation();
-        }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _player.Jump();

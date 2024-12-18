@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class Animation : MonoBehaviour
@@ -10,6 +8,7 @@ public class Animation : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Controller _controller;
 
+    private bool _alreadyPlayJumpSound;
     private bool _isMoving;
     private bool _isRunning;
 
@@ -21,59 +20,78 @@ public class Animation : MonoBehaviour
         }
     }
 
-    public void JumpAnimation()
+    private void Update()
     {
-        _animator.SetFloat("Jump", 1);
-        TimerManager.StartTimer(0.25f, (() => _animator.SetFloat("Jump", 0)));
-        _animator.SetFloat("Fall", 1);
-
-        // Jouer le son de saut
-        SoundManager.Instance.PlaySound(SoundManager.Instance.jumpSound);
+        SetAnimationBool();
     }
-
-    public void FallAnimation()
+    private void SetAnimationBool()
     {
-        int Falling = _player.CanJump() == true ? 0 : 1;
-        _animator.SetFloat("Fall", Falling);
-        if (Falling == 0 && !_isMoving)
+        if (_player.velocity.x != 0 && _player.CanJump())
         {
-            _animator.Play("Stand", 0, 0f);
-        }
-        if (Falling == 0 && _isMoving)
-        {
-            _animator.Play("Run", 0, 0f);
-        }
-    }
-
-    public void MoveAnimation()
-    {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        _isMoving = horizontalInput != 0;
-        _animator.SetFloat("Speed", _isMoving ? 1 : 0);
-
-        if (_isMoving)
-        {
-            _spriteRenderer.flipX = horizontalInput < 0;
-        }
-
-        HandleRunningSound(); // Gérer le son de la course
-    }
-
-    private void HandleRunningSound()
-    {
-        bool isCurrentlyRunning = _isMoving && _player.velocity.y == 0;
-
-        if (isCurrentlyRunning && !_isRunning)
-        {
-            _isRunning = true;
+            _animator.SetBool("playerMove", true);
+            _animator.SetBool("fall", false);
+            _animator.SetBool("isJumping", false);
             SoundManager.Instance.PlaySound(SoundManager.Instance.runSound, true);
         }
-        else if (!isCurrentlyRunning && _isRunning)
+        else if (_player.velocity.x == 0)
         {
-            _isRunning = false;
+            _animator.SetBool("canJump", true);
+            _animator.SetBool("playerMove", false);
+            _animator.SetBool("fall", false);
+            _animator.SetBool("isJumping", false);
             SoundManager.Instance.StopSound();
         }
+        if (_player.CanJump())
+        {
+            SoundManager.Instance.StopSound();
+            _animator.SetBool("canJump", true);
+            _alreadyPlayJumpSound = false;
+            _animator.SetBool("fall", false);
+            _animator.SetBool("isJumping", false);
+        }
+        else if (_player.velocity.y > 0)
+        {
+            SoundManager.Instance.StopSound();
+            _animator.SetBool("isJumping", true);
+            _animator.SetBool("canJump", false);
+            if (!_alreadyPlayJumpSound) { SoundManager.Instance.PlaySound(SoundManager.Instance.jumpSound); _alreadyPlayJumpSound = true; }
+        }
+        else
+        {
+            _animator.SetBool("fall", true);
+            _animator.SetBool("isJumping", false);
+            _animator.SetBool("canJump", false);
+        }
+        _spriteRenderer.flipX = (_player.velocity.x > 0) ? false : true;
     }
+    //public void MoveAnimation(float playerMovement)
+    //{
+    //    _isMoving = playerMovement != 0;
+    //    _animator.SetBool("PlayerMove", _isMoving);
+
+    //    if (_isMoving)
+    //    {
+    //        _spriteRenderer.flipX = playerMovement < 0;
+    //    }
+
+    //    HandleRunningSound(); // Gérer le son de la course
+    //}
+
+    //private void HandleRunningSound()
+    //{
+    //    bool isCurrentlyRunning = _isMoving && _player.CanJump();
+
+    //    if (isCurrentlyRunning && !_isRunning)
+    //    {
+    //        _isRunning = true;
+    //        SoundManager.Instance.PlaySound(SoundManager.Instance.runSound, true);
+    //    }
+    //    else if (!isCurrentlyRunning && _isRunning)
+    //    {
+    //        _isRunning = false;
+    //        SoundManager.Instance.StopSound();
+    //    }
+    //}
 
     public void DeadSpikeDownAnimation()
     {

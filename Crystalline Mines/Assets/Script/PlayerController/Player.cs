@@ -100,10 +100,10 @@ public class Player : MonoBehaviour
                 DropThroughPlatform(1);
                 ReenablePlatformCollision();
             }
-            else if (deltaMovement.y < 0 && _coyotteJump)
-            {
-                Animation.Instance.FallAnimation();
-            }
+            //else if (deltaMovement.y < 0 && _coyotteJump)
+            //{
+            //    Animation.Instance.FallAnimation(true);
+            //}
         }
         HandleCoyoteTime();
         transform.Translate(deltaMovement);
@@ -303,7 +303,6 @@ public class Player : MonoBehaviour
     {
         if (_hasFloor || _coyotteJump)
         {
-            Animation.Instance.JumpAnimation();
             velocity.y = _jumpForce;
             _hasFloor = false;
             _coyoteTimeCounter = 0;
