@@ -75,7 +75,9 @@ public class SimonGame : MonoBehaviour
     private IEnumerator CristalAnimation()
     {
         _animationTime = true;
-        if (_cristalIndex == 1) { yield return new WaitForSeconds(0.5f); }
+        //if (_cristalIndex == 1) { yield return new WaitForSeconds(0.5f); }
+
+        yield return new WaitForSeconds(0.5f);
 
         for (int i = 0; i < _cristalIndex; i++)
         {
@@ -165,7 +167,6 @@ public class SimonGame : MonoBehaviour
 
     private void WinEnigma()
     {
-
         TimerManager.StartTimer(0.5f, () =>
         {
             foreach (var crystal in _allCristals)
@@ -177,13 +178,6 @@ public class SimonGame : MonoBehaviour
             _startingCristal.layer = 0;
         });
         DoorHandler.Instance.GetDoor(_levelRoom).OpenDoor(() => true);
-
-        ////TEST BUILD
-        //TimerManager.StartTimer(3.0f, () =>
-        //{
-        //    _victoryPanel.gameObject.SetActive(true);
-        //    Time.timeScale = 0.0f;
-        //});
     }
 
     private bool ResetEnigma()
