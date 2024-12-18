@@ -157,4 +157,12 @@ public class RailManager : MonoBehaviour
 
         return true;
     }
+
+    [ContextMenu("FinishEnigma")]
+    public void FinishEnigma()
+    {
+        onAllRailsRepairedEvent?.Invoke();
+
+        _enigmaDoor.OpenDoor(() => true);
+    }
 }

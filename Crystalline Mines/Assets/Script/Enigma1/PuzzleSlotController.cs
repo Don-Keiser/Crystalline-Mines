@@ -58,7 +58,9 @@ namespace Script.Enigma1
 
             grabController.holdObject = crystalAlreadyPlaced;
             grabController.holdObjectRb = crystalAlreadyPlaced.GetComponent<Rigidbody2D>();
-            _puzzleManager.RegisterCrystal(crystalAlreadyPlaced, false);
+            _puzzleManager.RegisterCrystal(crystalAlreadyPlaced, true);
+            //_puzzleManager.CheckPuzzleCompletion();
+
         }
 
         public void RemoveCrystal()
