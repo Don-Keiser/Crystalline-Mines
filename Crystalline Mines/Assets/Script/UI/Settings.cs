@@ -19,7 +19,7 @@ public class Settings : MonoBehaviour
     [SerializeField] private GameObject _soundPanel;
 
     [Header("Video Settings")]
-    [SerializeField] private Dropdown _resolutionDropdown;
+    [SerializeField] private TMP_Dropdown _resolutionDropdown;
     [SerializeField] private Toggle _fullScreenToggle;
 
     [Header("Audio Mixer")]
@@ -89,7 +89,7 @@ public class Settings : MonoBehaviour
         _videoPanel.SetActive(false);
     }
 
-    private void SetResolution()
+    public void SetResolution()
     {
         Resolution[] resolutions = {
             new Resolution { width = 1920, height = 1080 },
@@ -143,13 +143,28 @@ public class Settings : MonoBehaviour
         }
     }
     
-        public void Default()
+        public void DefaultVideo()
+        {
+            const int defaultResolutionIndex = 0;
+            const bool defaultFullScreen = true;
+            
+            _resolutionDropdown.value = defaultResolutionIndex;
+            _resolutionDropdown.RefreshShownValue();
+            SetResolution();
+            
+            _fullScreenToggle.isOn = defaultFullScreen;
+            ToggleFullScreen();
+            
+            PlayerPrefs.SetInt("ResolutionIndex", defaultResolutionIndex);
+            PlayerPrefs.SetInt("FullScreen", defaultFullScreen ? 1 : 0);
+            PlayerPrefs.Save();
+            
+        }
+        public void DefaultSound()
         {
             const float defaultMasterVolume = 0.5f;
             const float defaultMusicVolume = 0.5f;
             const float defaultUiVolume = 0.5f;
-            const int defaultResolutionIndex = 0;
-            const bool defaultFullScreen = true;
             
             _masterVolumeSlider.value = defaultMasterVolume;
             AdjustVolume("MasterVolume", _masterVolumeSlider, _masterVolumeText, "MasterVolumeValue");
@@ -160,18 +175,9 @@ public class Settings : MonoBehaviour
             _uiVolumeSlider.value = defaultUiVolume;
             AdjustVolume("UIVolume", _uiVolumeSlider, _uiVolumeText, "UIVolumeValue");
             
-            _resolutionDropdown.value = defaultResolutionIndex;
-            _resolutionDropdown.RefreshShownValue();
-            SetResolution();
-            
-            _fullScreenToggle.isOn = defaultFullScreen;
-            ToggleFullScreen();
-            
             PlayerPrefs.SetFloat("MasterVolumeValue", defaultMasterVolume);
             PlayerPrefs.SetFloat("MusicVolumeValue", defaultMusicVolume);
             PlayerPrefs.SetFloat("UIVolumeValue", defaultUiVolume);
-            PlayerPrefs.SetInt("ResolutionIndex", defaultResolutionIndex);
-            PlayerPrefs.SetInt("FullScreen", defaultFullScreen ? 1 : 0);
             PlayerPrefs.Save();
             
         }
