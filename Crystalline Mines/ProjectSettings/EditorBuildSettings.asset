@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestVolume.unity
     guid: 79bfbff19d79de1478de0d9064d7c00c
+  - enabled: 1
+    path: Assets/Scenes/Game Scene/GAME.unity
+    guid: 899cb5baddfa1b0488923ee42ab89d3b
   m_configObjects: {}
