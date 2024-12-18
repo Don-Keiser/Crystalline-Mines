@@ -46,6 +46,7 @@ public class MainMenu : MonoBehaviour
     public void Credits()
     {
         _audioButton.Play();
+        GetComponent<Canvas>().enabled = false;
         _credits.SetActive(true);
     }
 
@@ -53,5 +54,6 @@ public class MainMenu : MonoBehaviour
     {
         _audioButton.Play();
         _credits.SetActive(false);
+        GetComponent<Canvas>().enabled = true;
     }
 }

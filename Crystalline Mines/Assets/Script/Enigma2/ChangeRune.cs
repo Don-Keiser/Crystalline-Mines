@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class ChangeRune : Interactible
@@ -16,10 +14,10 @@ public class ChangeRune : Interactible
     [SerializeField] private GameObject _goodRune;
     private Color _color;
     private Color _alpha;
-    
+
     [Header("Animation")]
     [SerializeField] private float _duration = 2.0f; // duration of the fade in and fade out
-    
+
     [NonSerialized] public bool canInteract = true;
     [NonSerialized] public bool isGoodRune = false;
     public event Action OnRuneChanged;
@@ -27,12 +25,12 @@ public class ChangeRune : Interactible
     private void Start()
     {
         _color = GetComponent<Light2D>().color;
-        
-        
+
+
         foreach (GameObject rune in _runes)
         {
-            GameObject _instantiateRune = Instantiate(rune, new Vector3(transform.position.x,transform.position.y + 3
-                ,transform.position.z), Quaternion.identity, transform);
+            GameObject _instantiateRune = Instantiate(rune, new Vector3(transform.position.x, transform.position.y + 3
+                , transform.position.z), Quaternion.identity, transform);
             _instantiateRune.GetComponent<SpriteRenderer>().color = _color;
             _instantiateRune.GetComponent<Light2D>().color = _color;
             _instantiateRune.SetActive(false);
@@ -45,19 +43,19 @@ public class ChangeRune : Interactible
             _runeIndex = Random.Range(0, _instantiateRunes.Count);
             _displayRune = _instantiateRunes[_runeIndex];
         } while (_displayRune.name == _goodRune.name);
-        
+
         _displayRune.SetActive(true);
     }
 
     public void Change()
     {
-        
+
         // Deactivate the current GameObject
         if (_displayRune is not null)
         {
-            StartCoroutine(FadeOut(_duration/2, _displayRune.GetComponent<SpriteRenderer>()));
-            StartCoroutine(LightFadeIn(_duration/2, _displayRune.GetComponent<Light2D>()));
-            StartCoroutine(CrystalFadeOut(_duration/2, GetComponent<Light2D>()));
+            StartCoroutine(FadeOut(_duration / 2, _displayRune.GetComponent<SpriteRenderer>()));
+            StartCoroutine(LightFadeIn(_duration / 2, _displayRune.GetComponent<Light2D>()));
+            StartCoroutine(CrystalFadeOut(_duration / 2, GetComponent<Light2D>()));
         }
 
         // Go to next index
@@ -72,19 +70,19 @@ public class ChangeRune : Interactible
 
         // Activate the new GameObject
         _displayRune = _instantiateRunes[_runeIndex];
-        
+
         if (_displayRune is not null)
         {
-            TimerManager.StartTimer(_duration/2, () =>
+            TimerManager.StartTimer(_duration / 2, () =>
             {
                 _displayRune.SetActive(true);
-                StartCoroutine(FadeIn(_duration/2, _displayRune.GetComponent<SpriteRenderer>()));
-                StartCoroutine(LightFadeOut(_duration/2, _displayRune.GetComponent<Light2D>()));
-                StartCoroutine(CrystalFadeIn(_duration/2, GetComponent<Light2D>()));
+                StartCoroutine(FadeIn(_duration / 2, _displayRune.GetComponent<SpriteRenderer>()));
+                StartCoroutine(LightFadeOut(_duration / 2, _displayRune.GetComponent<Light2D>()));
+                StartCoroutine(CrystalFadeIn(_duration / 2, GetComponent<Light2D>()));
             });
         }
-        
-        
+
+
         // check if the rune is the good one
         if (_displayRune is not null && _displayRune.name == _goodRune.name)
         {
@@ -95,10 +93,10 @@ public class ChangeRune : Interactible
             isGoodRune = false;
         }
     }
-    
+
     private IEnumerator FadeOut(float duration, SpriteRenderer sprite)
     {
-        for(float t = duration; t > 0.01f ; t -= Time.deltaTime)
+        for (float t = duration; t > 0.01f; t -= Time.deltaTime)
         {
             _alpha = sprite.color;
             _alpha.a = t / duration;
@@ -108,7 +106,7 @@ public class ChangeRune : Interactible
     }
     private IEnumerator FadeIn(float duration, SpriteRenderer sprite)
     {
-        for(float t = 0.01f; t < duration ; t += Time.deltaTime)
+        for (float t = 0.01f; t < duration; t += Time.deltaTime)
         {
             _alpha = sprite.color;
             _alpha.a = t / duration;
@@ -116,68 +114,68 @@ public class ChangeRune : Interactible
             yield return null;
         }
     }
-     private IEnumerator LightFadeIn(float duration, Light2D light2D)
-     {
-         canInteract = false;
-         light2D.enabled = true;
-         for(float t = 0.00f; t < duration ; t += Time.deltaTime)
-         {
-             // fade out the light
-             light2D.pointLightInnerRadius = t/duration * 1.5f;
-             
-             yield return null;
-         }
-         
-         light2D.pointLightInnerRadius = 1.5f;
-         light2D.gameObject.SetActive(false);
-         light2D.enabled = false;
-         OnRuneChanged?.Invoke();
-     }
-    
+    private IEnumerator LightFadeIn(float duration, Light2D light2D)
+    {
+        canInteract = false;
+        light2D.enabled = true;
+        for (float t = 0.00f; t < duration; t += Time.deltaTime)
+        {
+            // fade out the light
+            light2D.pointLightInnerRadius = t / duration * 1.5f;
+
+            yield return null;
+        }
+
+        light2D.pointLightInnerRadius = 1.5f;
+        light2D.gameObject.SetActive(false);
+        light2D.enabled = false;
+        OnRuneChanged?.Invoke();
+    }
+
     private IEnumerator LightFadeOut(float duration, Light2D light2D)
     {
         light2D.enabled = true;
-        for(float t = duration; t > 0.00f ; t -= Time.deltaTime)
+        for (float t = duration; t > 0.00f; t -= Time.deltaTime)
         {
             // fade out the light
-            light2D.pointLightInnerRadius = t/duration * 1.5f;
-            
+            light2D.pointLightInnerRadius = t / duration * 1.5f;
+
             yield return null;
         }
         light2D.pointLightInnerRadius = 0.0f;
         light2D.enabled = false;
         canInteract = true;
     }
-    
-    
+
+
     private IEnumerator CrystalFadeOut(float duration, Light2D light2D)
     {
-        for(float t = duration; t > 0.00f ; t -= Time.deltaTime)
+        for (float t = duration; t > 0.00f; t -= Time.deltaTime)
         {
-            light2D.pointLightInnerRadius = t/duration * 0.5f;
-            light2D.pointLightOuterRadius = t/duration;
+            light2D.pointLightInnerRadius = t / duration * 0.5f;
+            light2D.pointLightOuterRadius = t / duration;
             yield return null;
         }
         light2D.pointLightInnerRadius = 0.0f;
         light2D.pointLightOuterRadius = 0.0f;
     }
-    
+
     private IEnumerator CrystalFadeIn(float duration, Light2D light2D)
     {
-        for(float t = 0.00f; t < duration ; t += Time.deltaTime)
+        for (float t = 0.00f; t < duration; t += Time.deltaTime)
         {
-            light2D.pointLightInnerRadius = t/duration * 0.5f;
-            light2D.pointLightOuterRadius = t/duration;
+            light2D.pointLightInnerRadius = t / duration * 0.5f;
+            light2D.pointLightOuterRadius = t / duration;
             yield return null;
         }
         light2D.pointLightInnerRadius = 0.5f;
         light2D.pointLightOuterRadius = 1.0f;
     }
-    
+
     public override void PlayerInteract()
     {
         base.PlayerInteract();
-        if(canInteract)
+        if (canInteract)
         {
             Change();
         }
