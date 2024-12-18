@@ -19,7 +19,7 @@ public class ChangeRune : Interactible
     [SerializeField] private float _duration = 2.0f; // duration of the fade in and fade out
 
     [NonSerialized] public bool canInteract = true;
-    [NonSerialized] public bool isGoodRune = false;
+    [NonSerialized] public bool isGoodRune;
     public event Action OnRuneChanged;
 
     private void Start()
@@ -116,8 +116,7 @@ public class ChangeRune : Interactible
     }
     private IEnumerator LightFadeIn(float duration, Light2D light2D) // Light Fade In for Rune
     {
-        canInteract = false;
-        //light2D.enabled = true;
+        gameObject.layer = 0; // Ignore interactible layer
         for (float t = 0.00f; t < duration; t += Time.deltaTime)
         {
             // fade out the light
@@ -129,7 +128,6 @@ public class ChangeRune : Interactible
         light2D.pointLightInnerRadius = 1.5f;
         light2D.gameObject.SetActive(false);
         light2D.enabled = false;
-        OnRuneChanged?.Invoke();
     }
 
     private IEnumerator LightFadeOut(float duration, Light2D light2D) // Light Fade Out for Rune
@@ -143,8 +141,8 @@ public class ChangeRune : Interactible
             yield return null;
         }
         light2D.pointLightInnerRadius = 0.0f;
-        //light2D.enabled = false;
-        canInteract = true;
+        gameObject.layer = 9; // Interactible layer
+        OnRuneChanged?.Invoke();
     }
 
 
@@ -175,9 +173,7 @@ public class ChangeRune : Interactible
     public override void PlayerInteract()
     {
         base.PlayerInteract();
-        if (canInteract)
-        {
-            Change();
-        }
+        Change();
+        
     }
 }
