@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Light2D), typeof(Button))]
-public class ButtonLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
 {
     private Light2D _light2D;
     private Button _button;
@@ -15,6 +15,7 @@ public class ButtonLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private float y;
     
     public bool LightOn = true;
+    private IPointerUpHandler _pointerUpHandlerImplementation;
 
     private void Start()
     {
@@ -43,6 +44,14 @@ public class ButtonLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _button.transform.localScale = new Vector3(x, y, 1f);
 
     }
-    
-    
+
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(LightOn)
+        {
+            _light2D.enabled = false;
+        }
+        _button.transform.localScale = new Vector3(x, y, 1f);
+    }
 }
