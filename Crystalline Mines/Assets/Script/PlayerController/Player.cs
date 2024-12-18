@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
                 DropThroughPlatform(1);
                 ReenablePlatformCollision();
             }
-            else if (deltaMovement.y < 0)
+            else if (deltaMovement.y < 0 && _coyotteJump)
             {
                 Animation.Instance.FallAnimation();
             }
@@ -373,7 +373,7 @@ public class Player : MonoBehaviour
 
     public bool CanJump()
     {
-        if (_hasFloor || _coyotteJump)
+        if (_coyotteJump)
         {
             return true;
         }

@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
     public bool IsAnimating { get; private set; }
     public bool FinishAnim { get; private set; }
 
-    private void Awake()
+    private void OnEnable()
     {
         EventManager.CameraCinematic += GoToMapCenter; // Subscribe event
 
@@ -41,6 +41,10 @@ public class CameraController : MonoBehaviour
         _startFOV = _cam.orthographicSize;
         _initialFOV = _startFOV;
         FinishAnim = true;
+    }
+    private void OnDisable()
+    {
+        EventManager.CameraCinematic -= GoToMapCenter; // Subscribe event
     }
 
     public void InitializeCameraBoundary(float maxX, float minX, float maxY, float minY)
