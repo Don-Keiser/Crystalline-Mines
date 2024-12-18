@@ -9,6 +9,8 @@ public class Settings : MonoBehaviour
     
     public bool settingsActive;
     public AudioSource audioSource;
+    public AudioSource sfxSource;
+    public AudioSource musicSource;
     public bool isInOnDestroyOnLoad;
 
     [Header("UI Panels")]

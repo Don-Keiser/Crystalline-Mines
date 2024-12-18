@@ -7686,6 +7686,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsActive: 0
   audioSource: {fileID: 117395523}
+  sfxSource: {fileID: 1349361807}
+  musicSource: {fileID: 212223108}
   isInOnDestroyOnLoad: 0
   _settingsPanel: {fileID: 292012327}
   _videoPanel: {fileID: 1255601867}
