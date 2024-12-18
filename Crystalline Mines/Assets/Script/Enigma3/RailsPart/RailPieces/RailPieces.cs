@@ -58,6 +58,8 @@ public class RailPieces : Interactible, IRail
         _playerGrabController = PlayerGrabController.Instance;
 
         UpdateSprite();
+
+        RailManager.onAllRailsRepairedEvent += () => gameObject.layer = 0;
     }
     #endregion
 

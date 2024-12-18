@@ -8,6 +8,7 @@ public class TESTING_SCRIPT : MonoBehaviour
     [SerializeField] KeyCode _respawnPlayerKey = KeyCode.O;
     [SerializeField] KeyCode _setCheckPointStateToPlayerLeaveTheMineKey = KeyCode.I;
     [SerializeField] KeyCode _playerWonKey = KeyCode.U;
+    [SerializeField] KeyCode _launchFinishRailEnigmaEvent = KeyCode.Y;
 
     void Update()
     {
@@ -37,6 +38,13 @@ public class TESTING_SCRIPT : MonoBehaviour
             print($"DEBUGGING ! Launch player victory");
 
             GameOverAndVictoryManager.EscapingSuccess();
+        }
+
+        if (Input.GetKeyDown(_launchFinishRailEnigmaEvent))
+        {
+            print($"DEBUGGING ! Launch finished rail enigma event");
+
+            RailManager.onAllRailsRepairedEvent?.Invoke();
         }
     }
 }

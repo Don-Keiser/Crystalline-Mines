@@ -63,6 +63,8 @@ public class Rail : Interactible, IRail
 
                 SetRailState(RailFormHandler.RailStates.NonDamaged);
 
+                RailManager.onNewReparedRailEvent?.Invoke(this);
+
                 PlayerGrabController.Instance.hasCrystal = false;
                 PlayerGrabController.Instance.holdObject = null;
                 PlayerGrabController.Instance.holdObjectRb = null;

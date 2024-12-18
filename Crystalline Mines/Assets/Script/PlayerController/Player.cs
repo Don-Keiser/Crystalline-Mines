@@ -353,6 +353,9 @@ public class Player : MonoBehaviour
     public void Respawn()
     {
         // Position handling
+        if (respawnPosition == Vector3.zero)
+            respawnPosition = new Vector3(3, -0.3f, 0); // Sorry about the pure value being there (it's 5:30 PM and last day), it's the default spawn.
+
         transform.position = respawnPosition;
         velocity = Vector2.zero;
 
