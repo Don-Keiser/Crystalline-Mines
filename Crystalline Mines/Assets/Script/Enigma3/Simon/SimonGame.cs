@@ -16,7 +16,7 @@ public class SimonGame : MonoBehaviour
     [SerializeField] private int _maxSequencelength;
     private List<GameObject> _cristalSequence = new();
 
-    [SerializeField] private bool _enigmaIsLaunched = false;
+    [SerializeField] private bool _enigmaIsLaunched;
 
     private bool _animationTime = false;
     private int _cristalIndex = 1;
@@ -31,9 +31,17 @@ public class SimonGame : MonoBehaviour
 
     private void Start()
     {
-        _enigmaIsLaunched = false;
         InitializeRandomSequence();
         FirstAnim();
+    }
+    
+    private void ChangeLayer()
+    {
+        foreach (var cristal in _allCristals)
+        {
+            cristal.layer = cristal.layer == 0 ? 9 : 0;
+        }
+        _startingCristal.layer = _startingCristal.layer == 0 ? 9 : 0;
     }
 
     #region Initialize sequence
@@ -130,6 +138,7 @@ public class SimonGame : MonoBehaviour
         if (choosedCristal == _startingCristal && !_enigmaIsLaunched)
         {
             _enigmaIsLaunched = true;
+            ChangeLayer();
             StopCoroutine(FirstCristalAnim());
             SimonIteration();
             return;
@@ -192,10 +201,17 @@ public class SimonGame : MonoBehaviour
         _cristalPlayerChoose.Clear();
         _cristalIndex = 1;
         _enigmaIsLaunched = false;
+        ChangeLayer();
 
         InitializeRandomSequence();
         FirstAnim();
 
         return true;
+    }
+    
+    [ContextMenu("FinishEnigma")]
+    public void FinishEnigma()
+    {
+        WinEnigma();
     }
 }
