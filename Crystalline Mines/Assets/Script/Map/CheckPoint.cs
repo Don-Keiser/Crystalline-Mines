@@ -19,8 +19,7 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] private float _maxCameraDezoom;
     [SerializeField] private float _animDuration;
     [SerializeField] private float _fullscreenDuration;
-
-
+    private bool _animationAlreadyDone;
 
     void Start()
 
@@ -37,9 +36,11 @@ public class CheckPoint : MonoBehaviour
 
         if (player is null) { return; }
 
-
-        EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _fullscreenDuration, _animDuration);
-
+        if (!_animationAlreadyDone)
+        {
+            EventManager.StartCameraAnimation(_levelCenter.transform.position, _maxCameraDezoom, _fullscreenDuration, _animDuration);
+            _animationAlreadyDone = true;
+        }
         player.respawnPosition = respawnPosition;
 
         SetNewState(CheckPointState.Claimed);
