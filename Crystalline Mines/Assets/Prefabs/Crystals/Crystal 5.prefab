@@ -27,9 +27,9 @@ Transform:
   m_GameObject: {fileID: 1115689071956982922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.49, y: 12.17, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -20
   m_Sprite: {fileID: 21300000, guid: 66ba64bffd7a9c44185475609c4d7ee9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -119,8 +119,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.31614995, y: -0.05949998, z: 0}
-    m_Extent: {x: 5.0574503, y: 5.5485, z: 0}
+    m_Center: {x: -0.31614995, y: -0.058799982, z: 0}
+    m_Extent: {x: 5.0574503, y: 5.5478, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -136,8 +136,5 @@ MonoBehaviour:
   - {x: -0.0720253, y: 0.9900818, z: 0}
   - {x: -0.63271713, y: 0.5568838, z: 0}
   - {x: -0.8748932, y: -1.0643444, z: 0}
-  - {x: -0.6193657, y: -0.79107, z: 0}
-  - {x: -0.5261345, y: -0.8292103, z: 0}
   - {x: -0.53461075, y: -0.9923649, z: 0}
   - {x: -0.24644089, y: -1.0305042, z: 0}
-  - {x: -0.16168594, y: -0.994483, z: 0}

@@ -6,7 +6,7 @@ using UnityEngine;
 public class SolutionCheck : MonoBehaviour
 {
     private List<ChangeRune> _lightPoints = new List<ChangeRune>(); 
-    [SerializeField] private GameObject _outDoor;
+    [SerializeField] private DoorHandler.LevelRoom _outDoor;
 
     private void Start()
     {
@@ -36,8 +36,15 @@ public class SolutionCheck : MonoBehaviour
 
         if (isCorrect)
         {
-            _outDoor.SetActive(false);
+            DoorHandler.Instance.GetDoor(_outDoor).OpenDoor(() => true);
             _lightPoints.ForEach(lightPoint => lightPoint.canInteract = false);
         }
+    }
+
+    [ContextMenu("FinishEnigma")]
+    public void FinishEnigma()
+    {
+        DoorHandler.Instance.GetDoor(_outDoor).OpenDoor(() => true);
+        _lightPoints.ForEach(lightPoint => lightPoint.canInteract = false);
     }
 }
