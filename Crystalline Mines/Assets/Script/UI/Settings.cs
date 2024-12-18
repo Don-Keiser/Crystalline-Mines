@@ -71,6 +71,7 @@ public class Settings : MonoBehaviour
         _videoPanel.SetActive(false);
         _soundPanel.SetActive(false);
         settingsActive = false;
+        
     }
 
     public void OpenVideoSettings()
