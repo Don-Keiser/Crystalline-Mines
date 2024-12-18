@@ -54,7 +54,7 @@ public class Door : MonoBehaviour
 
     void PlayOpeningSFX()
     {
-
+        SoundManager.Instance.PlaySound(SoundManager.Instance.doorSound);
     }
 
     void ResetDoor()
