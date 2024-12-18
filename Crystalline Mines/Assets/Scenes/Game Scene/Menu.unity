@@ -742,7 +742,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: TestVolume
+          m_StringArgument: Animation
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &154742785
@@ -7686,6 +7686,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsActive: 0
   audioSource: {fileID: 117395523}
+  sfxSource: {fileID: 1349361807}
+  musicSource: {fileID: 212223108}
   isInOnDestroyOnLoad: 0
   _settingsPanel: {fileID: 292012327}
   _videoPanel: {fileID: 1255601867}
