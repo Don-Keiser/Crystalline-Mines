@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aecd2fba50457ee4bbac25806083cab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkPoints:
+  _checkPoints:
   - {fileID: 3742711859456348165}
   - {fileID: 1187591622605453075}
   - {fileID: 463042574281483940}

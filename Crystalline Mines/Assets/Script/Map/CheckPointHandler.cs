@@ -10,7 +10,7 @@ public class CheckPointHandler : MonoBehaviour
     public Dictionary<LevelRoom, CheckPoint> checkPointDictionary { get; private set; }
 
     [Header("External references :")]
-    [SerializeField] List<CheckPoint> checkPoints = new();
+    [SerializeField] List<CheckPoint> _checkPoints = new();
 
     void Awake()
     {
@@ -26,13 +26,13 @@ public class CheckPointHandler : MonoBehaviour
 
     bool IsCheckPointsListCorrectlySet()
     {
-        int atStartCheckPointListLenght = checkPoints.Count;
+        int atStartCheckPointListLenght = _checkPoints.Count;
         int enumLenght = Enum.GetValues(typeof(LevelRoom)).Length;
 
         if (atStartCheckPointListLenght != enumLenght)
         {
             Debug.LogError(
-                $"ERROR ! The lenght of the List '{nameof(checkPoints)}' is not equal to the size of the '{nameof(LevelRoom)}' Enum lenght " +
+                $"ERROR ! The lenght of the List '{nameof(_checkPoints)}' is not equal to the size of the '{nameof(LevelRoom)}' Enum lenght " +
                 $": {atStartCheckPointListLenght} is not equal to {enumLenght}."
             );
 
@@ -51,9 +51,9 @@ public class CheckPointHandler : MonoBehaviour
 
         LevelRoom[] levelRoomEnumValues = (LevelRoom[])Enum.GetValues(typeof(LevelRoom));
 
-        for (int i = 0; i < checkPoints.Count; i++)
+        for (int i = 0; i < _checkPoints.Count; i++)
         {
-            checkPointDictionary.Add(levelRoomEnumValues[i], checkPoints[i]);
+            checkPointDictionary.Add(levelRoomEnumValues[i], _checkPoints[i]);
         }
 
         return checkPointDictionary;
@@ -74,21 +74,21 @@ public class CheckPointHandler : MonoBehaviour
             return null;
         }
 
-        if (p_index > checkPoints.Count - 1)
+        if (p_index > _checkPoints.Count - 1)
         {
             Debug.LogError($"ERROR ! The given index '{p_index}' is greater then the check point dictionnary size less one.");
             return null;
         }
         #endregion
 
-        return checkPoints[p_index];
+        return _checkPoints[p_index];
     }
 
     public void SetAllCheckPointState(CheckPoint.CheckPointState p_newCheckPointState)
     {
-        for (int i = 0; i < checkPoints.Count; i++)
+        for (int i = 0; i < _checkPoints.Count; i++)
         {
-            checkPoints[i].SetNewState(p_newCheckPointState);
+            _checkPoints[i].SetNewState(p_newCheckPointState);
         }
     }
 
