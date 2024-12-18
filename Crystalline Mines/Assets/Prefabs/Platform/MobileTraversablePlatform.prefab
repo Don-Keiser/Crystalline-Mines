@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5583144620033656920}
   - component: {fileID: 8869553507146296886}
   - component: {fileID: 7685745939247676336}
-  - component: {fileID: 3658979125848056208}
   - component: {fileID: 6646881883396163671}
   - component: {fileID: -4042867473063839623}
   m_Layer: 8
@@ -98,7 +97,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 188146713986786400}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1c20f8e2fe0056b49ba8ec6a4d2e4338, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -121,7 +120,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.005, y: 0.09}
+  m_Offset: {x: -0.004999995, y: 0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -132,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.23, y: 0.12}
+  m_Size: {x: 2.23, y: 0.0001}
   m_EdgeRadius: 0
 --- !u!61 &7685745939247676336
 BoxCollider2D:
@@ -163,10 +162,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.005, y: 0.07}
+  m_Offset: {x: -0.004999995, y: 0.08533514}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -177,35 +176,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.23, y: 0.12}
+  m_Size: {x: 2.23, y: 0.15067028}
   m_EdgeRadius: 0
---- !u!50 &3658979125848056208
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 188146713986786400}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!114 &6646881883396163671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +218,7 @@ MonoBehaviour:
   - {x: 1.1126595, y: 0.0069475174, z: 0}
   m_ShapePathHash: -851059019
   m_Mesh: {fileID: 0}
-  m_InstanceId: 50406
+  m_InstanceId: 156570
   m_LocalBounds:
     m_Center: {x: -0.004289627, y: 0.07627177, z: 0}
     m_Extent: {x: 1.1186161, y: 0.069324255, z: 0}

@@ -17,7 +17,7 @@ public class HighlightRunes : Interactible
     [SerializeField] private float _fullScreenDuration;
     [SerializeField] private float _animationDuration;
     [SerializeField] private float _maxDezoom;
-    [SerializeField] private Vector3 _cameraCenter = new Vector3(60, 9, -10);
+    [SerializeField] private GameObject _cameraCenter;
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class HighlightRunes : Interactible
             _runeLight.enabled = true;
             _rune.SetActive(true);
             _runeSprite.enabled = false; // hide the rune
-            EventManager.StartCameraAnimation(_cameraCenter, _maxDezoom, _fullScreenDuration,_animationDuration);
+            EventManager.StartCameraAnimation(_cameraCenter.transform.position, _maxDezoom, _fullScreenDuration,_animationDuration);
             
             // display the rune
             TimerManager.StartTimer((_fullScreenDuration + (2 * _animationDuration)), () =>
