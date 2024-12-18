@@ -30,11 +30,15 @@ public class Controller : MonoBehaviour
     {
         if (!_camera.FinishAnim) { return; }
 
-        Vector2 _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Vector2 _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         _player.SetMoveInput(_moveInput);
-
         ShowTextOnNearestObject();
-        Animation.Instance.MoveAnimation();
+
+        if(_player.CanJump())
+        {
+            Animation.Instance.MoveAnimation();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _player.Jump();

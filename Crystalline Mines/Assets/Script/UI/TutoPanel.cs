@@ -82,6 +82,7 @@ public class UpdateTutoPanel : MonoBehaviour
         for (int i = 0; 0 < _fullText.Length; i++)
         {
             if (!_panel.activeSelf) { ResetText(); break; }
+            if(_currentText.Length == _fullText.Length) { break; }
 
             _currentText = _fullText.Substring(0, i);
             _canvasText.text = _currentText;
