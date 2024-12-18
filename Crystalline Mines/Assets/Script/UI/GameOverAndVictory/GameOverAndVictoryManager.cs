@@ -13,22 +13,34 @@ public class GameOverAndVictoryManager : MonoBehaviour
     public static Action<bool, bool> OnEscapingEvent;
 
     [Header("Statistics :")]
-    [SerializeField] float _escapingTimeInSeconds = 180;
+    [SerializeField] float _escapingTimeInSeconds = 120;
 
     Player _player;
     CheckPointHandler _checkPointHandler;
 
     [Tooltip("Represent the Treasure check point")]
     CheckPoint _lastCheckPoint;
+    BoxCollider2D _boxCollider2D;
 
     void Start()
     {
         _player = Player.PlayerTransform.GetComponent<Player>();
         _checkPointHandler = CheckPointHandler.Instance;
         _lastCheckPoint = _checkPointHandler.GetCheckPoint(_checkPointHandler.checkPointDictionary.Count - 1);
+        _boxCollider2D = GetComponent<BoxCollider2D>();
+
+        _boxCollider2D.enabled = false;
 
         Treasure.OnPlayerPickupTreasureEvent += StartEscapingTimer;
         GameOverAndVictoryUIManager.OnRestartEscapingEvent += RetryEscaping;
+    }
+
+    private void OnTriggerEnter2D(Collider2D p_collider2D)
+    {
+        if (!p_collider2D.gameObject.CompareTag("Player"))
+            return;
+
+        EscapingSuccess();
     }
 
     public static void EscapingSuccess()
@@ -53,6 +65,8 @@ public class GameOverAndVictoryManager : MonoBehaviour
     public void StartEscapingTimer()
     {
         OnEscapingStartEvent?.Invoke(_escapingTimeInSeconds);
+
+        _boxCollider2D.enabled = true;
 
         TimerManager.StartTimer(_escapingTimeInSeconds, EscapingFailure);
     }

@@ -6,8 +6,8 @@ public class RailManager : MonoBehaviour
 {
     public static RailManager Instance;
 
-    public static Action allRailsRepairedEvent;
-    public static Action<Rail> newReparedRailEvent;
+    public static Action onAllRailsRepairedEvent;
+    public static Action<Rail> onNewReparedRailEvent;
     public static Action<Sprite> onShowDetailedDamagedRailEvent;
 
     public List<IRail> IRails { get; private set; } = new();
@@ -150,6 +150,8 @@ public class RailManager : MonoBehaviour
                 return false;
             }
         }
+
+        onAllRailsRepairedEvent?.Invoke();
 
         _enigmaDoor.OpenDoor(() => true);
 
