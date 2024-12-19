@@ -20,6 +20,9 @@ public class Controller : MonoBehaviour
     [Header("Show Text on nearest interactible object")]
     [SerializeField] private GameObject _interactibleText;
     private bool _textIsActive;
+    
+    [Header("Pause Menu")]
+    [SerializeField] private GameObject _pauseMenu;
 
     private void Awake()
     {
@@ -28,6 +31,8 @@ public class Controller : MonoBehaviour
     }
     private void Update()
     {
+        Animation.Instance.SetAnimationBool();
+        if (_pauseMenu.activeSelf) { return; }
         if (!_camera.FinishAnim) { return; }
 
         Vector2 _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
@@ -44,16 +49,16 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             GameObject nearestObject = GetNearestInteractableObject();
-            if (nearestObject != null)
+            if (nearestObject is not null)
             {
                 Interactible interactible = nearestObject.GetComponent<Interactible>();
-                if (interactible != null)
+                if (interactible is not null)
                 {
                     interactible.PlayerInteract();
                     return;
                 }
             }
-            if(_grabController != null && _grabController.hasCrystal)
+            if(_grabController is not null && _grabController.hasCrystal)
             {
                 _grabController.DropObject();
             }

@@ -56,27 +56,27 @@ namespace Script.Enigma1
         {
             Debug.Log("Puzzle successfully completed!");
             IsPuzzleCompleted = true;
-            foreach (var cristal in DEBUGCRSITAL)
-            {
-                if (cristal.GetComponent<Light2D>() != null)
-                {
-                    StartCoroutine(FinishEnigmaAnim(cristal.GetComponent<Light2D>()));
-                }
-                cristal.layer = 0;
-            }
             foreach(var slot in puzzleSlots)
             {
                 slot.gameObject.layer = 0;
             }
+            foreach (var cristal in DEBUGCRSITAL)
+            {
+                cristal.layer = 0;
+                if (cristal.GetComponent<Light2D>() != null)
+                {
+                    StartCoroutine(FinishEnigmaAnim(cristal.GetComponent<Light2D>()));
+                }
+            }
             TimerManager.StartTimer(3.0f, () => DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true));
         }
-        private void CheckPuzzleCompletion()
+        public void CheckPuzzleCompletion()
         {
             if (_placedCrystals == _totalCrystals && CheckAllSlots())
             {
                 Debug.Log("Puzzle successfully completed!");
                 IsPuzzleCompleted = true;
-                foreach (var cristal in DEBUGCRSITAL)
+                foreach (var cristal in _placedCrystalObjects)
                 {
                     if (cristal.GetComponent<Light2D>() != null)
                     {

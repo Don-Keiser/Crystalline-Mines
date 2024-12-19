@@ -63,7 +63,7 @@ namespace Script.Enigma1
                 holdObjectRb.isKinematic = false;
                 holdObjectRb.velocity = Vector2.zero;
 
-                holdObjectRb.AddForce(direction * 10.0f, ForceMode2D.Impulse);
+                holdObjectRb.AddForce(direction * 5.0f, ForceMode2D.Impulse);
 
                 int LayerInteractible = LayerMask.NameToLayer("Interactible");
                 holdObject.layer = LayerInteractible;

@@ -29,7 +29,7 @@ public class SimonGame : MonoBehaviour
     [Header("Victory Screen TEST")]
     [SerializeField] private GameObject _victoryPanel;
 
-    private void Start()
+    private void Start()    
     {
         InitializeRandomSequence();
         FirstAnim();
@@ -60,7 +60,7 @@ public class SimonGame : MonoBehaviour
     }
     #endregion
 
-    #region Scale Animation
+    #region Animation
     private void SimonIteration()
     {
         StartCoroutine(CristalAnimation());
