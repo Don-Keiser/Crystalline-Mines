@@ -8,10 +8,13 @@ public class Pause : MonoBehaviour
     [SerializeField] private GameObject _pauseButton;
     [SerializeField] private Player _player;
     private bool _active;
-    
+
+    [SerializeField] private CameraController _camera;
 
     private void Update()
     {
+        if (!_camera.FinishAnim) { _pauseButton.SetActive(false); return; }
+        else { _pauseButton.SetActive(true); }
         OpenPauseWithEscape();
     }
 
@@ -36,7 +39,7 @@ public class Pause : MonoBehaviour
         _pauseButton.SetActive(false);
         _active = true;
     }
-    
+
 
     public void Resume()
     {
@@ -50,9 +53,9 @@ public class Pause : MonoBehaviour
     public void Retry()
     {
         global::Settings.Instance.audioSource.Play();
-        
+
         _player.transform.position = _player.respawnPosition;
-        
+
         Resume();
     }
     public void Settings()
@@ -64,11 +67,11 @@ public class Pause : MonoBehaviour
     public void Exit(string sceneName)
     {
         global::Settings.Instance.audioSource.Play();
-        
+
         global::Settings.Instance.musicSource.Stop();
         global::Settings.Instance.musicSource.clip = global::SoundManager.Instance.mainMenuSong;
         global::Settings.Instance.musicSource.Play();
-        
+
         SceneManager.LoadScene(sceneName);
     }
 }

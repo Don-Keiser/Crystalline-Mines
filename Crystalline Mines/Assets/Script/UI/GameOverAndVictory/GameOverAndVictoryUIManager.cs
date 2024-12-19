@@ -45,6 +45,7 @@ public class GameOverAndVictoryUIManager : MonoBehaviour
 
     void HandleGameOverAndVictoryUIVisibility(bool p_isVictoryUI, bool p_newVisibility)
     {
+        Time.timeScale = 0.0f;
         if (p_isVictoryUI)
             _victoryPanel.SetActive(p_newVisibility);
         else

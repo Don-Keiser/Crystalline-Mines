@@ -18,11 +18,16 @@ public class UpdateTutoPanel : MonoBehaviour
     [SerializeField] private string _fullText;
     [SerializeField] private string _currentText = "";
 
-    private void Awake()
+    private void OnEnable()
     {
         GetComponent();
         EventManager.ActiveTutoPanel += ShowPanel;
         EventManager.DisableTutoPanel += HidePanel;
+    }
+    private void OnDisable()
+    {
+        EventManager.ActiveTutoPanel -= ShowPanel;
+        EventManager.DisableTutoPanel -= HidePanel;
     }
     private void GetComponent()
     {
