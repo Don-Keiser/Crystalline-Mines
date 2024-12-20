@@ -361,6 +361,7 @@ public class Player : MonoBehaviour
 
         // Carried object handling 
         GameObject carriedObject = GetComponent<PlayerGrabController>().holdObject;
+
         if (carriedObject == null)
             return;
 

@@ -54,7 +54,7 @@ public class Pause : MonoBehaviour
     {
         global::Settings.Instance.audioSource.Play();
 
-        _player.transform.position = _player.respawnPosition;
+        _player.Respawn();
 
         Resume();
     }
