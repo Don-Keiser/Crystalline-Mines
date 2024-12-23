@@ -28,11 +28,11 @@ public static class EventManager
     }
     public static void StartActiveTutoPanel(GameObject currentObject)
     {
-        ActiveTutoPanel(currentObject);
+        ActiveTutoPanel?.Invoke(currentObject);
     }
     public static void StartDisableTutoPanel(GameObject currentObject)
     {
-        DisableTutoPanel(currentObject);
+        DisableTutoPanel?.Invoke(currentObject);
     }
     public static void PlayerGetTutoKey()
     {

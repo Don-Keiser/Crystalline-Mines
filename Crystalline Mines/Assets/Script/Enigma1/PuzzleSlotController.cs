@@ -13,12 +13,7 @@ namespace Script.Enigma1
 
         [Header("Slot State")]
         public bool isOccupied = false;
-        private bool playerNearby = false;
         public GameObject crystalHere;
-
-        [Header("Cooldown")]
-        private bool _interactionCooldown = false; // Variable to manage cooldown
-
 
         void Start()
         {
@@ -32,7 +27,6 @@ namespace Script.Enigma1
 
         public void PlaceCrystal(GameObject crystal)
         {
-            HandleInteractionCooldown(); // Starts the cooldown
             if (isOccupied) return;
             crystal.transform.position = transform.position; // Places the crystal in the slot
             isOccupied = true;
@@ -65,7 +59,6 @@ namespace Script.Enigma1
 
         public void RemoveCrystal()
         {
-            HandleInteractionCooldown(); // Starts the cooldown
             if (!isOccupied) return;
 
             // Assign the crystal to the PlayerGrabController's holdObject
@@ -108,11 +101,7 @@ namespace Script.Enigma1
                 PlaceCrystal(grabController.holdObject);
             }
         }
-        private void HandleInteractionCooldown()
-        {
-            _interactionCooldown = true;
-            TimerManager.StartTimer(0.5f, () => _interactionCooldown = false);
-        }
+
         private void OnTriggerExit2D(Collider2D other)
         {
             PlayerGrabController.Instance.SetNearbySlot(null);

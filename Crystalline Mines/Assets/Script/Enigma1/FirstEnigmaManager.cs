@@ -13,7 +13,6 @@ namespace Script.Enigma1
         [SerializeField] private DoorHandler.LevelRoom _doorToOpen;
 
         [SerializeField] private float _additionalRadius;
-        [SerializeField] private bool _animFinish;
 
         [Header("Enigma data")]
         [SerializeField] private int _totalCrystals = 5;
@@ -129,7 +128,6 @@ namespace Script.Enigma1
             }
             cristalLight.intensity = 0.0f;
             cristalLight.pointLightOuterRadius = 0f;
-            _animFinish = true;
         }
 
 
