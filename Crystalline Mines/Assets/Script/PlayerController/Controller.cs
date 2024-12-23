@@ -31,7 +31,7 @@ public class Controller : MonoBehaviour
     }
     private void Update()
     {
-        Animation.Instance.SetAnimationBool();
+        AnimationManager.Instance.SetAnimationBool();
         if (_pauseMenu.activeSelf) { return; }
         if (!_camera.FinishAnim) { return; }
 

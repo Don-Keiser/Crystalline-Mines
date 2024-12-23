@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class TrapSpike : MonoBehaviour
 {
-    Animation animationClass;
+    AnimationManager animationClass;
 
     void Start()
     {
-        animationClass = Animation.Instance;
+        animationClass = AnimationManager.Instance;
     }
     
     void OnTriggerEnter2D(Collider2D p_collision2D)

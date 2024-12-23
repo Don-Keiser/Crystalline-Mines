@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Animation : MonoBehaviour
+public class AnimationManager : MonoBehaviour
 {
-    public static Animation Instance;
+    public static AnimationManager Instance;
 
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;

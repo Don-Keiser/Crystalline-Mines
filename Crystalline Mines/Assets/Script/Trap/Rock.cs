@@ -8,7 +8,7 @@ public class Rock : MonoBehaviour
         {
             if (gameObject.layer == LayerMask.NameToLayer("TrapCrystal"))
             {
-                Animation.Instance.DeadTrapCrystalAnimation();
+                AnimationManager.Instance.DeadTrapCrystalAnimation();
                 TimerManager.StartTimer(0.5f, (() => collision.gameObject.GetComponent<Player>().Respawn()));
                 Destroy(gameObject);
             }

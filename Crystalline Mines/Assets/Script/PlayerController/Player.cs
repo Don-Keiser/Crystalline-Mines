@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
             }
             //else if (deltaMovement.y < 0 && _coyotteJump)
             //{
-            //    Animation.Instance.FallAnimation(true);
+            //    AnimationManager.Instance.FallAnimation(true);
             //}
         }
         HandleCoyoteTime();
