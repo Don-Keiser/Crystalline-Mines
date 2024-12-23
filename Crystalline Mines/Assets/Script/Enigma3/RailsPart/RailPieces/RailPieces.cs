@@ -32,6 +32,7 @@ public class RailPieces : Interactible, IRail
     int _initialLayer;
     Vector3 _initialPosition;
     SpriteRenderer _spriteRenderer;
+    Rigidbody2D _rigidbody2D;
     bool _isCarried;
 
     #endregion
@@ -47,6 +48,7 @@ public class RailPieces : Interactible, IRail
         _initialLayer = gameObject.layer;
         _initialPosition = _transform.position;
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
 
         _playerTransform = Player.PlayerTransform;
 
@@ -96,9 +98,15 @@ public class RailPieces : Interactible, IRail
     {
         gameObject.SetActive(true);
 
+        // Gravity part
+        _rigidbody2D.isKinematic = false;
+        _rigidbody2D.velocity = Vector2.zero;
+
+        // Position part
         _transform.parent = _railPiecesParent;
         _transform.position = _initialPosition;
 
+        // Carried part
         if (_playerGrabController.holdObject == gameObject)
             _playerGrabController.holdObject = null;
 

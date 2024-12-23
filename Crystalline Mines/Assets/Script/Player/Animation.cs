@@ -3,21 +3,17 @@ using UnityEngine;
 public class Animation : MonoBehaviour
 {
     public static Animation Instance;
+
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Player _player;
     [SerializeField] private Controller _controller;
 
     private bool _alreadyPlayJumpSound;
-    private bool _isMoving;
-    private bool _isRunning;
 
     public void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+        Instance = Instantiator.ReturnInstance(this, Instantiator.InstanceConflictResolutions.WarningAndPause);
     }
 
     public void SetAnimationBool()
@@ -60,44 +56,58 @@ public class Animation : MonoBehaviour
         }
         _spriteRenderer.flipX = (_player.velocity.x > 0) ? false : true;
     }
+
     public void DeadSpikeDownAnimation()
     {
         _controller.gameObject.SetActive(false);
+
         _player.velocity = Vector2.zero;
+
+        ForceApplicator.ApplyImpulse(_player.gameObject.transform, Vector2.down, 1, 0.25f);
+
         _animator.Play("DeadSpikeDown", 0, 0f);
 
-        // Jouer le son de mort
         SoundManager.Instance.PlaySound(SoundManager.Instance.deathSound);
 
-        TimerManager.StartTimer(0.5f, (() => _animator.Play("Stand", 0, 0f)));
-        TimerManager.StartTimer(0.5f, (() => _controller.gameObject.SetActive(true)));
+        TimerManager.StartTimer(0.5f, () =>
+        {
+            _animator.Play("Stand", 0, 0f);
+            _controller.gameObject.SetActive(true);
+            _player.isDead = false;
+        });
     }
 
     public void DeadSpikeUpAnimation()
     {
         _controller.gameObject.SetActive(false);
-        _player.velocity = Vector2.zero;
-        _animator.Play("DeadSpikeUp", 0, 0f);
 
-        // Jouer le son de mort
+        _player.velocity = Vector2.zero;
+
+        _animator.Play("DeadSpikeUp", 0, 0f);
         SoundManager.Instance.PlaySound(SoundManager.Instance.deathSound);
 
-        TimerManager.StartTimer(0.5f, (() => _animator.Play("Stand", 0, 0f)));
-        TimerManager.StartTimer(0.5f, (() => _controller.gameObject.SetActive(true)));
-        TimerManager.StartTimer(0.5f, (() => _player.isDead = false));
+        TimerManager.StartTimer(0.5f, () =>
+        {
+            _animator.Play("Stand", 0, 0f);
+            _controller.gameObject.SetActive(true);
+            _player.isDead = false;
+        });
     }
 
     public void DeadTrapCrystalAnimation()
     {
         _controller.gameObject.SetActive(false);
-        _player.velocity = Vector2.zero;
-        _animator.Play("DeadCrystal", 0, 0f);
 
-        // Jouer le son de mort
+        _player.velocity = Vector2.zero;
+
+        _animator.Play("DeadCrystal", 0, 0f);
         SoundManager.Instance.PlaySound(SoundManager.Instance.deathSound);
 
-        TimerManager.StartTimer(0.5f, (() => _animator.Play("Stand", 0, 0f)));
-        TimerManager.StartTimer(0.5f, (() => _controller.gameObject.SetActive(true)));
+        TimerManager.StartTimer(0.5f, () =>
+        {
+            _animator.Play("Stand", 0, 0f);
+            _controller.gameObject.SetActive(true);
+            _player.isDead = false;
+        });
     }
-
 }

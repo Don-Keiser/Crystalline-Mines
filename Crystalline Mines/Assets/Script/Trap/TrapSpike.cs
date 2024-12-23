@@ -1,38 +1,74 @@
-using System;
 using UnityEngine;
 
 public class TrapSpike : MonoBehaviour
 {
-    private Player _player;
-    public void OnTriggerEnter2D(Collider2D collision)
+    Animation animationClass;
+
+    void Start()
     {
-        Interact_Crystal crystal = collision.GetComponent<Interact_Crystal>();
-        _player = collision.GetComponent<Player>();
-        if(crystal != null)
+        animationClass = Animation.Instance;
+    }
+    
+    void OnTriggerEnter2D(Collider2D p_collision2D)
+    {
+        if (p_collision2D.TryGetComponent(out ICarriable iCarriable))
         {
-            collision.transform.position = crystal.initialPosition;
-            crystal.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            crystal.GetComponent<Rigidbody2D>().isKinematic = true;
-        }
-        else if (collision.gameObject.CompareTag("Player"))
-        {
-            if (gameObject.layer == LayerMask.NameToLayer("SpikeBottom"))
-            {
-                Animation.Instance.DeadSpikeDownAnimation();
-                TimerManager.StartTimer(0.4f, (() => collision.gameObject.GetComponent<Player>().Respawn()));
-            }
-            if (gameObject.layer == LayerMask.NameToLayer("SpikeTop"))
-            {
-                _player.isDead = true;
-                Animation.Instance.DeadSpikeUpAnimation();
-                TimerManager.StartTimer(0.4f, (() => collision.gameObject.GetComponent<Player>().Respawn()));
-            }
-            if (gameObject.layer == LayerMask.NameToLayer("TrapCrystal"))
-            {
-                Animation.Instance.DeadTrapCrystalAnimation();
-                TimerManager.StartTimer(0.4f, (() => collision.gameObject.GetComponent<Player>().Respawn()));
-            }
+            iCarriable.Reinitialize();
+            return;
         }
 
+        if (p_collision2D.gameObject.CompareTag("Player"))
+        {
+            // Security
+            if (Player.PlayerTransform.GetComponent<Player>().isDead)
+                return;
+
+            if (!p_collision2D.TryGetComponent(out Player player))
+            {
+                Debug.LogError($"ERROR ! The collided GameObject '{p_collision2D.name}' has the 'Player' tag but has not the 'Player' Component");
+                return;
+            }
+
+            HandlePlayerDeath(player);
+            return;
+        }
+
+        Debug.LogError(
+            $"ERROR ! The GameObject '{p_collision2D.name}' has collided with '{name}' {nameof(TrapSpike)}, " +
+            $"but there is nothing planned to handle it."
+        );
+    }
+
+    void HandlePlayerDeath(Player p_player)
+    {
+        // NOTE : We can't use a switch here because of the NameToLayer method's bahaviour
+
+        p_player.isDead = true;
+
+        if (gameObject.layer == LayerMask.NameToLayer("SpikeBottom"))
+        {
+            animationClass.DeadSpikeDownAnimation();
+            TimerManager.StartTimer(0.4f, () => p_player.Respawn());
+            return;
+        }
+        else if (gameObject.layer == LayerMask.NameToLayer("SpikeTop"))
+        {
+            animationClass.DeadSpikeUpAnimation();
+            TimerManager.StartTimer(0.4f, () => p_player.Respawn());
+            return;
+        }
+        else if (gameObject.layer == LayerMask.NameToLayer("TrapCrystal"))
+        {
+            animationClass.DeadTrapCrystalAnimation();
+            TimerManager.StartTimer(0.4f, () => p_player.Respawn());
+            return;
+        }
+        else
+        {
+            Debug.LogError(
+                $"ERROR ! The GameObject '{p_player.name}' has collided with '{name}' {nameof(TrapSpike)}, " +
+                $"but there is nothing planned to handle it."
+            );
+        }
     }
 }

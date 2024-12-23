@@ -1,17 +1,14 @@
 using Script.Enigma1;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    [HideInInspector] public Vector3 zoneRespawnOfPlayer;
-
     public static bool CameraAnimationTime = false;
     public static Transform PlayerTransform;
-
-    [Header("Player Ressources")]
     public static bool TutorialKeyObtained = false;
 
+    [Header("Base respawn position :")]
+    [SerializeField] Vector3 _defaultRespawnPosition = new(3, -0.3f, 0);
     [HideInInspector] public Vector3 respawnPosition;
 
     [Header("Coyotte Time")]
@@ -352,12 +349,16 @@ public class Player : MonoBehaviour
     /// Moves the player to the respawn position, and reinitialize the carried object. </summary>
     public void Respawn()
     {
+        isDead = true;
+
         // Position handling
         if (respawnPosition == Vector3.zero)
-            respawnPosition = new Vector3(3, -0.3f, 0); // Sorry about the pure value being there (it's 5:30 PM and last day), it's the default spawn.
+            respawnPosition = _defaultRespawnPosition;
 
         transform.position = respawnPosition;
         velocity = Vector2.zero;
+
+        isDead = false;
 
         // Carried object handling 
         GameObject carriedObject = GetComponent<PlayerGrabController>().holdObject;

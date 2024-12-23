@@ -3,75 +3,103 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] private GameObject _settings;
-    [SerializeField] private GameObject _pausePanel;
-    [SerializeField] private GameObject _pauseButton;
+    [Header("External references :")]
     [SerializeField] private Player _player;
-    private bool _active;
 
     [SerializeField] private CameraController _camera;
 
+    [Header("Internal references :")]
+    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _pauseButton;
+
+    private Settings _settings;
+    private SoundManager _soundManager;
+
+    private bool _isActive;
+
+    private void Start()
+    {
+        _settings = Settings.Instance;
+        _soundManager = SoundManager.Instance;
+    }
+
     private void Update()
     {
-        if (!_camera.FinishAnim) { _pauseButton.SetActive(false); return; }
-        else { _pauseButton.SetActive(true); }
+        if (!_camera.FinishAnim)
+        {
+            _pauseButton.SetActive(false); 
+            return; 
+        }
+        else 
+        { 
+            _pauseButton.SetActive(true); 
+        }
+
         OpenPauseWithEscape();
     }
 
     private void OpenPauseWithEscape()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !_active)
+        if (Input.GetKeyDown(KeyCode.Escape) && !_isActive)
         {
             OpenPauseWithButton();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && _active && global::Settings.Instance.settingsActive == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && _isActive && _settings.settingsActive == false)
         {
             Resume();
         }
     }
+
     private void OpenPauseWithButton()
     {
-        global::Settings.Instance.audioSource.Play();
+        _settings.audioSource.Play();
+
         Time.timeScale = 0;
+
         _pausePanel.SetActive(true);
         _pauseButton.SetActive(false);
-        _active = true;
-    }
 
+        _isActive = true;
+    }
 
     public void Resume()
     {
-        global::Settings.Instance.audioSource.Play();
+        _settings.audioSource.Play();
+
         Time.timeScale = 1;
+
         _pausePanel.SetActive(false);
         _pauseButton.SetActive(true);
-        _active = false;
+
+        _isActive = false;
     }
 
     public void Retry()
     {
-        global::Settings.Instance.audioSource.Play();
+        _settings.audioSource.Play();
 
         _player.Respawn();
 
         Resume();
     }
-    public void Settings()
+
+    public void OpenSettings()
     {
-        global::Settings.Instance.audioSource.Play();
-        global::Settings.Instance.settingsActive = true;
-        global::Settings.Instance._settingsPanel.SetActive(true);
+        _settings.audioSource.Play();
+        _settings.settingsActive = true;
+        _settings._settingsPanel.SetActive(true);
     }
-    public void Exit(string sceneName)
+
+    public void Exit(string p_sceneName)
     {
-        global::Settings.Instance.audioSource.Play();
+        _settings.audioSource.Play();
+        
+        _settings.musicSource.Stop();
+        _settings.musicSource.clip = _soundManager.mainMenuSong;
+        _settings.musicSource.Play();
 
-        global::Settings.Instance.musicSource.Stop();
-        global::Settings.Instance.musicSource.clip = global::SoundManager.Instance.mainMenuSong;
-        global::Settings.Instance.musicSource.Play();
-
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(p_sceneName);
     }
 }
