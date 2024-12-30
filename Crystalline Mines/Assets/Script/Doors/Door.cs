@@ -5,16 +5,16 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [Header("External references :")]
-    [SerializeField] Animator animator;
+    [SerializeField] protected Animator _animator;
 
-    Transform _transform;
+    protected Transform _transform;
 
-    Vector3 _initialPosition;
-    Quaternion _initialRotation;
+    protected Vector3 _initialPosition;
+    protected Quaternion _initialRotation;
 
     bool _isOpen;
 
-    void Start()
+    virtual protected void Start()
     {
         _transform = transform;
 
@@ -30,6 +30,9 @@ public class Door : MonoBehaviour
             return;
         }
 
+        if (_isOpen)
+            return;
+
         if (p_openningCondition.Invoke())
         {
             _isOpen = true;
@@ -44,25 +47,26 @@ public class Door : MonoBehaviour
         }
     }
 
-    void PlayOpeningAnimation()
+    virtual protected void PlayOpeningAnimation()
     {
-        // TEMPORARY : TO DEBUG
+        TimerManager.StartTimer(3.0f, () => gameObject.SetActive(false));
+
+        // TO DEBUG
         GetComponent<SpriteRenderer>().color = Color.green;
-        TimerManager.StartTimer(3.0f, () => Destroy(gameObject));
-        //animator.Play();
     }
 
-    void PlayOpeningSFX()
+    virtual protected void PlayOpeningSFX()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.doorSound);
     }
 
-    void ResetDoor()
+    virtual protected void ResetDoor()
     {
-        _transform.position = _initialPosition;
-        _transform.rotation = _initialRotation;
+        gameObject.SetActive(true);
 
-        // TEMPORARY : TO DEBUG
+        _transform.SetPositionAndRotation(_initialPosition, _initialRotation);
+
+        // TO DEBUG
         GetComponent<SpriteRenderer>().color = Color.red;
     }
 }
