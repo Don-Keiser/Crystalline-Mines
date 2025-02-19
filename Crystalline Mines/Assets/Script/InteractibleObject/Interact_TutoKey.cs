@@ -5,7 +5,7 @@ public class Interact_TutoKey : Interactible
     public override void PlayerInteract()
     {
         base.PlayerInteract();
-        DoorHandler.Instance.GetDoor(_doorRoom).OpenDoor(() => true);
+       TimerManager.StartTimer(0.25f, () => DoorHandler.Instance.GetDoor(_doorRoom).OpenDoor(() => true));
     }
     public override void StartAnim()
     {

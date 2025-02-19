@@ -31,24 +31,32 @@ public class ButtonLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(LightOn)
+        PointerEnter();
+    }
+
+    public void PointerEnter()
+    {
+        if (LightOn)
         {
             _light2D.enabled = true;
         }
         _button.transform.localScale = new Vector3(x + 0.25f, y + 0.25f, 1f);
-        //_button.GetComponent<Light2D>().color = _colorTint;
+        _light2D.color = _colorTint;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(LightOn)
+        PointerExit();
+    }
+    public void PointerExit()
+    {
+        if (LightOn)
         {
             _light2D.enabled = false;
         }
         _button.transform.localScale = new Vector3(x, y, 1f);
-
+        _light2D.color = Color.white;
     }
-
 
     public void OnPointerUp(PointerEventData eventData)
     {

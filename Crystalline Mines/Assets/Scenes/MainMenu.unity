@@ -34419,7 +34419,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6320754, g: 0.66161686, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -34446,6 +34446,30 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1725524431}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: SettingButtonSelected
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 15584228}
+          m_ObjectArgumentAssemblyTypeName: ButtonLight, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1725524431}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: SettingButtonUnselected
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 666315306}
+          m_ObjectArgumentAssemblyTypeName: ButtonLight, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -35425,7 +35449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
-  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!1 &117395522
 GameObject:
   m_ObjectHideFlags: 0
@@ -35733,7 +35757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
-  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &154742788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37465,7 +37489,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6320754, g: 0.66161686, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -37492,6 +37516,30 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1725524431}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: SettingButtonSelected
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 666315306}
+          m_ObjectArgumentAssemblyTypeName: ButtonLight, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1725524431}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: SettingButtonUnselected
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 15584228}
+          m_ObjectArgumentAssemblyTypeName: ButtonLight, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -43168,7 +43216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
-  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
+  _colorTint: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1424399314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43578,7 +43626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
-  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &1452012457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44969,7 +45017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
-  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &1634365462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45266,7 +45314,7 @@ Canvas:
   m_GameObject: {fileID: 1725524425}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 880200849}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -46237,7 +46285,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6320754, g: 0.66161686, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -47295,7 +47343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
-  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
+  _colorTint: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2133264141
 MonoBehaviour:
   m_ObjectHideFlags: 0

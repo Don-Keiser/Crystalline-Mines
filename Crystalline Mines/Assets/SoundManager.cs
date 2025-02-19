@@ -28,17 +28,23 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        _audioSource = Settings.Instance.sfxSource;
-        _musicSource = Settings.Instance.musicSource;
+
+        if (Settings.Instance is not null)
+        {
+            _audioSource = Settings.Instance.sfxSource;
+            _musicSource = Settings.Instance.musicSource;
+        }
     }
 
     private void Start()
     {
-        _musicSource.Stop();
-        _musicSource.clip = inGameMusic;
-        _audioSource.loop = true;
-        _musicSource.Play();
+        if (_musicSource is not null)
+        {
+            _musicSource.Stop();
+            _musicSource.clip = inGameMusic;
+            _audioSource.loop = true;
+            _musicSource.Play();
+        }
     }
 
     public void PlaySound(AudioClip clip, bool loop = false)
@@ -60,7 +66,10 @@ public class SoundManager : MonoBehaviour
 
     public void StopSound()
     {
-        _audioSource.loop = false;
-        _audioSource.Stop();
+        if (_audioSource != null)
+        {
+            _audioSource.loop = false;
+            _audioSource.Stop();
+        }
     }
 }

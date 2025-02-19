@@ -18,20 +18,20 @@ public class AnimationManager : MonoBehaviour
 
     public void SetAnimationBool()
     {
-        if (_player.velocity.x != 0 && _player.CanJump())
+        if (_controller.playerInput.x != 0 && _player.CanJump())
         {
             _animator.SetBool("playerMove", true);
             _animator.SetBool("fall", false);
             _animator.SetBool("isJumping", false);
-            SoundManager.Instance.PlaySound(SoundManager.Instance.runSound, true);
+            SoundManager.Instance?.PlaySound(SoundManager.Instance?.runSound, true);
         }
-        else if (_player.velocity.x == 0)
+        else if (_controller.playerInput.x == 0)
         {
             _animator.SetBool("canJump", true);
             _animator.SetBool("playerMove", false);
             _animator.SetBool("fall", false);
             _animator.SetBool("isJumping", false);
-            SoundManager.Instance.StopSound();
+            SoundManager.Instance?.StopSound();
         }
         if (_player.CanJump())
         {
@@ -40,21 +40,25 @@ public class AnimationManager : MonoBehaviour
             _animator.SetBool("fall", false);
             _animator.SetBool("isJumping", false);
         }
-        else if (_player.velocity.y > 0)
+        else if (_controller.playerInput.y > 0)
         {
-            SoundManager.Instance.StopSound();
+            SoundManager.Instance?.StopSound();
             _animator.SetBool("isJumping", true);
             _animator.SetBool("canJump", false);
-            if (!_alreadyPlayJumpSound) { SoundManager.Instance.PlaySound(SoundManager.Instance.jumpSound); _alreadyPlayJumpSound = true; }
+            if (!_alreadyPlayJumpSound)
+            { 
+                SoundManager.Instance?.PlaySound(SoundManager.Instance?.jumpSound);
+                _alreadyPlayJumpSound = true;
+            }
         }
         else
         {
-            SoundManager.Instance.StopSound();
+            SoundManager.Instance?.StopSound();
             _animator.SetBool("fall", true);
             _animator.SetBool("isJumping", false);
             _animator.SetBool("canJump", false);
         }
-        _spriteRenderer.flipX = (_player.velocity.x > 0) ? false : true;
+        _spriteRenderer.flipX = (_controller.playerInput.x > 0) ? false : true;
     }
 
     public void DeadSpikeDownAnimation()
@@ -67,7 +71,7 @@ public class AnimationManager : MonoBehaviour
 
         _animator.Play("DeadSpikeDown", 0, 0f);
 
-        SoundManager.Instance.PlaySound(SoundManager.Instance.deathSound);
+        SoundManager.Instance?.PlaySound(SoundManager.Instance?.deathSound);
 
         TimerManager.StartTimer(0.5f, () =>
         {
@@ -84,7 +88,7 @@ public class AnimationManager : MonoBehaviour
         _player.velocity = Vector2.zero;
 
         _animator.Play("DeadSpikeUp", 0, 0f);
-        SoundManager.Instance.PlaySound(SoundManager.Instance.deathSound);
+        SoundManager.Instance?.PlaySound(SoundManager.Instance?.deathSound);
 
         TimerManager.StartTimer(0.5f, () =>
         {
@@ -101,7 +105,7 @@ public class AnimationManager : MonoBehaviour
         _player.velocity = Vector2.zero;
 
         _animator.Play("DeadCrystal", 0, 0f);
-        SoundManager.Instance.PlaySound(SoundManager.Instance.deathSound);
+        SoundManager.Instance?.PlaySound(SoundManager.Instance?.deathSound);
 
         TimerManager.StartTimer(0.5f, () =>
         {
