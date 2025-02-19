@@ -1,5 +1,6 @@
 using Script.Enigma1;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
@@ -38,7 +39,7 @@ public class Treasure : Interactible, ICarriable
 
     public override void StartAnim()
     {
-        
+        EventManager.StartCameraShake(100000000.0f, 1.0f); //c'est nul mettre une action a la place ou bool 
     }
 
     public override void StartSFXAndVFX()

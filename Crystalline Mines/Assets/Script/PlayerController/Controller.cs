@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class Controller : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    private AnimationManager _playerAnimManager;
     private PlayerGrabController _grabController;
     [SerializeField] private CameraController _camera;
 
@@ -28,14 +29,21 @@ public class Controller : MonoBehaviour
     {
         _grabController = _player.GetComponent<PlayerGrabController>();
         if (_grabController is null) { Debug.LogError("Player has not PlayerGrabController script"); }
+
+        _playerAnimManager = transform.GetChild(0).GetComponent<AnimationManager>();
     }
     private void Update()
     {
+        _player.SetMoveInput(playerInput);
+
+        if (_pauseMenu.activeSelf || !_camera.FinishAnim) 
+        {
+            _playerAnimManager.SetPlayerAnimToDefault();
+            return;
+        }
+
         AnimationManager.Instance.SetAnimationBool(); //a modifier
 
-        if (_pauseMenu.activeSelf || !_camera.FinishAnim) { return; }
-
-        _player.SetMoveInput(playerInput);
         ShowTextOnNearestObject();
     }
     public void ShowTextOnNearestObject()
@@ -78,34 +86,43 @@ public class Controller : MonoBehaviour
         if (context.canceled)
         {
             //anim stand
-            _player.SetMoveInput(new Vector2(0,0));
+            _player.SetMoveInput(new Vector2(0, 0));
         }
     }
     public void JumpInput(InputAction.CallbackContext context)
     {
-        _player.Jump();
-        //anim jump
+        if (context.started)
+        {
+            _player.Jump();
+            //anim jump
+        }
     }
     public void CrouchInput(InputAction.CallbackContext context)
     {
-        _player.DropThroughPlatform(-1);
-        //anim fall
+        if (context.started)
+        {
+            _player.DropThroughPlatform(-1);
+            //anim fall
+        }
     }
     public void InteractInput(InputAction.CallbackContext context)
     {
-        GameObject nearestObject = GetNearestInteractableObject();
-        if (nearestObject is not null)
+        if (context.started)
         {
-            Interactible interactible = nearestObject.GetComponent<Interactible>();
-            if (interactible is not null)
+            GameObject nearestObject = GetNearestInteractableObject();
+            if (nearestObject is not null)
             {
-                interactible.PlayerInteract();
-                return;
+                Interactible interactible = nearestObject.GetComponent<Interactible>();
+                if (interactible is not null)
+                {
+                    interactible.PlayerInteract();
+                    return;
+                }
             }
-        }
-        if (_grabController is not null && _grabController.hasCrystal)
-        {
-            _grabController.DropObject();
+            if (_grabController is not null && _grabController.hasCrystal)
+            {
+                _grabController.DropObject();
+            }
         }
     }
 }

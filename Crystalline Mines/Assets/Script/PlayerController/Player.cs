@@ -76,8 +76,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (CameraAnimationTime || isDead) { return; }
-        UpdateColliderInfos();
+
         ApplyGravity();
+        UpdateColliderInfos();
 
         Vector2 deltaMovement = velocity * Time.deltaTime;
         //print($"delata movement X {deltaMovement.x} and Y {deltaMovement.y}");

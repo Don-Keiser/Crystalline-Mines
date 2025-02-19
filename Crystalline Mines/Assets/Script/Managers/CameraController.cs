@@ -35,10 +35,6 @@ public class CameraController : MonoBehaviour
     public bool FinishAnim { get; private set; }
     public bool FullSreenTime { get; private set; }
 
-    [Header("Camera Shake")]
-    private float _skakeMagnitude;
-    private float _shakeDuration;
-
     private void OnEnable()
     {
         EventManager.CameraCinematic += GoToMapCenter; // Subscribe event
@@ -136,8 +132,6 @@ public class CameraController : MonoBehaviour
 
     public void StartCameraShake(float duration, float magnitude = 1)
     {
-        _shakeDuration = duration;
-        _skakeMagnitude = magnitude;
         StartCoroutine(CameraShake(duration, magnitude));   
     }
     private IEnumerator CameraShake(float duration, float magnitude)
