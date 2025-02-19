@@ -5,6 +5,13 @@ public class MobilePlatform : MonoBehaviour
     [SerializeField] private Transform[] _waypoints;
     [SerializeField] private float _moveSpeed = 2f;
     private int _waypointIndex;
+
+    private CameraController _camera;
+
+    private void Awake()
+    {
+        _camera = FindObjectOfType<Camera>().GetComponent<CameraController>();
+    }
     void Start()
     {
         transform.position = _waypoints[_waypointIndex].transform.position;
@@ -24,6 +31,8 @@ public class MobilePlatform : MonoBehaviour
 
     void Move()
     {
+        if (!_camera.FinishAnim) { return; }
+
         transform.position = Vector2.MoveTowards(transform.position, _waypoints[_waypointIndex].transform.position, _moveSpeed * Time.deltaTime);
         if (transform.position == _waypoints[_waypointIndex].transform.position)
         {

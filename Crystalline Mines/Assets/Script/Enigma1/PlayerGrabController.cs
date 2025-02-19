@@ -32,7 +32,7 @@ namespace Script.Enigma1
         {
             float velocityX = Input.GetAxisRaw("Horizontal");
 
-            if (velocityX != 0)
+            if (velocityX is not 0)
                 return lastDirection = velocityX < 0 ? Vector2.left : Vector2.right;
 
             return lastDirection;
@@ -45,7 +45,7 @@ namespace Script.Enigma1
 
         public void DropObject()
         {
-            if (holdObject == null)
+            if (holdObject is null)
             {
                 Debug.LogError("holdObject is null at the start of DropObject.");
                 return;
@@ -53,12 +53,12 @@ namespace Script.Enigma1
 
             RailPieces railPieces = holdObject.GetComponent<RailPieces>();
 
-            if (_nearbySlot != null && !_nearbySlot.isOccupied)
+            if (_nearbySlot is not null && !_nearbySlot.isOccupied)
             {
                 holdObjectRb.velocity = Vector2.zero;
                 _nearbySlot.PlaceCrystal(holdObject);
             }
-            else
+            else if(holdObjectRb is not null)
             {
                 holdObjectRb.isKinematic = false;
                 holdObjectRb.velocity = Vector2.zero;
@@ -71,7 +71,7 @@ namespace Script.Enigma1
                 Debug.Log("Crystal thrown.");
             }
             
-            if (railPieces != null)
+            if (railPieces is not null)
             {
                 railPieces.SetIsCarried(false);
             }
@@ -83,11 +83,11 @@ namespace Script.Enigma1
         }
         public void PickUpCrystal()
         {
-            if (holdObject != null)
+            if (holdObject is not null)
             {
                 hasCrystal = true;
                 holdObjectRb = holdObject.GetComponent<Rigidbody2D>();
-                if (holdObjectRb != null)
+                if (holdObjectRb is not null)
                 {
                     holdObjectRb.isKinematic = true;
                     holdObjectRb.velocity = Vector2.zero;

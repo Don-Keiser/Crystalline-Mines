@@ -34502,6 +34502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &15584229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34509,7 +34510,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15584223}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -34518,7 +34519,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 1
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -34552,7 +34553,7 @@ MonoBehaviour:
   - {x: 61.490818, y: -13.190287, z: 0.00036621088}
   - {x: 78.09598, y: -1.3411721, z: 0}
   - {x: 60.53899, y: 13.466117, z: 0.00036621088}
-  - {x: -58.082752, y: 13.214732, z: 0.00036621088}
+  - {x: -58.082756, y: 13.908963, z: 0.0003662109}
   - {x: -78.11594, y: -0.2095003, z: 0}
 --- !u!1 &17147920
 GameObject:
@@ -35375,7 +35376,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -35424,6 +35425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
 --- !u!1 &117395522
 GameObject:
   m_ObjectHideFlags: 0
@@ -35646,7 +35648,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -35731,6 +35733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
 --- !u!114 &154742788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35747,7 +35750,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -37545,6 +37548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &666315307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37552,7 +37556,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666315301}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -37561,7 +37565,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 1
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -40541,6 +40545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &997414312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43163,6 +43168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &1424399314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43179,7 +43185,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 1
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -43572,6 +43578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
 --- !u!114 &1452012457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43588,7 +43595,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -44962,6 +44969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.29158416, g: 0.33483884, b: 0.82641506, a: 1}
 --- !u!114 &1634365462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44978,7 +44986,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -46312,6 +46320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &1979619741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46319,7 +46328,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979619735}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -46328,7 +46337,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 1
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -47286,6 +47295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightOn: 1
+  _colorTint: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
 --- !u!114 &2133264141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47302,7 +47312,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 1
   m_FalloffIntensity: 0.4
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.33333334, b: 0.827451, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0

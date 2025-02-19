@@ -1,5 +1,4 @@
 using System.Collections;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +11,13 @@ public class VerticalGate : Door
     override protected void PlayOpeningAnimation()
     {
         // Will make the gate go upward
-        StartCoroutine(OpeningAnimationCoroutine(_openingPositionOffset, _openingDurationInSeconds));
+        EventManager.StartCameraAnimation(transform.position, 10.0f, _openingDurationInSeconds, 1.25f);
+
+        TimerManager.StartTimer(1.0f, () =>
+        {
+            StartCoroutine(OpeningAnimationCoroutine(_openingPositionOffset, _openingDurationInSeconds));
+            EventManager.StartCameraShake(_openingDurationInSeconds, 1.0f);
+        });
     }
 
     override protected void PlayOpeningSFX()

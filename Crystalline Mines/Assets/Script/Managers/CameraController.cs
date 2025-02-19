@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -32,10 +33,16 @@ public class CameraController : MonoBehaviour
 
     public bool IsAnimating { get; private set; }
     public bool FinishAnim { get; private set; }
+    public bool FullSreenTime { get; private set; }
+
+    [Header("Camera Shake")]
+    private float _skakeMagnitude;
+    private float _shakeDuration;
 
     private void OnEnable()
     {
         EventManager.CameraCinematic += GoToMapCenter; // Subscribe event
+        EventManager.OnStartedCameraShake += StartCameraShake;
 
         _cam = GetComponent<Camera>();
         _startFOV = _cam.orthographicSize;
@@ -45,6 +52,7 @@ public class CameraController : MonoBehaviour
     private void OnDisable()
     {
         EventManager.CameraCinematic -= GoToMapCenter; // Subscribe event
+        EventManager.OnStartedCameraShake -= StartCameraShake;
     }
 
     public void InitializeCameraBoundary(float maxX, float minX, float maxY, float minY)
@@ -81,7 +89,7 @@ public class CameraController : MonoBehaviour
         _targetZoom = targetZoom;
     }
 
-    public void GoToMapCenter(Vector3 mapCenter, float zoomOutLevel, float fullScreenDuration , float animDuration)
+    public void GoToMapCenter(Vector3 mapCenter, float zoomOutLevel, float fullScreenDuration, float animDuration)
     {
         FinishAnim = false;
         _levelCenter = mapCenter;
@@ -93,6 +101,7 @@ public class CameraController : MonoBehaviour
     public void ReturnToPlayer()
     {
         StartAnimation(_player.position, _initialFOV);
+        FullSreenTime = false;
     }
 
     public void AnimateCamera()
@@ -114,6 +123,7 @@ public class CameraController : MonoBehaviour
 
             if (_targetPosition == _levelCenter)
             {
+                FullSreenTime = true;
                 TimerManager.StartTimer(_fullScreenDuration, ReturnToPlayer);
             }
             else if (_targetPosition == _player.position)
@@ -122,5 +132,29 @@ public class CameraController : MonoBehaviour
                 Player.CameraAnimationTime = false;
             }
         }
+    }
+
+    public void StartCameraShake(float duration, float magnitude = 1)
+    {
+        _shakeDuration = duration;
+        _skakeMagnitude = magnitude;
+        StartCoroutine(CameraShake(duration, magnitude));   
+    }
+    private IEnumerator CameraShake(float duration, float magnitude)
+    {
+        float timer = 0;
+        while (timer < duration)
+        {
+            yield return new WaitForEndOfFrame();
+            Vector3 _camPos = _cam.transform.position;
+
+            float _camRotationZ = Random.Range(-1.0f, 1.0f) * magnitude;
+
+            _cam.transform.rotation = Quaternion.Euler(0, 0, _camRotationZ);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        _cam.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }

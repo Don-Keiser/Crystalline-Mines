@@ -23,6 +23,12 @@ namespace Script.Enigma1
         private List<GameObject> _placedCrystalObjects = new List<GameObject>();
         [SerializeField] private List<GameObject> DEBUGCRSITAL = new List<GameObject>();
 
+        [Header("End Enigma Camera animation")]
+        private Vector3 _doorPos;
+        [SerializeField] private float _maxCameraDezoom;
+        [SerializeField] private float _animDuration;
+        [SerializeField] private float _fullscreenDuration;
+
         void Awake()
         {
             if (Instance == null)
@@ -53,22 +59,28 @@ namespace Script.Enigma1
         [ContextMenu("EnigmaFinish")]
         public void EnigmaFinish()
         {
+            _placedCrystalObjects = DEBUGCRSITAL; //pas retirer pour le debug
+
+
+
             Debug.Log("Puzzle successfully completed!");
             IsPuzzleCompleted = true;
-            foreach(var slot in puzzleSlots)
+            foreach (var cristal in _placedCrystalObjects)
+            {
+                if (cristal.TryGetComponent<Light2D>(out Light2D light))
+                {
+                    StartCoroutine(FinishEnigmaAnim(light));
+                }
+                cristal.layer = 0;
+            }
+            foreach (var slot in puzzleSlots)
             {
                 slot.gameObject.layer = 0;
             }
-            foreach (var cristal in DEBUGCRSITAL)
-            {
-                cristal.layer = 0;
-                if (cristal.GetComponent<Light2D>() != null)
-                {
-                    StartCoroutine(FinishEnigmaAnim(cristal.GetComponent<Light2D>()));
-                }
-            }
+
             TimerManager.StartTimer(3.0f, () => DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true));
         }
+
         public void CheckPuzzleCompletion()
         {
             if (_placedCrystals == _totalCrystals && CheckAllSlots())
@@ -77,9 +89,9 @@ namespace Script.Enigma1
                 IsPuzzleCompleted = true;
                 foreach (var cristal in _placedCrystalObjects)
                 {
-                    if (cristal.GetComponent<Light2D>() != null)
+                    if (cristal.TryGetComponent<Light2D>(out Light2D light))
                     {
-                        StartCoroutine(FinishEnigmaAnim(cristal.GetComponent<Light2D>()));
+                        StartCoroutine(FinishEnigmaAnim(light));
                     }
                     cristal.layer = 0;
                 }
@@ -87,11 +99,8 @@ namespace Script.Enigma1
                 {
                     slot.gameObject.layer = 0;
                 }
+
                 TimerManager.StartTimer(3.0f, () => DoorHandler.Instance.GetDoor(_doorToOpen).OpenDoor(() => true));
-            }
-            else if (_placedCrystals == _totalCrystals)
-            {
-                Debug.Log("All crystals are placed, but some are incorrect.");
             }
         }
 
@@ -102,13 +111,13 @@ namespace Script.Enigma1
             float duration = 1.5f; 
             float elapsedTime = 0f;
 
-            cristalLight.intensity += 2.5f;
 
             while (elapsedTime < duration)
             {
                 float t = elapsedTime / duration; 
                 cristalLight.pointLightOuterRadius = Mathf.Lerp(initialRadius, endRadius, t);
                 elapsedTime += Time.deltaTime; 
+                cristalLight.intensity += Time.deltaTime * 2;
                 yield return null;
             }
 

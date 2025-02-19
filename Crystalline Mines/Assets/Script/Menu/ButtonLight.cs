@@ -17,6 +17,9 @@ public class ButtonLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public bool LightOn = true;
     private IPointerUpHandler _pointerUpHandlerImplementation;
 
+    [Header("Color tint when cursor over Button")]
+    [SerializeField] private Color _colorTint;
+
     private void Start()
     {
         _light2D = GetComponent<Light2D>();
@@ -33,6 +36,7 @@ public class ButtonLight : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             _light2D.enabled = true;
         }
         _button.transform.localScale = new Vector3(x + 0.25f, y + 0.25f, 1f);
+        //_button.GetComponent<Light2D>().color = _colorTint;
     }
 
     public void OnPointerExit(PointerEventData eventData)

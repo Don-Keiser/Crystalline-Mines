@@ -50,9 +50,6 @@ public class Door : MonoBehaviour
     virtual protected void PlayOpeningAnimation()
     {
         TimerManager.StartTimer(3.0f, () => gameObject.SetActive(false));
-
-        // TO DEBUG
-        GetComponent<SpriteRenderer>().color = Color.green;
     }
 
     virtual protected void PlayOpeningSFX()
