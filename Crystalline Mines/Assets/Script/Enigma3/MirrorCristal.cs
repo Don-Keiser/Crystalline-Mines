@@ -6,18 +6,11 @@ using UnityEngine.Rendering.Universal;
 public class MirrorCristal : EmitterCristal
 {
     [SerializeField] private List<Color> colorsReceived = new List<Color>();
-    [SerializeField] private List<MirrorCristal> _cristalConnected = new();
-    [SerializeField] private float _animDuration = 1f;
+    [SerializeField] private float _animDuration = 1.5f;
     private Color _laserColor;
 
     private SpriteRenderer _spriteRenderer;
     private Light2D _light;
-
-    private void Awake()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _light = GetComponent<Light2D>();
-    }
     public void GetLaserColorReceived(List<Color> color)
     {
         foreach (Color c in color)
@@ -27,53 +20,38 @@ public class MirrorCristal : EmitterCristal
                 colorsReceived.Add(c);
             }
         }
-        StartCoroutine(FillCristalColor());
-    }
-    private IEnumerator FillCristalColor()
-    {
         SetRightColor();
-        Color lightColor = _light.color;
-        Color spriteColor = _spriteRenderer.color;
-        for (float t = _animDuration; t > 0.01f; t -= Time.deltaTime)
-        {
-            lightColor.a += t;
-            spriteColor.a += t;
-
-            _light.color = lightColor;
-            _spriteRenderer.color = spriteColor;
-            yield return null;
-        }
-
-        lightColor.a = 1f;
-        _light.color = lightColor;
-
-        spriteColor.a = 1f;
-        _spriteRenderer.color = lightColor;
     }
 
     private void SetRightColor()
     {
         _laserColor = GetAverageColor(colorsReceived);
-        _laserColor.a = 0;
 
-        _light.color = _laserColor;
-        _spriteRenderer.color = _laserColor;
+        StartCoroutine(ColorTransition(_laserColor)); // Lancer l'animation de couleur
 
-       TimerManager.StartTimer(_animDuration, () =>
-       {
-           _laserColor.a = 1;
-           SendLaser(transform.position, _laserColor, colorsReceived);
-       });
+        TimerManager.StartTimer(0.75f, () => SendLaser(transform.position, _laserColor, colorsReceived));
     }
-
-    protected override void ClearMirrorColorList(MirrorCristal hittedCristal)
+    private IEnumerator ColorTransition(Color targetColor)
     {
-        base.ClearMirrorColorList(hittedCristal); //Empty
+        Light2D light = GetComponent<Light2D>();
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        Color startColor = sprite.color;
+        float elapsedTime = 0f;
 
-        if (!_cristalConnected.Contains(hittedCristal))
+        while (elapsedTime < _animDuration)
         {
-            _cristalConnected.Add(hittedCristal);
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / _animDuration;
+
+            Color currentColor = Color.Lerp(startColor, targetColor, t);
+            light.color = currentColor;
+            sprite.color = currentColor;
+
+            yield return null; 
         }
+
+        light.color = targetColor;
+        sprite.color = targetColor;
     }
     private Color GetAverageColor(List<Color> colors)
     {
