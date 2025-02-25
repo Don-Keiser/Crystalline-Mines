@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class MirrorCristal : EmitterCristal
 {
-    [SerializeField] private List<Color> colorsReceived = new List<Color>();
+    [SerializeField] public List<Color> colorsReceived = new List<Color>();
     [SerializeField] private float _animDuration = 1.5f;
     private Color _laserColor;
 
@@ -22,7 +22,6 @@ public class MirrorCristal : EmitterCristal
         }
         SetRightColor();
     }
-
     private void SetRightColor()
     {
         _laserColor = GetAverageColor(colorsReceived);
@@ -47,7 +46,7 @@ public class MirrorCristal : EmitterCristal
             light.color = currentColor;
             sprite.color = currentColor;
 
-            yield return null; 
+            yield return null;
         }
 
         light.color = targetColor;
@@ -69,5 +68,23 @@ public class MirrorCristal : EmitterCristal
         rgbColor.z = rgbColor.z == 0 ? 0 : rgbColor.z / colors.Count;
 
         return new Color(rgbColor.x, rgbColor.y, rgbColor.z, 1);
+    }
+
+    public void DesactivateCristal(List<Color> colors)
+    {
+        if (colors.Count <= 0) { return; }
+        List<Color> colorToRemove = new List<Color>();
+
+        foreach (var color in colors)
+        {
+            if (colorsReceived.Contains(color))
+            {
+                colorToRemove.Add(color);
+            }
+        }
+        foreach (var color in colorToRemove)
+        {
+            colorsReceived.Remove(color);
+        }
     }
 }

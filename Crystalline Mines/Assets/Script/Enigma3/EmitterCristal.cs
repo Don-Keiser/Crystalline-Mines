@@ -6,7 +6,8 @@ using UnityEngine.Rendering.Universal;
 public class EmitterCristal : MonoBehaviour
 {
     [SerializeField] protected Vector2 _cristalDir = Vector2.right;
-    [SerializeField] protected List<EmitterCristal> cristalConnected = new();
+    [SerializeField] protected List<EmitterCristal> cristalConnectedWith = new();
+    [SerializeField] protected List<EmitterCristal> isConnectedWith = new();
 
     protected LineRenderer _lineRenderer;
     protected Color _cristalColor;
@@ -30,10 +31,15 @@ public class EmitterCristal : MonoBehaviour
 
         if (!hit.collider.gameObject.TryGetComponent(out MirrorCristal hittedCristal)) { return; }
 
-        if (!cristalConnected.Contains(hittedCristal))
+        if (!isConnectedWith.Contains(hittedCristal))
         {
-            cristalConnected.Add(hittedCristal);
+            isConnectedWith.Add(hittedCristal);
         }
+        if (!hittedCristal.cristalConnectedWith.Contains(this))
+        {
+            hittedCristal.cristalConnectedWith.Add(this);
+        }
+
         hittedCristal.GetLaserColorReceived(colorsToSend);
         SendLineRenderer(hitPos, laserColor);
     }
@@ -57,45 +63,61 @@ public class EmitterCristal : MonoBehaviour
     }
 
     [ContextMenu("DesactivateLaser")]
-    protected void DesactivateLaser()
+    private void DesativateLaser()
     {
-        if (cristalConnected.Count > 0)
+        if (isConnectedWith.Count > 0)
         {
-            ResetLineRendererColor(Color.white);
-            List<EmitterCristal> cristauxAClean = new List<EmitterCristal>();
-            cristauxAClean = cristalConnected;
+            DesactivateLR(Color.white);
+
+            List<EmitterCristal> cristauxAClean = new List<EmitterCristal>(isConnectedWith);
 
             foreach (MirrorCristal cristal in cristauxAClean)
             {
-                if(cristal.cristalConnected.Count > 1)
+                if (cristal.isConnectedWith.Count < 2)
                 {
-                    EmitterCristal emitter = new EmitterCristal();
-                }
-                ResetLineRendererColor(Color.white);
-                ResetCristalColor(cristal, Color.white);
-                cristal.DesactivateLaser();
+                    // Debug pour vérifier l'état du cristal avant modification
+                    Debug.Log("Désactivation de : " + cristal.name);
 
-                cristal.cristalConnected.Remove(this);
+                    cristal.DesactivateColor(Color.white);
+                    cristal.DesactivateLR(Color.white);
+
+                    // Suppression après désactivation
+                    if (cristal.cristalConnectedWith.Contains(this)) { cristal.cristalConnectedWith.Remove(this); }
+                    if (this.isConnectedWith.Contains(cristal)) { this.isConnectedWith.Remove(cristal); }
+
+                    cristal.DesactivateCristal(cristal.colorsReceived);
+
+                    // Vérifier que le cristal a bien été mis à jour
+                    Debug.Log("Couleur après désactivation: " + cristal.GetComponent<SpriteRenderer>().color);
+
+                    // Éviter une récursion infinie en s’assurant que l'on ne rappelle pas sur un cristal déjà désactivé
+                    if (cristal.cristalConnectedWith.Count == 0)
+                    {
+                        cristal.DesativateLaser();
+                    }
+                }
             }
-            cristalConnected.Clear();
+        }
+        else
+        {
+            Debug.Log("Fin de la désactivation.");
+            return;
         }
     }
 
-    private void ResetCristalColor(MirrorCristal cristal, Color color)
-    {
-        cristal.GetComponent<Light2D>().color = color;
-        cristal.GetComponent<SpriteRenderer>().color = color;
-    }
 
-    private void ResetLineRendererColor(Color color)
+    private void DesactivateColor(Color color)
+    {
+        GetComponent<SpriteRenderer>().color = color;
+        GetComponent<Light2D>().color = color;
+    }
+    private void DesactivateLR(Color color)
     {
         _lineRenderer.startColor = color;
         _lineRenderer.endColor = color;
-
         _lineRenderer.SetPosition(0, Vector2.zero);
         _lineRenderer.SetPosition(1, Vector2.zero);
     }
-
     private IEnumerator LaserRayonAnim(Vector2 finalPos)
     {
         float duration = 0.2f;
