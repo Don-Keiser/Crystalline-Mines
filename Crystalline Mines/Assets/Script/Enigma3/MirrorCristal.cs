@@ -25,6 +25,10 @@ public class MirrorCristal : EmitterCristal
     private void SetRightColor()
     {
         _laserColor = GetAverageColor(colorsReceived);
+        _lineRenderer.startColor = _laserColor;
+        _lineRenderer.endColor = _laserColor;
+        _cristalColor = _laserColor;
+
 
         StartCoroutine(ColorTransition(_laserColor)); // Lancer l'animation de couleur
 
